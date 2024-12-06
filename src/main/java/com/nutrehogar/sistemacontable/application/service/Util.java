@@ -3,6 +3,7 @@ package com.nutrehogar.sistemacontable.application.service;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.table.DefaultTableCellRenderer;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -50,5 +51,30 @@ public class Util {
     @Contract(" -> new")
     public static @NotNull DateTimeFormatter getDateFormat() {
         return DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+    }
+
+
+
+    /**
+     * Define como se debe renderizar una selda que contenga un tipo especifico de dato.
+     * <p>
+     * En este caso si el valor de la celda ({@code value}) es de tipo {@link BigDecimal} se aplicara este renderer.
+     * {@code         setDefaultRenderer(BigDecimal.class, new BigDecimalRenderer());}
+     * <p>
+     * <strong><a id="override">Implementation Note:</a></strong> si el <code>bigDecimal</code> es 0 (<code>BigDecimal.ZERO</code>) en la tabla no se vera nada es decir ""
+     * ,en cambio si es un numero diferente a 0 antes de imprimir al numero se le aplica un {@link DecimalFormat},
+     * en concreto "#,##0.00", mediante <code>formatBigDecimal</code> de {@link Util}.
+     *
+     * @see DefaultTableCellRenderer
+     */
+    public static class BigDecimalRenderer extends DefaultTableCellRenderer {
+        @Override
+        protected void setValue(Object value) {
+            if (value instanceof BigDecimal bigDecimal) {
+                setText(!bigDecimal.equals(BigDecimal.ZERO) ? Util.formatBigDecimal(bigDecimal) : ""); // Formato con 2 decimales
+            } else {
+                super.setValue(value);
+            }
+        }
     }
 }
