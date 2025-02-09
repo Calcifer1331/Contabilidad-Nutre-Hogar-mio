@@ -118,7 +118,7 @@
 		<element kind="image" uuid="6eda5699-3ca3-4146-9c3c-4e89b271e6e6" x="362" y="17" width="187" height="33" hImageAlign="Right">
 			<expression><![CDATA[$P{IMG_DIR}+"Rectangle 2.png"]]></expression>
 		</element>
-		<element kind="staticText" uuid="0bbfe33c-f7ea-42f0-bf01-24bb4be734ac" x="374" y="17" width="55" height="33" forecolor="#FFFFFF" fontName="Roboto Regular" fontSize="16.0" bold="false" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="0bbfe33c-f7ea-42f0-bf01-24bb4be734ac" x="374" y="17" width="55" height="33" forecolor="#FFFFFF" fontName="Roboto" fontSize="16.0" bold="false" hTextAlign="Center" vTextAlign="Middle">
 			<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
 			<text><![CDATA[Monto:]]></text>
 		</element>
@@ -128,12 +128,12 @@
 		<element kind="textField" uuid="e7a1a17d-4d20-4f99-82eb-e80ca0fe8ece" x="40" y="4" width="259" height="14" forecolor="#323232" fontName="Roboto Bold" evaluationTime="Column" bold="true">
 			<expression><![CDATA[$P{ENTRY_NAME}]]></expression>
 		</element>
-		<element kind="textField" uuid="ec08ce0d-21f9-4c52-b504-b84a4918ee73" x="429" y="17" width="115" height="33" forecolor="#FFFFFF" fontName="Roboto Black" fontSize="12.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+		<element kind="textField" uuid="ec08ce0d-21f9-4c52-b504-b84a4918ee73" x="429" y="17" width="115" height="33" forecolor="#FFFFFF" fontName="Roboto Black" fontSize="12.0" bold="false" hTextAlign="Right" vTextAlign="Middle">
 			<expression><![CDATA[$P{ENTRY_AMOUNT}]]></expression>
 		</element>
 	</columnHeader>
 	<detail>
-		<band height="223" splitType="Stretch">
+		<band height="458" splitType="Stretch">
 			<element kind="component" uuid="dbe5c476-f549-40e5-8a86-7c5e57c0c061" x="247" y="16" width="303" height="60">
 				<component kind="table">
 					<datasetRun uuid="9aa619a6-7b4c-4eb4-b603-41e40419346b" subDataset="Dataset1">
@@ -213,17 +213,16 @@
 			<element kind="line" uuid="a629b177-05b4-4314-95cf-46bb73589dd5" x="32" y="112" width="150" height="1">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
-			<element kind="staticText" uuid="f3e6e144-7d4b-4b84-b3f9-247537482e06" x="32" y="112" width="150" height="21" forecolor="#323232" fontName="Roboto Regular" fontSize="10.0" vTextAlign="Top">
+			<element kind="staticText" uuid="f3e6e144-7d4b-4b84-b3f9-247537482e06" x="32" y="112" width="150" height="21" forecolor="#323232" fontName="Roboto" fontSize="10.0" vTextAlign="Top">
 				<text><![CDATA[Revisado por:]]></text>
 			</element>
-			<element kind="line" uuid="d0aea5c6-6564-48e1-85b7-c62cda90477b" x="32" y="178" width="150" height="1">
+			<element kind="line" uuid="d0aea5c6-6564-48e1-85b7-c62cda90477b" x="32" y="159" width="150" height="1">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
-			<element kind="staticText" uuid="fd3cad01-044f-426a-9852-a9df00808ede" x="32" y="179" width="150" height="20" forecolor="#323232" fontName="Roboto Regular" fontSize="10.0" vTextAlign="Top">
+			<element kind="staticText" uuid="fd3cad01-044f-426a-9852-a9df00808ede" x="32" y="160" width="150" height="20" forecolor="#323232" fontName="Roboto" fontSize="10.0" vTextAlign="Top">
 				<text><![CDATA[Aprobado por:]]></text>
 			</element>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</band>
 	</detail>
-	<pageFooter height="101" splitType="Stretch"/>
 </jasperReport>

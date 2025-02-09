@@ -16,6 +16,7 @@ import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.ui.components.*;
 import com.nutrehogar.sistemacontable.ui.view.crud.AccountingEntryFormView;
 import jakarta.persistence.EntityExistsException;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectDeletedException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +26,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.text.AbstractDocument;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -33,6 +35,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+@Slf4j
 public class AccountingEntryFormController extends SimpleController<LedgerRecord> {
     private final JournalEntryRepository journalRepository;
     private final AccountRepository accountRepository;
@@ -43,13 +46,14 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     private boolean isBeingAdded;
     private boolean isBeingEdited;
     private BigDecimal ZERO;
-    private final ReportController reportController = new ReportController();
+    private ReportController reportController;
 
 
     public AccountingEntryFormController(LedgerRecordRepository repository, AccountingEntryFormView view, JournalEntryRepository journalRepository, AccountRepository accountRepository) {
         super(repository, view);
         this.journalRepository = journalRepository;
         this.accountRepository = accountRepository;
+        reportController = new ReportController();
         loadDataAccount();
     }
 
@@ -95,10 +99,20 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getBtnDeleteEntry().addActionListener(e -> deleteEntry());
         getBtnUpdateEntry().addActionListener(e -> updateEntry());
         getBtnGeneratePaymentVoucher().addActionListener(e -> {
-            reportController.generateReport(ReportController.ReportType.PAYMENT_VOUCHER, getJournalEntryDTO());
+            try {
+                reportController.generateReport(ReportController.ReportType.PAYMENT_VOUCHER, getJournalEntryDTO());
+            } catch (Exception ex) {
+                log.info(ex.getMessage());
+                throw new RuntimeException(ex);
+            }
         });
         getBtnGenerateRegistrationForm().addActionListener(e -> {
-            reportController.generateReport(ReportController.ReportType.REGISTRATION_FORM, getJournalEntryDTO());
+            try {
+                reportController.generateReport(ReportController.ReportType.REGISTRATION_FORM, getJournalEntryDTO());
+            } catch (Exception ex) {
+                log.info(ex.getMessage());
+                throw new RuntimeException(ex);
+            }
         });
         ((AbstractDocument) getTxtRecordAmount().getDocument()).setDocumentFilter(new CustomDocumentFilter(CustomDocumentFilter.Type.DECIMAL));
         ((AbstractDocument) getTxtEntryDocumentNumber().getDocument()).setDocumentFilter(new CustomDocumentFilter(CustomDocumentFilter.Type.INTEGER));

@@ -20,6 +20,8 @@ public class ConfigLoader {
     public static final String DIR_BACKUP_NAME = "backup";
     public static final String DIR_LOG_NAME = "logs";
     public static final String DIR_REPORTS_NAME = "reports";
+    public static final String DIR_REPORTS_TEMPLATE_NAME = "template";
+    public static final String DIR_REPORTS_TEMPLATE_IMG_NAME = "img";
     public static final String DIR_PAYMENT_VOUCHER_NAME = "payment_voucher";
     public static final String DIR_REGISTRATION_FORM_NAME = "registration_form";
 
@@ -30,7 +32,9 @@ public class ConfigLoader {
                 getLogsPath(),
                 getReportsPath(),
                 getRegistrationFormPath(),
-                getPaymentVoucherPath()
+                getPaymentVoucherPath(),
+                getReportsTemplatePath(),
+                getReportsTemplateImgPath()
         );
     }
 
@@ -95,5 +99,11 @@ public class ConfigLoader {
 
     public static @NotNull String getRegistrationFormPath() {
         return getReportsPath() + File.separator + DIR_REGISTRATION_FORM_NAME;
+    }
+    public static @NotNull String getReportsTemplatePath() {
+        return getReportsPath() + File.separator + DIR_REPORTS_TEMPLATE_NAME;
+    }
+    public static @NotNull String getReportsTemplateImgPath() {
+        return getReportsTemplatePath() + File.separator + DIR_REPORTS_TEMPLATE_IMG_NAME+ File.separator;
     }
 }

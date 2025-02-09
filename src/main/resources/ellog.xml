@@ -1,0 +1,11 @@
+<!-- Configurar el logger para JasperReports (o para el subpaquete de fuentes) -->
+<!--    <logger name="net.sf.jasperreports.engine.fonts" level="DEBUG" />-->
+
+<!-- Configuración para todo el paquete JasperReports -->
+<!--    <logger name="net.sf.jasperreports" level="DEBUG" />-->
+
+<!-- Logger raíz en DEBUG -->
+<!--    <root level="DEBUG">-->
+<!--        <appender-ref ref="CONSOLE" />-->
+<!--        <appender-ref ref="FILE" />-->
+<!--    </root>-->
