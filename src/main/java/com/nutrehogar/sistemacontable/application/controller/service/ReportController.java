@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.getPaymentVoucherPath;
 import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.getRegistrationFormPath;
@@ -29,7 +30,7 @@ import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.get
 
 @Slf4j
 public class ReportController {
-    public static void main(String[] args) throws IOException, FontFormatException {
+    public static void main(String[] args)  {
 
         var record = List.of(
                 new LedgerRecordDTO("Egreso", "F-76265673", "1.12431", "871652", "0.00", "123.12", "0.00"),
@@ -56,44 +57,6 @@ public class ReportController {
     private final Map<String, Object> parameters;
 
     public ReportController() {
-//        InputStream fontStream1 = ReportController.class.getResourceAsStream("/fonts/Roboto-Black.ttf");
-//        InputStream fontStream2 = ReportController.class.getResourceAsStream("/fonts/Roboto-Bold.ttf");
-//        InputStream fontStream3 = ReportController.class.getResourceAsStream("/fonts/Roboto-Regular.ttf");
-//        InputStream fontStream4 = ReportController.class.getResourceAsStream("/fonts/Roboto-Italic.ttf");
-//            try{
-//                Font font1 = Font.createFont(Font.TRUETYPE_FONT, fontStream1);
-//                Font font3 = Font.createFont(Font.TRUETYPE_FONT, fontStream3);
-//                Font font2 = Font.createFont(Font.TRUETYPE_FONT, fontStream2);
-//                Font font4 = Font.createFont(Font.TRUETYPE_FONT, fontStream4);
-//                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-//                ge.registerFont(font1);
-//                ge.registerFont(font3);
-//                ge.registerFont(font2);
-//                ge.registerFont(font4);
-//                log.info("Font registered. {}", font1);
-//                log.info("Font registered. {}", font3);
-//                log.info("Font registered. {}", font2);
-//                log.info("Font registered. {}", font4);
-//            } catch (FontFormatException | IOException e) {
-//                log.error(e.getMessage());
-//                throw new ReportException(e);
-//            }
-//
-//        var p = new JPanel();
-//        p.add(new JLabel("Normal"));
-//        var a = new JLabel("Este es el Roboto");
-//        p.add(a);
-//        a.setFont(new Font("Roboto", Font.PLAIN, 12));
-//        JOptionPane.showMessageDialog(null, p);
-//
-//        a.setText("Este es el Roboto Bold");
-//        a.setFont(new Font("Roboto", Font.BOLD, 12));
-//        JOptionPane.showMessageDialog(null, p);
-//
-//        a.setText("Este es el Roboto Black");
-//        a.setFont(new Font("Roboto Black", Font.PLAIN, 12));
-//        JOptionPane.showMessageDialog(null, p);
-
         parameters = new HashMap<>();
 //        IMG_DIR = Objects.requireNonNull(ReportController.class.getResource(TEMPLATE_PATH + "img/"), TEMPLATE_PATH + "img/" + " directory not found").getPath();
         IMG_DIR = ConfigLoader.getReportsTemplateImgPath();

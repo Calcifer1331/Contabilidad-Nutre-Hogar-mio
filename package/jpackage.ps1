@@ -1,0 +1,17 @@
+jpackage `
+--input .\..\target\lib `
+--name SistemaContable `
+--main-jar SistemaContable-1.8-SNAPSHOT.jar `
+--main-class com.nutrehogar.sistemacontable.application.MainClass `
+--type exe `
+--icon .\icon\icon.ico `
+--vendor "Universidad Tecnológica de Panamá - LIC. EN DESARROLLO DE SOFTWARE (2016-M)" `
+--description "Sistema de Contabilidad para Nutre Hogar" `
+--app-version 1.8 `
+--verbose `
+--win-shortcut `
+--win-menu `
+--win-dir-chooser `
+--runtime-image "C:\Users\Calci\.jdks\corretto-21.0.6" `
+--install-dir C:\Users\SistemaContable `
+--resource-dir D:\projects\Java\Contabilidad-Nutre-Hogar-mio\package\resource
