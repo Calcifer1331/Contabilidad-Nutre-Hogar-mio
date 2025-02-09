@@ -1,9 +1,6 @@
 HELP.md
 target/
-package/Jar
-package/Icon
-package/exe
-package/Jre
+package/.exe
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
