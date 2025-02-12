@@ -24,6 +24,7 @@ public class ConfigLoader {
     public static final String DIR_REPORTS_TEMPLATE_IMG_NAME = "img";
     public static final String DIR_PAYMENT_VOUCHER_NAME = "payment_voucher";
     public static final String DIR_REGISTRATION_FORM_NAME = "registration_form";
+    public static final String PING = "admin123";
 
     static {
         createDirectories(

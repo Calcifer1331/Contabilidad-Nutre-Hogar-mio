@@ -2,6 +2,18 @@
 
 Este proyecto es una aplicación de escritorio para la gestión contable de Nutre Hogar. Permite el ledgerRecord y control de
 transacciones contables, incluyendo la generación de reportes de libro diario mayor y general.
+
+## Indicaciones
+
+### crear exe
+
+Se debe ejecutar el script `jpackage.ps1` que esta en `package/`, para en la carpeta `./target/bio` debe de haber el `.jar` principal de programa y el de las dependencias.
+
+### Instalacion 
+
+Se debe instalar el programa en `C:\users\[tu-usuario]\SistemaContable`, ademas dentro de esta carpeta tiene que tener `\template\img\` con las imagenes.
+
+
 ```java
 module SistemaContable {
     requires java.compiler;

@@ -1,6 +1,7 @@
 package com.nutrehogar.sistemacontable.application;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
 import com.nutrehogar.sistemacontable.application.config.HibernateUtil;
 import com.nutrehogar.sistemacontable.application.controller.business.GeneralLedgerController;
 import com.nutrehogar.sistemacontable.application.controller.business.JournalController;
@@ -71,16 +72,12 @@ public class App {
     private Consumer<Integer> prepareToEditJournalEntry;
     private JFrame frame;
 
-    public App(SplashScreen splash) {
-        session = HibernateUtil.getSession();
+    public App() {
         Thread.startVirtualThread(() -> Runtime.getRuntime().addShutdownHook(new Thread(HibernateUtil::shutdown)));
-        setDefaultRepositories();
-        setDefaultViews();
-        setDefaultControllers();
-        FlatSVGIcon svgLogo = new FlatSVGIcon("svgs/SistemaContableLogo.svg", 250, 250);
         SwingUtilities.invokeLater(() -> {
+            dashboardView = new DefaultDashboardView();
             frame = new JFrame();
-            frame.setIconImage(svgLogo.getImage());
+            frame.setIconImage(new FlatSVGIcon("svgs/SistemaContableLogo.svg", 250, 250).getImage());
             frame.setTitle("Sistema Contable");
             frame.setSize(1300, 600);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -89,8 +86,11 @@ public class App {
             frame.add(dashboardView);
             frame.getRootPane().setBackground(Color.WHITE);
             frame.setVisible(true);
+            setDefaultViews();
         });
-        splash.dispose();
+        session = HibernateUtil.getSession();
+        setDefaultRepositories();
+        setDefaultControllers();
     }
 
     private void setDefaultViews() {
@@ -101,7 +101,6 @@ public class App {
         trialBalanceView = new DefaultTrialBalanceView();
         generalLedgerView = new DefaultGeneralLedgerView();
         backupView = new DefaultBackupView();
-        dashboardView = new DefaultDashboardView();
     }
 
     private void setDefaultRepositories() {

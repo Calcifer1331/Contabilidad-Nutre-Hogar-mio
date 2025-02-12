@@ -75,12 +75,41 @@ public class HibernateUtil {
      * Debe ser llamado al finalizar el uso de la aplicación.
      */
     public static synchronized void shutdown() {
-        if (session != null) {
-            session.close();
+        try {
+            log.info("Iniciando el proceso de cierre...");
+
+            // Esperar si hay tareas en ejecución antes de cerrar la sesión
+            if (session != null && session.isOpen()) {
+                log.info("Cerrando la sesión activa...");
+                session.close();
+            }
+
+            // Asegurar que no haya procesos en ejecución antes de cerrar la fábrica de sesiones
+            if (sessionFactory != null && !sessionFactory.isClosed()) {
+                log.info("Cerrando SessionFactory...");
+                sessionFactory.close();
+            }
+
+            // Si tienes un pool de hilos, asegurarte de cerrarlo de manera segura
+//            if (executorService != null && !executorService.isShutdown()) {
+//                log.info("Esperando que todas las tareas finalicen...");
+//                executorService.shutdown();
+//                try {
+//                    if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+//                        log.warn("Forzando la detención de tareas en ejecución...");
+//                        executorService.shutdownNow();
+//                    }
+//                } catch (InterruptedException e) {
+//                    log.error("Error al esperar la terminación de tareas", e);
+//                    executorService.shutdownNow();
+//                    Thread.currentThread().interrupt();
+//                }
+//            }
+
+            log.info("Cierre seguro completado.");
+        } catch (Exception e) {
+            log.error("Error durante el proceso de cierre", e);
         }
-        if (sessionFactory != null) {
-            sessionFactory.close();
-        }
-        log.info("Session closed");
     }
+
 }
