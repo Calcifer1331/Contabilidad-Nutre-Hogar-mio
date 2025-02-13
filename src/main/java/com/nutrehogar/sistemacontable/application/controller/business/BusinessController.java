@@ -9,14 +9,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.function.Consumer;
 
-import static com.nutrehogar.sistemacontable.application.config.Constants.END_PERIOD;
-import static com.nutrehogar.sistemacontable.application.config.Constants.START_PERIOD;
+import static com.nutrehogar.sistemacontable.ui.components.LocalDateSpinnerModel.CURRENT_DATE;
 
 @Getter
 @Setter
 public abstract class BusinessController<T> extends SimpleController<T> {
+    public static final LocalDate END_PERIOD = LocalDate.of(CURRENT_DATE.getYear(), 12, 31);
+    public static final LocalDate START_PERIOD = LocalDate.of(CURRENT_DATE.getYear(), 1, 1);
+
     private LocalDateSpinnerModel spnModelStartPeriod;
     private LocalDateSpinnerModel spnModelEndPeriod;
     private final Consumer<Integer> editJournalEntry;

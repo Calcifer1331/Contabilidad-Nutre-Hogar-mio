@@ -35,6 +35,7 @@ import com.nutrehogar.sistemacontable.ui.view.crud.AccountingEntryFormView;
 import com.nutrehogar.sistemacontable.ui.view.imple.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,15 +69,22 @@ public class App {
     private GeneralLedgerView generalLedgerView;
     private BackupView backupView;
     private PanelDashboardView dashboardView;
-
     private Consumer<Integer> prepareToEditJournalEntry;
     private JFrame frame;
 
     public App() {
         Thread.startVirtualThread(() -> Runtime.getRuntime().addShutdownHook(new Thread(HibernateUtil::shutdown)));
         SwingUtilities.invokeLater(() -> {
-            dashboardView = new DefaultDashboardView();
+            Thread.startVirtualThread(this::setDefaultViews);
             frame = new JFrame();
+            Thread.startVirtualThread(() -> {
+                JPasswordField passwordField = new JPasswordField();
+                FlatSVGIcon icon = new FlatSVGIcon("svgs/key.svg");
+                boolean pass = false;
+                while (!pass) {
+                    pass = requestPing(passwordField, icon);
+                }
+            });
             frame.setIconImage(new FlatSVGIcon("svgs/SistemaContableLogo.svg", 250, 250).getImage());
             frame.setTitle("Sistema Contable");
             frame.setSize(1300, 600);
@@ -86,14 +94,25 @@ public class App {
             frame.add(dashboardView);
             frame.getRootPane().setBackground(Color.WHITE);
             frame.setVisible(true);
-            setDefaultViews();
         });
         session = HibernateUtil.getSession();
         setDefaultRepositories();
         setDefaultControllers();
     }
 
+    private boolean requestPing(JPasswordField passwordField, Icon icon) {
+        int option = JOptionPane.showConfirmDialog(frame, passwordField, "Ingrese su PING", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, icon);
+        if (option != JOptionPane.OK_OPTION) {
+            log.info("Close program, no ping");
+            System.exit(0);
+        }
+        String pin = new String(passwordField.getPassword());
+        log.info("PIN ingresado: {}", pin);
+        return pin.equals(ConfigLoader.PING);
+    }
+
     private void setDefaultViews() {
+        dashboardView = new DefaultDashboardView();
         accountingEntryFormView = new DefaultAccountEntryFormView();
         accountView = new DefaultAccountView();
         accountSubtypeView = new DefaultAccountSubtypeView();

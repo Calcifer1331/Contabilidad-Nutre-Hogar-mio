@@ -12,5 +12,4 @@ public class LedgerRecordDTO {
     String reference;
     String debit;
     String credit;
-    String balance;
 }

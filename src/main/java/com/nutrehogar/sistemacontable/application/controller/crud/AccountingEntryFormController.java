@@ -45,7 +45,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     private List<LedgerRecordDTO> tblDataList;
     private boolean isBeingAdded;
     private boolean isBeingEdited;
-    private BigDecimal ZERO;
+    public static final BigDecimal ZERO = BigDecimal.valueOf(0, 2);
     private ReportController reportController;
 
 
@@ -64,8 +64,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         cbxModelDocumentType = new CustomComboBoxModel<>(DocumentType.values());
         journalEntry = Optional.empty();
         tblDataList = new ArrayList<>();
-        ZERO = Constants.ZERO;
-        getTxtEntryDocumentNumber().setEnabled(false);
         prepareBtnToAddEntry();
         prepareBtnToAddRecord();
         super.initialize();
@@ -171,7 +169,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         }
         journalEntry.get().getLedgerRecords().add(record.get());
         loadData();
-        prepareToAddRecord();
     }
 
     private Optional<LedgerRecord> getLedgerRecordByForm(LedgerRecord lr) {
@@ -216,12 +213,8 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             showMessage("El nombre de la Entrada no puede esta vacia.");
             return Optional.empty();
         }
-        if (getData().isEmpty() || getData().size() < 2) {
+        if (getData().isEmpty()) {
             showMessage("La Entrada tiene que tener al menos dos registros.");
-            return Optional.empty();
-        }
-        if (tblDataList.getLast().getBalance().equals(ZERO)) {
-            showMessage("El Saldo total debe estar balanceado(0).");
             return Optional.empty();
         }
 
@@ -300,6 +293,23 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getTxtRecordReference().setText("");
         getRbtRecordDebit().setSelected(true);
         getTxtRecordAmount().setText("");
+    }
+
+    private void prepareBtnToEditRecord() {
+        getBtnSaveRecord().setEnabled(false);
+        getBtnDeleteRecord().setEnabled(true);
+        getBtnEdit().setEnabled(true);
+        getBtnAddRecord().setEnabled(true);
+        getBtnUpdateRecord().setEnabled(true);
+    }
+
+    private void prepareBtnToAddRecord() {
+        getBtnAddRecord().setEnabled(true);
+        getBtnDeleteRecord().setEnabled(false);
+        getBtnEdit().setEnabled(false);
+        getBtnSaveRecord().setEnabled(true);
+        getBtnUpdateRecord().setEnabled(false);
+        getRbtRecordDebit().setSelected(true);
     }
 
     private void saveEntry() {
@@ -418,7 +428,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     private void prepareToAddEntry() {
         journalEntry = Optional.of(new JournalEntry());
-        getTxtEntryDocumentNumber().setEnabled(false);
+        getTxtEntryDocumentNumber().setEnabled(true);
         getTxtEntryName().setText("");
         getTaEntryConcept().setText("");
         getTxtEntryDocumentNumber().setText("");
@@ -451,23 +461,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         isBeingAdded = false;
     }
 
-    private void prepareBtnToEditRecord() {
-        getBtnSaveRecord().setEnabled(false);
-        getBtnDeleteRecord().setEnabled(true);
-        getBtnEdit().setEnabled(true);
-        getBtnAddRecord().setEnabled(true);
-        getBtnUpdateRecord().setEnabled(true);
-    }
-
-    private void prepareBtnToAddRecord() {
-        getBtnAddRecord().setEnabled(true);
-        getBtnDeleteRecord().setEnabled(false);
-        getBtnEdit().setEnabled(false);
-        getBtnSaveRecord().setEnabled(true);
-        getBtnUpdateRecord().setEnabled(false);
-        getRbtRecordDebit().setSelected(true);
-    }
-
     private void loadDataAccount() {
         if (accountRepository == null) {
             return;
@@ -487,19 +480,20 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             tblDataList.clear();
         }
         for (LedgerRecord record : getData()) {
-            balance = record.getAccount().getAccountSubtype().getAccountType().getBalance(balance, record.getCredit(), record.getDebit());
-            debitSum = debitSum.add(record.getDebit(), MathContext.DECIMAL128).setScale(2, RoundingMode.HALF_UP);
-            creditSum = creditSum.add(record.getCredit(), MathContext.DECIMAL128).setScale(2, RoundingMode.HALF_UP);
-            tblDataList.add(new LedgerRecordDTO(record.getDocumentType().getName(), record.getVoucher(), Account.getCellRenderer(record.getAccount().getId()), record.getReference(), record.getDebit().toString(), record.getCredit().toString(), balance.toString()));
+            debitSum = debitSum.add(record.getDebit(), MathContext.DECIMAL128);
+            creditSum = creditSum.add(record.getCredit(), MathContext.DECIMAL128);
+            balance = creditSum.subtract(debitSum, MathContext.DECIMAL128);
+            tblDataList.add(new LedgerRecordDTO(record.getDocumentType().getName(), record.getVoucher(), Account.getCellRenderer(record.getAccount().getId()), record.getReference(), record.getDebit().toString(), record.getCredit().toString()));
         }
-        boolean isBalanced = !getData().isEmpty() && getData().size() >= 2 && balance.equals(ZERO);
+        tblDataList.add(new LedgerRecordDTO("", "", "TOTAL", "", debitSum.toString(), creditSum.toString()));
+        boolean isBalanced = !getData().isEmpty();
         getBtnSaveEntry().setEnabled(isBalanced && isBeingAdded);
         getBtnUpdateEntry().setEnabled(isBalanced && isBeingEdited);
     }
 
     public class LedgerRecordTableModel extends AbstractTableModel {
 
-        private final String[] COLUMN_NAMES = {"Tipo de Documento", "Comprobante", "Referencia", "Código", "Debíto", "Crédito", "Saldo"};
+        private final String[] COLUMN_NAMES = {"Tipo de Documento", "Comprobante", "Referencia", "Código", "Debíto", "Crédito"};
 
         @Override
         public int getRowCount() {
@@ -526,7 +520,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
                 case 3 -> record.getAccountId();
                 case 4 -> record.getDebit();
                 case 5 -> record.getCredit();
-                case 6 -> record.getBalance();
                 default -> "que haces?";
             };
 
@@ -535,7 +528,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             return switch (columnIndex) {
-                case 4, 5, 6 -> BigDecimal.class;
+                case 4, 5 -> BigDecimal.class;
                 default -> String.class;
             };
         }

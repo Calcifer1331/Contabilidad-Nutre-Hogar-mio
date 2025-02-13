@@ -177,7 +177,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
 
         lblRecordVoucher.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblRecordVoucher.setLabelFor(txtRecordVoucher);
-        lblRecordVoucher.setText("Comprobante No:");
+        lblRecordVoucher.setText("Comprobante:");
 
         lblRecordAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblRecordAmount.setLabelFor(txtRecordAmount);

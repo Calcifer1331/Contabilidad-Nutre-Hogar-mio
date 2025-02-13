@@ -19,10 +19,8 @@ import java.awt.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.getPaymentVoucherPath;
 import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.getRegistrationFormPath;
@@ -30,28 +28,9 @@ import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.get
 
 @Slf4j
 public class ReportController {
-    public static void main(String[] args)  {
-
-        var record = List.of(
-                new LedgerRecordDTO("Egreso", "F-76265673", "1.12431", "871652", "0.00", "123.12", "0.00"),
-                new LedgerRecordDTO("Ajuste", "8715DA", "2.2111", "7636562", "0.00", "0.00", "100.20"),
-                new LedgerRecordDTO("Egreso", "8267FDV", "1.18211", "28746768920903", "0.00", "197", "297.20"),
-                new LedgerRecordDTO("Ingreso", "A.Sa", "4.10431", "19838866473", "0.00", "18", "314.20")
-        );
-        var journal = new JournalEntryDTO(
-                1120,
-                "1863-2",
-                LocalDate.now(),
-                "Ventas S.A.",
-                "Para pagar a credito de un tanque de gas de 100Lb. Para pagar a credito de un tanque de gas de 100Lb. Para pagar a credito de un tanque de gas de 100Lb.",
-                "Bl/. 198.13",
-                record);
-        var report = new ReportController();
-        report.generateReport(ReportType.REGISTRATION_FORM, journal);
-    }
-
-    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy", Constants.LOCALE);
-    public static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd", Constants.LOCALE);
+    public static final Locale LOCALE =  Locale.of("es", "PA");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy", LOCALE);
+    public static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd", LOCALE);
     private static final String TEMPLATE_PATH = "/template/";
     private String IMG_DIR;
     private final Map<String, Object> parameters;

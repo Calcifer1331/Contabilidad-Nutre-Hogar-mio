@@ -38,7 +38,7 @@
 		<field name="accountId" class="java.lang.String"/>
 		<field name="debit" class="java.lang.String"/>
 		<field name="credit" class="java.lang.String"/>
-		<field name="balance" class="java.lang.String"/>
+		<field name="reference" class="java.lang.String"/>
 	</dataset>
 	<parameter name="MANAGER_NAME" class="java.lang.String">
 		<defaultValueExpression><![CDATA["Licdo. Julío C. Guerra."]]></defaultValueExpression>
@@ -134,65 +134,59 @@
 	</columnHeader>
 	<detail>
 		<band height="458" splitType="Stretch">
-			<element kind="component" uuid="dbe5c476-f549-40e5-8a86-7c5e57c0c061" x="247" y="16" width="303" height="60">
+			<element kind="component" uuid="dbe5c476-f549-40e5-8a86-7c5e57c0c061" x="237" y="26" width="312" height="60">
 				<component kind="table">
 					<datasetRun uuid="9aa619a6-7b4c-4eb4-b603-41e40419346b" subDataset="Dataset1">
 						<dataSourceExpression><![CDATA[$P{TABLE_DATA_SOURCE}]]></dataSourceExpression>
 					</datasetRun>
-					<column kind="single" uuid="79be98c9-c6d4-4ffb-9c6b-59b288d7add6" width="75">
+					<column kind="single" uuid="050d5450-305b-4d19-afd2-e43099b1864d" width="77">
 						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
-							<element kind="staticText" uuid="442c02e8-de2f-4495-bb12-aaacc1bb8733" x="0" y="0" width="75" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-								<text><![CDATA[Cuenta]]></text>
+							<element kind="staticText" uuid="0f911404-d95a-461b-955e-f225fca8b995" x="0" y="0" width="77" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Referencia]]></text>
 							</element>
 						</columnHeader>
 						<detailCell height="30" style="Table 1_TD">
-							<element kind="textField" uuid="b6b0f2f3-ed43-4591-8129-7102bb6431d5" x="0" y="0" width="75" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
-								<expression><![CDATA[$F{accountId}]]></expression>
+							<element kind="textField" uuid="85d1799e-edff-4abd-81eb-ea89131329e0" x="0" y="0" width="77" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{reference}]]></expression>
 							</element>
 						</detailCell>
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 					</column>
-					<column kind="single" uuid="b8762da9-f1a7-44f9-a0bb-e37a49cef452" width="76">
+					<column kind="single" uuid="79be98c9-c6d4-4ffb-9c6b-59b288d7add6" width="79">
 						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
-							<element kind="staticText" uuid="a63f72a7-f984-4a25-a498-d5549d6f1d91" x="0" y="0" width="76" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-								<text><![CDATA[Debíto]]></text>
+							<element kind="staticText" uuid="442c02e8-de2f-4495-bb12-aaacc1bb8733" x="0" y="0" width="79" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Cuenta]]></text>
 							</element>
 						</columnHeader>
 						<detailCell height="30" style="Table 1_TD">
-							<element kind="textField" uuid="5d7c799b-381b-4bf5-97d4-94172d7af4e6" x="0" y="0" width="76" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
-								<expression><![CDATA[$F{debit}]]></expression>
+							<element kind="textField" uuid="b6b0f2f3-ed43-4591-8129-7102bb6431d5" x="0" y="0" width="79" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{accountId}]]></expression>
 							</element>
 						</detailCell>
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 					</column>
-					<column kind="single" uuid="03a3f9e5-ecda-48d3-a169-ae2399e5dd59" width="76">
+					<column kind="single" uuid="b8762da9-f1a7-44f9-a0bb-e37a49cef452" width="78">
 						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
-							<element kind="staticText" uuid="92084ef6-b8a3-4932-b679-bbf93d2d7a12" x="0" y="0" width="76" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-								<text><![CDATA[Crédito]]></text>
+							<element kind="staticText" uuid="a63f72a7-f984-4a25-a498-d5549d6f1d91" x="0" y="0" width="78" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Debíto]]></text>
 							</element>
 						</columnHeader>
 						<detailCell height="30" style="Table 1_TD">
-							<element kind="textField" uuid="f96028df-8897-47ad-8ba3-0874a775394c" x="0" y="0" width="76" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
-								<expression><![CDATA[$F{credit}]]></expression>
+							<element kind="textField" uuid="5d7c799b-381b-4bf5-97d4-94172d7af4e6" x="0" y="0" width="78" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{debit}]]></expression>
 							</element>
 						</detailCell>
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 					</column>
-					<column kind="single" uuid="db153830-1826-4021-b53c-d6f842926b40" width="76">
+					<column kind="single" uuid="03a3f9e5-ecda-48d3-a169-ae2399e5dd59" width="78">
 						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
-							<element kind="staticText" uuid="56dae459-9219-487c-ac29-f9f08fa0e8b5" x="0" y="0" width="76" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
-								<text><![CDATA[Saldo]]></text>
+							<element kind="staticText" uuid="92084ef6-b8a3-4932-b679-bbf93d2d7a12" x="0" y="0" width="78" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Crédito]]></text>
 							</element>
 						</columnHeader>
 						<detailCell height="30" style="Table 1_TD">
-							<element kind="textField" uuid="eb7b88be-4afa-4cdc-8f43-a8c2a673f16b" x="0" y="0" width="76" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
-								<expression><![CDATA[$F{balance}]]></expression>
-								<box>
-									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-								</box>
+							<element kind="textField" uuid="f96028df-8897-47ad-8ba3-0874a775394c" x="0" y="0" width="78" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{credit}]]></expression>
 							</element>
 						</detailCell>
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>

@@ -1,5 +1,6 @@
 package com.nutrehogar.sistemacontable.application.controller.service;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.nutrehogar.sistemacontable.application.controller.Controller;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
 import com.nutrehogar.sistemacontable.ui.view.BackupView;
@@ -34,6 +35,7 @@ import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.get
 @Setter
 @Slf4j
 public class BackupController extends Controller {
+    private static final FlatSVGIcon ICON = new FlatSVGIcon("svgs/backup.svg");
 
     public static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
     public static final SimpleDateFormat TABLE_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -95,6 +97,8 @@ public class BackupController extends Controller {
 
     public void showView() {
         var dialog = new JDialog(frame, "Copias de Seguridad", true);
+        dialog.setIconImage(ICON.getImage());
+        dialog.getRootPane().setBackground(Color.WHITE);
         dialog.setLocationRelativeTo(frame);
         dialog.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         dialog.setSize(430, 460);
