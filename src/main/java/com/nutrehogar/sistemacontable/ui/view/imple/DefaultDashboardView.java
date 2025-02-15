@@ -69,7 +69,7 @@ public class DefaultDashboardView extends PanelDashboardView {
         btnShowAccountView.setText("Cuentas");
         btnShowAccountView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
-        btnShowTrialBalanceView.setText("Balance de Comprobacion");
+        btnShowTrialBalanceView.setText("Balance de Comprobación");
         btnShowTrialBalanceView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
         btnShowAccountSubtypeView.setText("SubtipoCuentas");

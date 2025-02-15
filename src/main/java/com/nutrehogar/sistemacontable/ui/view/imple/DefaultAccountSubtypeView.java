@@ -92,12 +92,12 @@ public class DefaultAccountSubtypeView extends AccountSubtypeView {
         btnAdd.setText("Crear");
 
         lblAdd.setLabelFor(btnAdd);
-        lblAdd.setText("<html><p>Prepara el Formulario para crear una nueva subtipo de cuenta</p></html>");
+        lblAdd.setText("<html><p>Crear un nuevo subtipo de cuenta</p></html>");
         lblAdd.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblAdd.setPreferredSize(new java.awt.Dimension(250, 40));
 
         lblEdit.setLabelFor(btnEdit);
-        lblEdit.setText("<html><p>Prepara el Formulario para editar el subtipo de cuenta seleccionado</p></html>");
+        lblEdit.setText("<html><p>Editar el subtipo de cuenta seleccionado</p></html>");
         lblEdit.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblEdit.setPreferredSize(new java.awt.Dimension(250, 40));
 

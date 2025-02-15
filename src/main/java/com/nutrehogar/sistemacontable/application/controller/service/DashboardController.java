@@ -8,6 +8,7 @@ import com.nutrehogar.sistemacontable.application.controller.crud.AccountControl
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountSubtypeController;
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountingEntryFormController;
 import com.nutrehogar.sistemacontable.ui.view.DashboardView;
+import com.nutrehogar.sistemacontable.ui.view.business.BusinessView;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -57,6 +58,9 @@ public class DashboardController extends Controller {
         getPnlContent().add(p, BorderLayout.CENTER);
         getPnlContent().revalidate();
         getPnlContent().repaint();
+        if (p instanceof BusinessView view){
+            view.getBtnFilter().doClick();
+        }
     }
 
     @Override

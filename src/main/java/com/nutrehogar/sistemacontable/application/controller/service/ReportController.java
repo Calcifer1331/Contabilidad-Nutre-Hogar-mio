@@ -1,7 +1,6 @@
 package com.nutrehogar.sistemacontable.application.controller.service;
 
 import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
-import com.nutrehogar.sistemacontable.application.config.Constants;
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.application.dto.LedgerRecordDTO;
 import com.nutrehogar.sistemacontable.exception.ReportException;

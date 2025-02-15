@@ -1,6 +1,5 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
-import com.nutrehogar.sistemacontable.application.config.Constants;
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
 import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
@@ -125,7 +124,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
                     entry.getDate(),
                     entry.getName(),
                     entry.getConcept(),
-                    "19,888.9",
+                    tblDataList.getLast().getDebit(),
                     tblDataList));
         }, () -> {
 

@@ -117,7 +117,7 @@ public class AccountController extends CRUDController<Account, Integer> {
         try {
             id = Integer.parseInt(getTxtAccountId().getText());
         } catch (NumberFormatException e) {
-            showMessage("El Codigo tiene que ser un numero.");
+            showMessage("El Código tiene que ser un numero.");
             return null;
         }
         if (cbxModelAccountType.getSelectedItem() == null || cbxModelSubtype.getSelectedItem() == null || getTxtAccountName().getText().isBlank()) {
@@ -135,7 +135,7 @@ public class AccountController extends CRUDController<Account, Integer> {
         }
 
         if (getRepository().existsById(account.getId())) {
-            showMessage("Ya existe una cuenta con el codigo: " + account.getId());
+            showMessage("Ya existe una cuenta con el Código: " + account.getId());
             return null;
         }
 

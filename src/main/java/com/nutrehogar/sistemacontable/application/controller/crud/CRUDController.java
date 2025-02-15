@@ -63,8 +63,8 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
         } catch (RepositoryException e) {
             String fullMessage = switch (e.getCause()) {
                 case IllegalArgumentException c -> "Los datos no son validos";
-                case ObjectDeletedException c -> "No se puede editar un cuenta eliminado";
-                case ConstraintViolationException c -> "Operacion no valido";
+                case ObjectDeletedException c -> "No se puede editar una cuenta eliminada";
+                case ConstraintViolationException c -> "Operación no valido";
                 case null, default -> e.getMessage();
             };
             showError("Error al guardar: " + fullMessage);

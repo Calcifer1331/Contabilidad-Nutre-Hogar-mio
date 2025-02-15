@@ -116,12 +116,12 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         btnAdd.setText("Crear");
 
         lblAdd.setLabelFor(btnAdd);
-        lblAdd.setText("<html><p>Prepara el formulario para agregar un nuevo registro </p></html>");
+        lblAdd.setText("<html><p>Agregar un nuevo registro </p></html>");
         lblAdd.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblAdd.setPreferredSize(new java.awt.Dimension(250, 40));
 
         lblEdit.setLabelFor(btnEdit);
-        lblEdit.setText("<html><p>Prepara el formulario para editar el registro seleccionado</p></html>");
+        lblEdit.setText("<html><p>Editar el registro seleccionado</p></html>");
         lblEdit.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblEdit.setPreferredSize(new java.awt.Dimension(250, 40));
 
@@ -223,7 +223,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         lblRecordType.setText("Tipo de Registro:");
 
         bgRecordType.add(rbtRecordDebit);
-        rbtRecordDebit.setText("Debíto");
+        rbtRecordDebit.setText("Débito");
 
         bgRecordType.add(rbtRecordCredit);
         rbtRecordCredit.setText("Crédito");

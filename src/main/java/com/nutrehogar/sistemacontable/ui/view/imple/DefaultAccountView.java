@@ -84,12 +84,12 @@ public class DefaultAccountView extends AccountView {
         btnAdd.setText("Crear");
 
         lblAdd.setLabelFor(btnAdd);
-        lblAdd.setText("<html><p>Prepara el formulario para crear una nueva cuenta</p></html>");
+        lblAdd.setText("<html><p>Crear una nueva cuenta</p></html>");
         lblAdd.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblAdd.setPreferredSize(new java.awt.Dimension(250, 40));
 
         lblEdit.setLabelFor(btnEdit);
-        lblEdit.setText("<html><p>Prepara el formulario para editar la cuenta seleccionada</p></html>");
+        lblEdit.setText("<html><p>Editar la cuenta seleccionada</p></html>");
         lblEdit.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         lblEdit.setPreferredSize(new java.awt.Dimension(250, 40));
 

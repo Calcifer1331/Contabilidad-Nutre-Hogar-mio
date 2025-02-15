@@ -146,7 +146,7 @@
                 </Component>
                 <Component class="com.nutrehogar.sistemacontable.ui.JComponents.impl.DefaultPanelButton" name="btnShowTrialBalanceView">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Balance de Comprobacion"/>
+                    <Property name="text" type="java.lang.String" value="Balance de Comprobaci&#xf3;n"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI Semibold" size="18" style="1"/>
                     </Property>
