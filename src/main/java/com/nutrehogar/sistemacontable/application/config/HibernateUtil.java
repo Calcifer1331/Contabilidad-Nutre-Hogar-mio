@@ -39,7 +39,7 @@ public class HibernateUtil {
             // Cargar la configuración de hibernate.cfg.xml
             Configuration configuration = new Configuration().configure();
 
-            configuration.setProperty("hibernate.connection.url", "jdbc:sqlite:" + ConfigLoader.getDbPath());
+            configuration.setProperty("hibernate.connection.url", "jdbc:sqlite:" + ConfigLoader.Props.DB_NAME.getPath().toString());
 
             return configuration.buildSessionFactory();
         } catch (Exception e) {

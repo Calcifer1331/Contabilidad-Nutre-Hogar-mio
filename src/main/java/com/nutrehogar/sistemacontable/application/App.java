@@ -24,7 +24,6 @@ import com.nutrehogar.sistemacontable.domain.model.LedgerRecord;
 import com.nutrehogar.sistemacontable.domain.repository.GeneralLedgerRepositoryImpl;
 import com.nutrehogar.sistemacontable.domain.repository.JournalRepositoryImpl;
 import com.nutrehogar.sistemacontable.domain.repository.TrialBalanceRepositoryImpl;
-import com.nutrehogar.sistemacontable.ui.JComponents.SplashScreen;
 import com.nutrehogar.sistemacontable.ui.view.BackupView;
 import com.nutrehogar.sistemacontable.ui.view.business.GeneralLedgerView;
 import com.nutrehogar.sistemacontable.ui.view.business.JournalView;
@@ -35,7 +34,6 @@ import com.nutrehogar.sistemacontable.ui.view.crud.AccountingEntryFormView;
 import com.nutrehogar.sistemacontable.ui.view.imple.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
-import org.slf4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;

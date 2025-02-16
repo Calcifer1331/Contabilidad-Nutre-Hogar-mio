@@ -25,7 +25,6 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.text.AbstractDocument;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;

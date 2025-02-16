@@ -2,7 +2,6 @@ package com.nutrehogar.sistemacontable.application.controller.service;
 
 import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
-import com.nutrehogar.sistemacontable.application.dto.LedgerRecordDTO;
 import com.nutrehogar.sistemacontable.exception.ReportException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,30 +13,25 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.io.*;
-import java.time.LocalDate;
+import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.List;
 
-import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.getPaymentVoucherPath;
-import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.getRegistrationFormPath;
 
 
 @Slf4j
 public class ReportController {
-    public static final Locale LOCALE =  Locale.of("es", "PA");
+    public static final Locale LOCALE = Locale.of("es", "PA");
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy", LOCALE);
     public static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd", LOCALE);
     private static final String TEMPLATE_PATH = "/template/";
-    private String IMG_DIR;
+    private final String IMG_DIR;
     private final Map<String, Object> parameters;
 
     public ReportController() {
         parameters = new HashMap<>();
-//        IMG_DIR = Objects.requireNonNull(ReportController.class.getResource(TEMPLATE_PATH + "img/"), TEMPLATE_PATH + "img/" + " directory not found").getPath();
-        IMG_DIR = ConfigLoader.getReportsTemplateImgPath();
+        IMG_DIR = ConfigLoader.Props.DIR_REPORTS_TEMPLATE_NAME.getPath().toString() + File.separator;
         log.info(IMG_DIR);
         initialize();
     }
@@ -51,29 +45,24 @@ public class ReportController {
     }
 
     public void generateReport(@NotNull ReportType reportType, JournalEntryDTO journal) throws ReportException {
-        var templateName = reportType.getTemplateName();
         Map<String, Object> params = new HashMap<>(this.parameters);
-
         reportType.setProps(params, journal);
-
         params.put("TABLE_DATA_SOURCE", new JRBeanCollectionDataSource(journal.ledgerRecords()));
 
-//        log.info("templateStream {}", ReportController.class.getResource(TEMPLATE_PATH + templateName));
-        InputStream templateStream = ReportController.class.getResourceAsStream(TEMPLATE_PATH + templateName);
+        InputStream templateStream = ReportController.class.getResourceAsStream(TEMPLATE_PATH + reportType.getTemplateName());
+
         if (templateStream == null) {
             log.error("templateStream is null");
-            throw new ReportException("Failed to load file " + TEMPLATE_PATH + templateName);
+            throw new ReportException("Failed to load file " + TEMPLATE_PATH + reportType.getTemplateName());
         }
-        log.info("templateName {}", templateName);
+
+        log.info("templateName {}", reportType.getTemplateName());
         log.info("templateStream {}", templateStream);
 
         JasperReport reportTemplate;
 
         try {
-//            JasperDesign jasperDesign = JRXmlLoader.load(templateStream);
-//            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
             reportTemplate = JasperCompileManager.compileReport(templateStream);
-//            reportTemplate = (JasperReport) JRLoader.loadObject(templateStream);
         } catch (Throwable e) {
             log.error(e.getMessage());
             throw new ReportException("Error compiling report: " + e.getMessage(), e);
@@ -86,9 +75,13 @@ public class ReportController {
         try {
             log.info("checkedStream {}", templateStream);
             log.info("params {}", params);
+
             JasperPrint print = JasperFillManager.fillReport(reportTemplate, params, new JREmptyDataSource());
+
             log.info("Report generated successfully {}", print.getName());
+
             JasperExportManager.exportReportToPdfFile(print, getDirReportPath(reportType, journal));
+
         } catch (Throwable e) {
             log.error(e.getMessage(), e);
             throw new ReportException(e.getMessage(), e);
@@ -109,7 +102,7 @@ public class ReportController {
         PAYMENT_VOUCHER(
                 "Comprobante de Pago",
                 "PaymentVoucher.jrxml",
-                getPaymentVoucherPath()
+                ConfigLoader.Props.DIR_PAYMENT_VOUCHER_NAME.getPath()
         ) {
             @Override
             protected void setProps(Map<String, Object> parameters, JournalEntryDTO journal) {
@@ -122,7 +115,7 @@ public class ReportController {
         }, REGISTRATION_FORM(
                 "Formulario de Registro",
                 "RegistrationForm.jrxml",
-                getRegistrationFormPath()
+                ConfigLoader.Props.DIR_REGISTRATION_FORM_NAME.getPath()
         ) {
             @Override
             protected void setProps(Map<String, Object> parameters, JournalEntryDTO journal) {
@@ -136,7 +129,7 @@ public class ReportController {
 
         String name;
         String templateName;
-        String dirPath;
+        Path dirPath;
 
         protected abstract void setProps(Map<String, Object> parameters, JournalEntryDTO journal);
     }

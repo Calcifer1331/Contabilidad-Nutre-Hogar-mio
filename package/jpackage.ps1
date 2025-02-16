@@ -1,6 +1,6 @@
 jpackage `
 --input .\..\target\lib `
---name SistemaContable `
+--name Sistema Contable `
 --main-jar SistemaContable-1.8.4.jar `
 --main-class com.nutrehogar.sistemacontable.application.MainClass `
 --type exe `
@@ -13,5 +13,4 @@ jpackage `
 --win-menu `
 --win-dir-chooser `
 --runtime-image "C:\Users\Calci\.jdks\corretto-21.0.6" `
---install-dir C:\Users\SistemaContable `
---resource-dir D:\projects\Java\Contabilidad-Nutre-Hogar-mio\package\resource
+--resource-dir .\resource

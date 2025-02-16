@@ -49,7 +49,6 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
         var accountSubtype = cbxModelSubtype.getSelectedItem();
         assert accountSubtype != null;
         List<Account> list = accountSubtype.getAccounts();
-        System.out.println("loadDataAccount: " + list.size());
         cbxModelAccount.setData(list);
     }
 
@@ -66,17 +65,12 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
     protected void loadData() {
         var entity = cbxModelAccount.getSelectedItem();
         if (entity == null) {
-            System.out.println("No account selected");
             return;
         }
         Integer id = entity.getId();
         if (id == null) {
-            System.out.println("No id selected");
             return;
         }
-
-        System.out.println("id: " + id);
-
         getData().clear();
 
         var list = getRepository().find(

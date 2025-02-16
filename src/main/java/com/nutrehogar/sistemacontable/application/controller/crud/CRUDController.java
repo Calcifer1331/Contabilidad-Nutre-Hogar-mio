@@ -77,8 +77,7 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
             prepareToAdd();
             return;
         }
-        var response = JOptionPane.showConfirmDialog(
-                (Component) getView(),
+        var response = JOptionPane.showConfirmDialog(getView(),
                 "Desea eliminar? El cambio sera permanente.",
                 "Elimination",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);

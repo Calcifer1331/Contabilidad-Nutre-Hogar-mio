@@ -1,6 +1,7 @@
 package com.nutrehogar.sistemacontable.application.controller.service;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
 import com.nutrehogar.sistemacontable.application.controller.Controller;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
 import com.nutrehogar.sistemacontable.ui.view.BackupView;
@@ -29,14 +30,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.nutrehogar.sistemacontable.application.config.ConfigLoader.getBackupPath;
 
 @Getter
 @Setter
 @Slf4j
 public class BackupController extends Controller {
     private static final FlatSVGIcon ICON = new FlatSVGIcon("svgs/backup.svg");
-
     public static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
     public static final SimpleDateFormat TABLE_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     private List<Path> data = new ArrayList<>();
@@ -63,7 +62,7 @@ public class BackupController extends Controller {
     }
 
     protected void loadData() {
-        try (var stream = Files.list(Paths.get(getBackupPath()))) {
+        try (var stream = Files.list(ConfigLoader.Props.DIR_BACKUP_NAME.getPath())) {
             data = stream
                     .filter(Files::isRegularFile)
                     .sorted((p1, p2) -> {
@@ -214,7 +213,7 @@ public class BackupController extends Controller {
     }
 
     private @NotNull String createFilePathForBackup(String fileName) {
-        return getBackupPath() + File.separator + fileName + ".sqlite";
+        return ConfigLoader.Props.DIR_BACKUP_NAME.getPath().toString() + File.separator + fileName + ".sqlite";
     }
 
     private @NotNull String createNameByDate() {

@@ -18,7 +18,8 @@ import java.util.Properties;
 public class MainClass {
 
     public static void main(String[] args) {
-        System.setProperty("LOG_DIR", ConfigLoader.getLogsPath());
+        ConfigLoader.createDirectories();
+        System.setProperty("LOG_DIR", ConfigLoader.Props.DIR_LOG_NAME.getPath().toString());
         Logger log = LoggerFactory.getLogger(MainClass.class);
         System.setProperty("flatlaf.animation", "true");
         System.setProperty("flatlaf.menuBarEmbedded", "true");
