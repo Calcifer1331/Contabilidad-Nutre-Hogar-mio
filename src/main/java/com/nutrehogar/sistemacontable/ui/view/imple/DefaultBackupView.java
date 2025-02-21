@@ -4,7 +4,7 @@
  */
 package com.nutrehogar.sistemacontable.ui.view.imple;
 
-import com.nutrehogar.sistemacontable.ui.view.BackupView;
+import com.nutrehogar.sistemacontable.ui.view.service.BackupView;
 import lombok.Getter;
 
 import javax.swing.*;

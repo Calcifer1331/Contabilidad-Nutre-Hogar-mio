@@ -47,9 +47,9 @@ public class CRUDRepositoryFactory {
             @NotNull Class<T> entityClass,
             @NotNull Session session) throws NullPointerException {
 
-        Objects.requireNonNull(repositoryInterface, "La interfaz del repositorio no puede ser nula.");
-        Objects.requireNonNull(entityClass, "La clase de la entidad no puede ser nula.");
-        Objects.requireNonNull(session, "La sesión no puede ser nula.");
+//        Objects.requireNonNull(repositoryInterface, "La interfaz del repositorio no puede ser nula.");
+//        Objects.requireNonNull(entityClass, "La clase de la entidad no puede ser nula.");
+//        Objects.requireNonNull(session, "La sesión no puede ser nula.");
 
         // Crear una instancia de la implementación específica si es necesario
         Object repositoryImpl;

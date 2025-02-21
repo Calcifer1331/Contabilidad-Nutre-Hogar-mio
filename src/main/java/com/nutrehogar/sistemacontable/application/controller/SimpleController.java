@@ -2,10 +2,12 @@ package com.nutrehogar.sistemacontable.application.controller;
 
 
 import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
+import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
 import com.nutrehogar.sistemacontable.ui.view.SimpleView;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -15,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Getter
 @Setter
 public abstract class SimpleController<T> extends Controller {
@@ -49,6 +52,11 @@ public abstract class SimpleController<T> extends Controller {
             public void mousePressed(MouseEvent e) {
                 setElementSelected(e);
             }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                setToolTipText(e);
+            }
         });
     }
 
@@ -57,6 +65,27 @@ public abstract class SimpleController<T> extends Controller {
     }
 
     protected abstract void setElementSelected(@NotNull MouseEvent e);
+
+
+
+    protected void setToolTipText(@NotNull MouseEvent e) {
+//        int row = getTblData().rowAtPoint(e.getPoint());
+//        log.info("setToolTipText: row={}, pos={}", row, e.getPoint());
+//        if (row != -1) {
+//            int selectedRow = getTblData().getSelectedRow();
+//            if (selectedRow < 0) {
+//                return;
+//            }
+//            log.info("setToolTipText: selectedRow={}", selectedRow);
+//            if (getData().get(selectedRow) instanceof AuditableEntity entity) {
+//                String tooltip = "<html>Creado por: " + entity.getCreatedBy() + "<br>" +
+//                        "Fecha creación: " + entity.getCreatedAt() + "<br>" +
+//                        "Actualizado por: " + entity.getUpdatedBy() + "<br>" +
+//                        "Fecha actualización: " + entity.getUpdatedAt() + "</html>";
+//                getTblData().setToolTipText(tooltip);
+//            }
+//        }
+    }
 
     @Override
     public SimpleView getView() {
@@ -70,5 +99,7 @@ public abstract class SimpleController<T> extends Controller {
     public JButton getBtnEdit() {
         return getView().getBtnEdit();
     }
+
+
 
 }

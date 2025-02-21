@@ -1,25 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.nutrehogar.sistemacontable.ui.view.imple;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.nutrehogar.sistemacontable.ui.ThemeConfig;
+import com.nutrehogar.sistemacontable.ui.view.service.DashboardView;
 import lombok.Getter;
 
-/**
- * @author Calci
- */
 @Getter
-public class DefaultDashboardView extends PanelDashboardView {
-    private final int ICON_SIZE = 50;
+public class DefaultDashboardView extends DashboardView {
 
-    /**
-     * Creates new form DefaultDashboardView
-     */
     public DefaultDashboardView() {
         initComponents();
-        btnHome.setIcon(new FlatSVGIcon("svgs/home.svg", 40, 40));
+    btnHome.setIcon(new FlatSVGIcon("svgs/home.svg", ThemeConfig.ICON_MD, ThemeConfig.ICON_MD));
         btnShowFormView.setIcon(getIcon("svgs/form.svg"));
         btnShowJournalView.setIcon(getIcon("svgs/journal.svg"));
         btnShowTrialBalanceView.setIcon(getIcon("svgs/trial_balance.svg"));
@@ -30,7 +21,7 @@ public class DefaultDashboardView extends PanelDashboardView {
     }
 
     private FlatSVGIcon getIcon(String iconName) {
-        return new FlatSVGIcon(iconName, ICON_SIZE, ICON_SIZE);
+        return new FlatSVGIcon(iconName, ThemeConfig.ICON_LG, ThemeConfig.ICON_LG);
     }
 
     /**
@@ -64,22 +55,16 @@ public class DefaultDashboardView extends PanelDashboardView {
         pnlGroupBtn.setOpaque(false);
 
         btnShowFormView.setText("Formulario");
-        btnShowFormView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
         btnShowAccountView.setText("Cuentas");
-        btnShowAccountView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
         btnShowTrialBalanceView.setText("Balance de Comprobación");
-        btnShowTrialBalanceView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
         btnShowAccountSubtypeView.setText("SubtipoCuentas");
-        btnShowAccountSubtypeView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
         btnShowGeneralLedgerView.setText("Mayor General");
-        btnShowGeneralLedgerView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
         btnShowJournalView.setText("Libro Diario");
-        btnShowJournalView.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout pnlGroupBtnLayout = new javax.swing.GroupLayout(pnlGroupBtn);
         pnlGroupBtn.setLayout(pnlGroupBtnLayout);
@@ -101,18 +86,18 @@ public class DefaultDashboardView extends PanelDashboardView {
             .addGroup(pnlGroupBtnLayout.createSequentialGroup()
                 .addGroup(pnlGroupBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlGroupBtnLayout.createSequentialGroup()
-                        .addComponent(btnShowFormView, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                        .addComponent(btnShowFormView, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnShowTrialBalanceView, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                        .addComponent(btnShowTrialBalanceView, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnShowAccountView, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                        .addComponent(btnShowAccountView, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
                     .addGroup(pnlGroupBtnLayout.createSequentialGroup()
                         .addComponent(btnShowJournalView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnShowGeneralLedgerView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnShowAccountSubtypeView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
@@ -136,11 +121,17 @@ public class DefaultDashboardView extends PanelDashboardView {
         pnlContent.setLayout(pnlContentLayout);
         pnlContentLayout.setHorizontalGroup(
             pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlContentLayout.setVerticalGroup(
             pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pnlNav.setOpaque(false);

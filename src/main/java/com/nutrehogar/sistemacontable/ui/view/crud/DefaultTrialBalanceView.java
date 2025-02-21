@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.nutrehogar.sistemacontable.ui.view.imple;
+package com.nutrehogar.sistemacontable.ui.view.crud;
 
 import com.nutrehogar.sistemacontable.ui.view.business.TrialBalanceView;
 import lombok.Getter;

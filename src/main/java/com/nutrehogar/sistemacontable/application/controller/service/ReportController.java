@@ -89,7 +89,7 @@ public class ReportController {
     }
 
     private @NotNull String getDirReportPath(@NotNull ReportType reportType, @NotNull JournalEntryDTO journal) {
-        String fileName = String.format("%s_%s_%s.pdf", reportType.getName(), journal.id(), journal.date().format(FILE_DATE_FORMATTER));
+        String fileName = String.format("%s#%s_%s.pdf", reportType.getName(), journal.id(), journal.date().format(FILE_DATE_FORMATTER));
         log.info("filename {}", fileName);
         log.info("file path {}", reportType.getDirPath() + File.separator + fileName);
         return reportType.getDirPath() + File.separator + fileName;

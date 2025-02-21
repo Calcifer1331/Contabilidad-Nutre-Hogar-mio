@@ -116,18 +116,14 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     private @Nullable JournalEntryDTO getJournalEntryDTO() {
         AtomicReference<JournalEntryDTO> journalEntryDTO = new AtomicReference<>();
-        journalEntry.ifPresentOrElse(entry -> {
-            journalEntryDTO.set(new JournalEntryDTO(
-                    entry.getId(),
-                    entry.getCheckNumber(),
-                    entry.getDate(),
-                    entry.getName(),
-                    entry.getConcept(),
-                    tblDataList.getLast().getDebit(),
-                    tblDataList));
-        }, () -> {
-
-        });
+        journalEntry.ifPresentOrElse(entry -> journalEntryDTO.set(new JournalEntryDTO(
+                entry.getId(),
+                entry.getCheckNumber(),
+                entry.getDate(),
+                entry.getName(),
+                entry.getConcept(),
+                tblDataList.getLast().getDebit(),
+                tblDataList)), () -> log.error("getJournalEntryDTO() error"));
         return journalEntryDTO.get();
     }
 
@@ -158,7 +154,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     private void saveRecord() {
         if (journalEntry.isEmpty()) {
-            showError("La Entrada esta vacia.");
+            showError("La Entrada esta vaciá.");
             return;
         }
         var record = getLedgerRecordByForm(new LedgerRecord());
@@ -171,19 +167,19 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     private Optional<LedgerRecord> getLedgerRecordByForm(LedgerRecord lr) {
         if (journalEntry.isEmpty()) {
-            showError("La Entrada esta vacia.");
+            showError("La Entrada esta vaciá.");
             return Optional.empty();
         }
         Optional<Account> account = Optional.ofNullable(cbxModelAccount.getSelectedItem());
         if (account.isEmpty()) {
-            showError("la Cuenta esta vacia.");
+            showError("la Cuenta esta vaciá.");
             return Optional.empty();
         }
         BigDecimal amount;
         try {
             amount = new BigDecimal(getTxtRecordAmount().getText()).setScale(2, RoundingMode.HALF_UP);
         } catch (NumberFormatException e) {
-            showMessage("El monto debe ser un numero y no puede estar vacio.");
+            showMessage("El monto debe ser un numero y no puede estar vació.");
             return Optional.empty();
         }
         if (lr == null) lr = new LedgerRecord();
@@ -208,7 +204,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     private @NotNull Optional<JournalEntry> getJournalEntryByForm(@NotNull JournalEntry je) {
         String name = getTxtEntryName().getText();
         if (name.isEmpty()) {
-            showMessage("El nombre de la Entrada no puede esta vacia.");
+            showMessage("El nombre de la Entrada no puede esta vaciá.");
             return Optional.empty();
         }
         if (getData().isEmpty()) {
@@ -343,7 +339,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             String fullMessage = switch (e.getCause()) {
                 case EntityExistsException c -> "Ya existe esa Cuenta";
                 case IllegalArgumentException c -> "Los datos no puede ser nulo";
-                case ConstraintViolationException c -> "Codigo de cuenta duplicado";
+                case ConstraintViolationException c -> "Código de cuenta duplicado";
                 case null, default -> e.getMessage();
             };
             showError("Error al guardar: " + fullMessage);
@@ -468,7 +464,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     }
 
     private void calcBalance() {
-        var balance = BigDecimal.ZERO;
         var debitSum = BigDecimal.ZERO;
         var creditSum = BigDecimal.ZERO;
 
@@ -480,7 +475,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         for (LedgerRecord record : getData()) {
             debitSum = debitSum.add(record.getDebit(), MathContext.DECIMAL128);
             creditSum = creditSum.add(record.getCredit(), MathContext.DECIMAL128);
-            balance = creditSum.subtract(debitSum, MathContext.DECIMAL128);
             tblDataList.add(new LedgerRecordDTO(record.getDocumentType().getName(), record.getVoucher(), Account.getCellRenderer(record.getAccount().getId()), record.getReference(), record.getDebit().toString(), record.getCredit().toString()));
         }
         tblDataList.add(new LedgerRecordDTO("", "", "TOTAL", "", debitSum.toString(), creditSum.toString()));

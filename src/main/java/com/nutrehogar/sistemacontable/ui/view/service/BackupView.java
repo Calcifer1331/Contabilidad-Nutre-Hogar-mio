@@ -1,4 +1,6 @@
-package com.nutrehogar.sistemacontable.ui.view;
+package com.nutrehogar.sistemacontable.ui.view.service;
+
+import com.nutrehogar.sistemacontable.ui.view.SimpleView;
 
 import javax.swing.*;
 

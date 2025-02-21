@@ -5,9 +5,13 @@
         <property name="hibernate.connection.url">jdbc:sqlite:sistemacontable.db</property>
         <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
 
+<!--        <property name="hibernate.cache.use_second_level_cache">true</property>-->
+<!--        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory-->
+<!--        </property>-->
+
         <!-- log SQL -->
-<!--        <property name="hibernate.show_sql">true</property>-->
-<!--        <property name="hibernate.format_sql">true</property>-->
+        <!--        <property name="hibernate.show_sql">true</property>-->
+        <!--        <property name="hibernate.format_sql">true</property>-->
 
         <!-- Configuración del esquema -->
         <property name="hibernate.hbm2ddl.auto">update</property>
@@ -19,5 +23,6 @@
         <mapping class="com.nutrehogar.sistemacontable.domain.model.AccountSubtype"/>
         <mapping class="com.nutrehogar.sistemacontable.domain.AccountType"/>
         <mapping class="com.nutrehogar.sistemacontable.domain.DocumentType"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.model.User"/>
     </session-factory>
 </hibernate-configuration>

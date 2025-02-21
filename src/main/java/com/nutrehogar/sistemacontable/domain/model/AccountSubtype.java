@@ -15,10 +15,10 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString(exclude = "accounts")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "account_subtype")
-public class AccountSubtype {
+public class AccountSubtype extends AuditableEntity{
     public static final int MAX_ID_LENGTH = 4;
     public static final int MAX_CANONICAL_ID_LENGTH = 3;
     @Id

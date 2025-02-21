@@ -3,6 +3,7 @@ package com.nutrehogar.sistemacontable.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.apache.batik.dom.AbstractEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @ToString(exclude = "ledgerRecords")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "journal_entry")
-public class JournalEntry {
+public class JournalEntry extends AuditableEntity {
     @Id
     @Column(name = "id")
     Integer id;

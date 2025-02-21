@@ -2,9 +2,11 @@ package com.nutrehogar.sistemacontable.application.controller.crud;
 
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
 import com.nutrehogar.sistemacontable.application.repository.crud.CRUDRepository;
+import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.ui.view.crud.CRUDView;
 import jakarta.persistence.EntityExistsException;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectDeletedException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.jetbrains.annotations.NotNull;
@@ -13,16 +15,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-
+@Slf4j
 public abstract class CRUDController<T, ID> extends SimpleController<T> {
     public CRUDController(CRUDRepository<T, ID> repository, CRUDView view) {
         super(repository, view);
+        initPopupMenu();
     }
 
     @Override
     protected void loadData() {
         setData(getRepository().findAll());
         super.loadData();
+    }
+
+    private final JPopupMenu popupMenu = new JPopupMenu();
+    private final JMenuItem detailsItem = new JMenuItem("Ver detalles de auditoría");
+
+    private void initPopupMenu() {
+        detailsItem.addActionListener(evt -> showAuditDetails());
+        popupMenu.add(detailsItem);
+    }
+
+
+    private void showAuditDetails() {
+        if (getSelected() != null && getSelected() instanceof AuditableEntity e) {
+            String message = "📌 Creado por: " + e.getCreatedBy() + "\n" +
+                    "🕒 Fecha creación: " + e.getCreatedAt() + "\n" +
+                    "✏️ Actualizado por: " + e.getUpdatedBy() + "\n" +
+                    "🕒 Fecha actualización: " + e.getUpdatedAt();
+            JOptionPane.showMessageDialog(getView(), message, "Detalles de Auditoría", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @Override
@@ -118,6 +140,7 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
                 return;
             }
             setSelected(getData().get(selectedRow));
+            popupMenu.show(getTblData(), e.getX(), e.getY());
         }
     }
 

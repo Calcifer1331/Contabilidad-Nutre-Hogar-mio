@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString(exclude = "journalEntry")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "ledger_record")
-public class LedgerRecord {
+public class LedgerRecord extends AuditableEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
