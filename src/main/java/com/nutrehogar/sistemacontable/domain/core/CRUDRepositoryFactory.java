@@ -2,7 +2,9 @@ package com.nutrehogar.sistemacontable.domain.core;
 
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.CRUDRepository;
+import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.repository.AccountSubtypeRepositoryImpl;
+import com.nutrehogar.sistemacontable.domain.repository.JournalEntryRepositoryImpl;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
@@ -55,6 +57,8 @@ public class CRUDRepositoryFactory {
         Object repositoryImpl;
         if (repositoryInterface == AccountSubtypeRepository.class) {
             repositoryImpl = new AccountSubtypeRepositoryImpl(session);
+        } else if (repositoryInterface == JournalEntryRepository.class) {
+            repositoryImpl = new JournalEntryRepositoryImpl(session);
         } else {
             repositoryImpl = new CRUDRepositoryImpl<>(entityClass, session);
         }

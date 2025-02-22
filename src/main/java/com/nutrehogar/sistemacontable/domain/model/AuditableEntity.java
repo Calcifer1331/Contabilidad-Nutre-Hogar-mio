@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public abstract class AuditableEntity {
 
     @Transient
-    User user;
+    public User user;
 
     @Column(name = "created_by", updatable = false)
     String createdBy;
@@ -46,6 +46,6 @@ public abstract class AuditableEntity {
     }
 
     private String getUsername() {
-        return user.getFirstName() == null ? "no hay usuario!" : user.getFirstName();
+        return user.getUsername() == null ? "no hay usuario!" : user.getUsername();
     }
 }

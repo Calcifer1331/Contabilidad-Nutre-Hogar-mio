@@ -4,6 +4,7 @@
  */
 package com.nutrehogar.sistemacontable.ui.view.imple;
 
+import com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel;
 import com.nutrehogar.sistemacontable.ui.view.service.BackupView;
 import lombok.Getter;
 
@@ -173,6 +174,11 @@ public class DefaultBackupView extends BackupView {
 
     @Override
     public JButton getBtnEdit() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public AuditablePanel getAuditablePanel() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

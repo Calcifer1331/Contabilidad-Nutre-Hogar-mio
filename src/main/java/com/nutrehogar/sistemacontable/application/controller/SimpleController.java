@@ -1,8 +1,10 @@
 package com.nutrehogar.sistemacontable.application.controller;
 
 
+import com.nutrehogar.sistemacontable.application.controller.service.BackupController;
 import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
 import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
+import com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
 import com.nutrehogar.sistemacontable.ui.view.SimpleView;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +55,6 @@ public abstract class SimpleController<T> extends Controller {
             public void mousePressed(MouseEvent e) {
                 setElementSelected(e);
             }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                setToolTipText(e);
-            }
         });
     }
 
@@ -66,25 +64,17 @@ public abstract class SimpleController<T> extends Controller {
 
     protected abstract void setElementSelected(@NotNull MouseEvent e);
 
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
 
-
-    protected void setToolTipText(@NotNull MouseEvent e) {
-//        int row = getTblData().rowAtPoint(e.getPoint());
-//        log.info("setToolTipText: row={}, pos={}", row, e.getPoint());
-//        if (row != -1) {
-//            int selectedRow = getTblData().getSelectedRow();
-//            if (selectedRow < 0) {
-//                return;
-//            }
-//            log.info("setToolTipText: selectedRow={}", selectedRow);
-//            if (getData().get(selectedRow) instanceof AuditableEntity entity) {
-//                String tooltip = "<html>Creado por: " + entity.getCreatedBy() + "<br>" +
-//                        "Fecha creación: " + entity.getCreatedAt() + "<br>" +
-//                        "Actualizado por: " + entity.getUpdatedBy() + "<br>" +
-//                        "Fecha actualización: " + entity.getUpdatedAt() + "</html>";
-//                getTblData().setToolTipText(tooltip);
-//            }
-//        }
+    protected <K extends AuditableEntity> void setAuditoria(K auditoria) {
+        SwingUtilities.invokeLater(() -> {
+            getAuditablePanel().getLblCreateAt().setText(auditoria.getCreatedAt() == null ? "" : auditoria.getCreatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblCreateBy().setText(auditoria.getCreatedBy() == null ? "" : auditoria.getCreatedBy());
+            getAuditablePanel().getLblUpdateAt().setText(auditoria.getUpdatedAt() == null ? "" : auditoria.getUpdatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblUpdateBy().setText(auditoria.getUpdatedBy() == null ? "" : auditoria.getUpdatedBy());
+            getAuditablePanel().revalidate();
+            getAuditablePanel().repaint();
+        });
     }
 
     @Override
@@ -100,6 +90,7 @@ public abstract class SimpleController<T> extends Controller {
         return getView().getBtnEdit();
     }
 
-
-
+    public AuditablePanel getAuditablePanel() {
+        return getView().getAuditablePanel();
+    }
 }

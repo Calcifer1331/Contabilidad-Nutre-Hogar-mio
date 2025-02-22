@@ -21,7 +21,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="167" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="100" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="pnlAside" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -34,7 +34,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="pnlAside" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" alignment="1" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -86,9 +86,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="pnlOperations" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="pnlOperations" max="32767" attributes="0"/>
+                      <Component id="auditablePanel" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -97,7 +100,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="pnlOperations" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="auditablePanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -107,7 +112,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Operaciones"/>
+                <TitledBorder title="   Operaciones   "/>
               </Border>
             </Property>
             <Property name="opaque" type="boolean" value="false"/>
@@ -116,13 +121,16 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jSeparator1" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="jSeparator1" min="-2" pref="354" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblFilter" alignment="0" pref="259" max="32767" attributes="0"/>
+                                  <Component id="lblFilter" alignment="0" pref="265" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblStart" alignment="0" max="32767" attributes="0"/>
@@ -138,7 +146,7 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnResetEnd" alignment="0" pref="101" max="32767" attributes="0"/>
+                                  <Component id="btnResetEnd" alignment="0" pref="106" max="32767" attributes="0"/>
                                   <Component id="btnFilter" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnResetStart" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnEdit" alignment="0" max="32767" attributes="0"/>
@@ -188,7 +196,7 @@
                           <Component id="lblEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="3" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="cbxAccountType" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -340,6 +348,8 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel" name="auditablePanel">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

@@ -5,7 +5,6 @@ import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.ThemeConfig;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -88,7 +87,7 @@ public class UserListPanel extends JPanel {
             setMaximumSize(new Dimension(Integer.MAX_VALUE, 67)); // 🔹 Expandir en X
             setVerticalTextPosition(SwingConstants.CENTER);
             setHorizontalAlignment(SwingConstants.LEADING);
-            setText(user.getFirstName() + " " + user.getLastName());
+            setText(user.getUsername());
             setIconTextGap(ThemeConfig.Spacing.GAP_MD);
             setFont(ThemeConfig.Typography.FONT_LG);
             setForeground(user.isEnable() ? ThemeConfig.Palette.OFFICE_GREEN : ThemeConfig.Palette.PLATINUM);

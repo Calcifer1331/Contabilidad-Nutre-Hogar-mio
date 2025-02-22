@@ -21,7 +21,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="160" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="93" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="pnlAside" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -85,11 +85,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="pnlOperations" max="32767" attributes="0"/>
-                      <Component id="pnlForm" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="pnlOperations" alignment="1" max="32767" attributes="0"/>
+                      <Component id="pnlForm" alignment="1" max="32767" attributes="0"/>
+                      <Component id="auditablePanel" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -101,6 +102,8 @@
                   <Component id="pnlOperations" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="pnlForm" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="auditablePanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -433,6 +436,8 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel" name="auditablePanel">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

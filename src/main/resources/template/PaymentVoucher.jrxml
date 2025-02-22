@@ -85,34 +85,34 @@
 		<element kind="image" uuid="73afc1ad-2832-4d32-b4ff-16fbff6ff99f" x="24" y="80" width="11" height="12" hImageAlign="Center" vImageAlign="Bottom">
 			<expression><![CDATA[$P{IMG_DIR}+"email_icon.png"]]></expression>
 		</element>
-		<element kind="textField" uuid="97a87cf5-de0f-4840-be07-b701a97f0f74" x="37" y="79" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+		<element kind="textField" uuid="97a87cf5-de0f-4840-be07-b701a97f0f74" x="37" y="79" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
 			<expression><![CDATA[$P{EMAIL}]]></expression>
 		</element>
-		<element kind="textField" uuid="a610da1d-5c0d-4aa4-8c30-3e81d865d9a4" x="37" y="56" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+		<element kind="textField" uuid="a610da1d-5c0d-4aa4-8c30-3e81d865d9a4" x="37" y="56" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
 			<expression><![CDATA[$P{PHONE}]]></expression>
 		</element>
-		<element kind="textField" uuid="623e265f-2a30-449b-b117-ec766520a767" x="37" y="34" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+		<element kind="textField" uuid="623e265f-2a30-449b-b117-ec766520a767" x="37" y="34" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
 			<expression><![CDATA[$P{LOCATION}]]></expression>
 		</element>
-		<element kind="textField" uuid="a4f52453-2e63-412c-843e-6ca6301fda9c" x="37" y="13" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+		<element kind="textField" uuid="a4f52453-2e63-412c-843e-6ca6301fda9c" x="37" y="13" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
 			<expression><![CDATA[$P{MANAGER_NAME}]]></expression>
 		</element>
-		<element kind="textField" uuid="2478e073-9de6-4a8f-8068-eddcd820b9ff" x="348" y="76" width="200" height="14" forecolor="#323232" fontName="Roboto Regular" bold="false" hTextAlign="Right">
+		<element kind="textField" uuid="2478e073-9de6-4a8f-8068-eddcd820b9ff" x="347" y="69" width="200" height="14" forecolor="#323232" fontName="Roboto Regular" bold="false" hTextAlign="Right">
 			<expression><![CDATA[$P{ENTRY_DATE}]]></expression>
 		</element>
-		<element kind="textField" uuid="20f60122-16f9-496c-8fb8-24fd9ae16175" x="268" y="40" width="257" height="35" forecolor="#5CD2D6" markup="none" fontName="Roboto Black" fontSize="29.0" bold="false" hTextAlign="Right" vTextAlign="Top">
+		<element kind="textField" uuid="20f60122-16f9-496c-8fb8-24fd9ae16175" x="267" y="33" width="257" height="35" forecolor="#5CD2D6" markup="none" fontName="Roboto Black" fontSize="29.0" bold="false" hTextAlign="Right" vTextAlign="Top">
 			<paragraph lineSpacingSize="0.0"/>
 			<expression><![CDATA[$P{ENTRY_ID}]]></expression>
 		</element>
-		<element kind="staticText" uuid="b9d0e1fd-5bd5-498f-b118-f7b12d8a6edd" x="525" y="40" width="25" height="35" forecolor="#323232" fontName="Roboto Bold" fontSize="28.0" hTextAlign="Center" vTextAlign="Top">
+		<element kind="staticText" uuid="b9d0e1fd-5bd5-498f-b118-f7b12d8a6edd" x="524" y="33" width="25" height="35" forecolor="#323232" fontName="Roboto Bold" fontSize="28.0" hTextAlign="Center" vTextAlign="Top">
 			<text><![CDATA[#]]></text>
 		</element>
-		<element kind="staticText" uuid="7f5e066f-b43b-4f3d-a794-e8540c4c1c86" x="267" y="13" width="283" height="27" forecolor="#323232" fontName="Roboto Black" fontSize="21.0" hTextAlign="Right" vTextAlign="Top">
+		<element kind="staticText" uuid="7f5e066f-b43b-4f3d-a794-e8540c4c1c86" x="266" y="6" width="283" height="27" forecolor="#323232" fontName="Roboto Black" fontSize="21.0" hTextAlign="Right" vTextAlign="Top">
 			<text><![CDATA[COMPROBANTE DE PAGO]]></text>
 		</element>
 	</pageHeader>
 	<columnHeader height="74">
-		<element kind="rectangle" uuid="e07114b8-c7eb-4030-8afb-6ac14aeff137" x="22" y="4" width="10" height="66" forecolor="#5CD2D6" backcolor="#5CD2D6">
+		<element kind="rectangle" uuid="e07114b8-c7eb-4030-8afb-6ac14aeff137" x="22" y="4" width="10" height="46" forecolor="#5CD2D6" backcolor="#5CD2D6">
 			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 		</element>
 		<element kind="image" uuid="6eda5699-3ca3-4146-9c3c-4e89b271e6e6" x="362" y="17" width="187" height="33" hImageAlign="Right">
@@ -122,18 +122,18 @@
 			<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
 			<text><![CDATA[Monto:]]></text>
 		</element>
-		<element kind="textField" uuid="cfd22468-e9ea-410e-9f97-2230f3fcc622" x="40" y="20" width="259" height="50" forecolor="#323232" fontName="Roboto Regular">
+		<element kind="textField" uuid="ec08ce0d-21f9-4c52-b504-b84a4918ee73" x="429" y="17" width="115" height="33" forecolor="#FFFFFF" fontName="Roboto Black" fontSize="16.0" bold="false" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$P{ENTRY_AMOUNT}]]></expression>
+		</element>
+		<element kind="textField" uuid="bbef4c09-22f0-4a12-9742-379a4c91eb57" x="40" y="20" width="285" height="30" forecolor="#323232" fontName="Roboto Regular">
 			<expression><![CDATA[$P{ENTRY_CONCEPT}]]></expression>
 		</element>
-		<element kind="textField" uuid="e7a1a17d-4d20-4f99-82eb-e80ca0fe8ece" x="40" y="4" width="259" height="14" forecolor="#323232" fontName="Roboto Bold" evaluationTime="Column" bold="true">
+		<element kind="textField" uuid="4085eac4-6aa6-449c-a4c4-3fd39d80c382" x="40" y="4" width="259" height="14" forecolor="#323232" fontName="Roboto Bold" evaluationTime="Column" bold="true">
 			<expression><![CDATA[$P{ENTRY_NAME}]]></expression>
-		</element>
-		<element kind="textField" uuid="ec08ce0d-21f9-4c52-b504-b84a4918ee73" x="429" y="17" width="115" height="33" forecolor="#FFFFFF" fontName="Roboto Black" fontSize="12.0" bold="false" hTextAlign="Right" vTextAlign="Middle">
-			<expression><![CDATA[$P{ENTRY_AMOUNT}]]></expression>
 		</element>
 	</columnHeader>
 	<detail>
-		<band height="458" splitType="Stretch">
+		<band height="200" splitType="Stretch">
 			<element kind="component" uuid="dbe5c476-f549-40e5-8a86-7c5e57c0c061" x="237" y="26" width="312" height="60">
 				<component kind="table">
 					<datasetRun uuid="9aa619a6-7b4c-4eb4-b603-41e40419346b" subDataset="Dataset1">

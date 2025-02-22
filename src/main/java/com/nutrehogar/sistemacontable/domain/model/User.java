@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "user")
-public class User extends AuditableEntity{
+public class User extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
@@ -22,11 +22,7 @@ public class User extends AuditableEntity{
     @Column(nullable = false)
     String password;
 
-    @Column(name = "first_name")
-    String firstName;
-
-    @Column(name = "last_name")
-    String lastName;
+    String username;
 
     @Column(name = "is_enable")
     boolean isEnable;
@@ -34,4 +30,12 @@ public class User extends AuditableEntity{
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     Permissions permissions;
+
+    public boolean isAuthorized() {
+        return permissions.equals(Permissions.CREATE);
+    }
+
+    public static boolean isAuthorized(User user) {
+        return user != null && user.isAuthorized();
+    }
 }

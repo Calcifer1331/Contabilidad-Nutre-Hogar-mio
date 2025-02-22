@@ -53,7 +53,7 @@ public class App {
     private void createFrame(){
         frame = new JFrame();
         frame.setIconImage(new FlatSVGIcon("svgs/SistemaContableLogo.svg", 250, 250).getImage());
-        frame.setTitle("Sistema Contable - " + MainClass.USER.getFirstName() + " " + MainClass.USER.getLastName());
+        frame.setTitle("Sistema Contable - " + MainClass.USER.getUsername() + " " + MainClass.USER.getUsername());
         frame.setSize(1300, 600);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         log.info("Frame created");

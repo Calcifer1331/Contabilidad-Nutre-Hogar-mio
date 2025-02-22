@@ -168,7 +168,7 @@ public class LoginForm extends JDialog {
             return;
         }
         if (ping.equals(MainClass.ADMIN_PING)) {
-            user = User.builder().isEnable(true).lastName("Admin").firstName("Root").permissions(Permissions.CREATE).password(MainClass.ADMIN_PING).build();
+            user = User.builder().isEnable(true).username("Root").permissions(Permissions.CREATE).password(MainClass.ADMIN_PING).build();
             setVisible(false);
             dispose();
             return;

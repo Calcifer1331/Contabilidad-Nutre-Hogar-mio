@@ -18,12 +18,12 @@ import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static com.nutrehogar.sistemacontable.application.report.Report.DATE_FORMATTER;
 
 
 @Slf4j
 public class ReportController {
     public static final Locale LOCALE = Locale.of("es", "PA");
-    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy", LOCALE);
     public static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd", LOCALE);
     private static final String TEMPLATE_PATH = "/template/";
     private final String IMG_DIR;

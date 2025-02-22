@@ -38,7 +38,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="166" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="161" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlAside" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -103,9 +103,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="pnlOperations" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="pnlOperations" alignment="1" max="32767" attributes="0"/>
+                      <Component id="auditablePanel" alignment="0" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -114,7 +117,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="pnlOperations" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="auditablePanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -136,7 +141,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblFilter" alignment="0" pref="260" max="32767" attributes="0"/>
+                          <Component id="lblFilter" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblStart" alignment="0" max="32767" attributes="0"/>
@@ -152,10 +157,10 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnResetEnd" alignment="0" pref="101" max="32767" attributes="0"/>
+                          <Component id="btnResetEnd" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnFilter" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnResetStart" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnEdit" alignment="0" pref="101" max="32767" attributes="0"/>
+                          <Component id="btnEdit" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -262,6 +267,8 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel" name="auditablePanel">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

@@ -34,7 +34,8 @@ public class ConfigLoader {
         DIR_REPORTS_TEMPLATE_NAME(DIR_PROGRAM_NAME.path.resolve("template")),
         DIR_REPORTS_NAME(Path.of(System.getProperty("user.home"), ("Reportes"))),
         DIR_PAYMENT_VOUCHER_NAME(DIR_REPORTS_NAME.path.resolve("Comprobantes")),
-        DIR_REGISTRATION_FORM_NAME(DIR_REPORTS_NAME.path.resolve("Formularios"));
+        DIR_REGISTRATION_FORM_NAME(DIR_REPORTS_NAME.path.resolve("Formularios")),
+        DIR_JOURNAL_NAME(DIR_REPORTS_NAME.path.resolve("Libro Diario"));
 
         Path path;
 

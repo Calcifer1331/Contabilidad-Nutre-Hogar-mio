@@ -1,7 +1,9 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
+import com.nutrehogar.sistemacontable.application.MainClass;
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
 import com.nutrehogar.sistemacontable.application.repository.crud.CRUDRepository;
+import com.nutrehogar.sistemacontable.domain.Permissions;
 import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.ui.view.crud.CRUDView;
@@ -16,35 +18,22 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 @Slf4j
-public abstract class CRUDController<T, ID> extends SimpleController<T> {
+public abstract class CRUDController<T extends AuditableEntity, ID> extends SimpleController<T> {
     public CRUDController(CRUDRepository<T, ID> repository, CRUDView view) {
         super(repository, view);
-        initPopupMenu();
+    }
+
+    @Override
+    protected void initialize() {
+        getBtnAdd().setEnabled(MainClass.USER.isAuthorized());
+        getBtnSave().setEnabled(MainClass.USER.isAuthorized());
+        super.initialize();
     }
 
     @Override
     protected void loadData() {
         setData(getRepository().findAll());
         super.loadData();
-    }
-
-    private final JPopupMenu popupMenu = new JPopupMenu();
-    private final JMenuItem detailsItem = new JMenuItem("Ver detalles de auditoría");
-
-    private void initPopupMenu() {
-        detailsItem.addActionListener(evt -> showAuditDetails());
-        popupMenu.add(detailsItem);
-    }
-
-
-    private void showAuditDetails() {
-        if (getSelected() != null && getSelected() instanceof AuditableEntity e) {
-            String message = "📌 Creado por: " + e.getCreatedBy() + "\n" +
-                    "🕒 Fecha creación: " + e.getCreatedAt() + "\n" +
-                    "✏️ Actualizado por: " + e.getUpdatedBy() + "\n" +
-                    "🕒 Fecha actualización: " + e.getUpdatedAt();
-            JOptionPane.showMessageDialog(getView(), message, "Detalles de Auditoría", JOptionPane.INFORMATION_MESSAGE);
-        }
     }
 
     @Override
@@ -61,6 +50,7 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
     private void save(T entity) {
         if (entity == null) return;
         try {
+            entity.setUser(MainClass.USER);
             getRepository().save(entity);
             loadData(); // Recargar datos después de guardar
             prepareToAdd();
@@ -75,10 +65,10 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
         }
     }
 
-
     private void update(T entity) {
         if (entity == null) return;
         try {
+            getSelected().setUser(MainClass.USER);
             getRepository().update(getSelected());
             loadData(); // Recargar datos después de eliminar
             prepareToAdd();
@@ -92,7 +82,6 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
             showError("Error al guardar: " + fullMessage);
         }
     }
-
 
     private void delete(ID id) {
         if (id == null) {
@@ -120,6 +109,7 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
     }
 
     protected void select() {
+        if (!MainClass.USER.isAuthorized()) return;
         getBtnDelete().setEnabled(true);
         getBtnEdit().setEnabled(true);
     }
@@ -140,19 +130,19 @@ public abstract class CRUDController<T, ID> extends SimpleController<T> {
                 return;
             }
             setSelected(getData().get(selectedRow));
-            popupMenu.show(getTblData(), e.getX(), e.getY());
+            setAuditoria(getSelected());
         }
     }
 
     protected void prepareToEdit() {
-        getBtnUpdate().setEnabled(true);
+        getBtnUpdate().setEnabled(MainClass.USER.isAuthorized());
         getBtnSave().setEnabled(false);
     }
 
     protected void prepareToAdd() {
         deselect();
         getBtnUpdate().setEnabled(false);
-        getBtnSave().setEnabled(true);
+        getBtnSave().setEnabled(MainClass.USER.isAuthorized());
     }
 
     protected abstract ID prepareToDelete();

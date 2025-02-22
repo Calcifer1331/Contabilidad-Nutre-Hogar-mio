@@ -70,6 +70,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         lblRecordType = new javax.swing.JLabel();
         rbtRecordDebit = new javax.swing.JRadioButton();
         rbtRecordCredit = new javax.swing.JRadioButton();
+        auditablePanel = new com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel();
         pnlEntryForm = new javax.swing.JPanel();
         lblEntryName = new javax.swing.JLabel();
         txtEntryName = new javax.swing.JTextField();
@@ -319,11 +320,12 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         pnlAside.setLayout(pnlAsideLayout);
         pnlAsideLayout.setHorizontalGroup(
             pnlAsideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAsideLayout.createSequentialGroup()
+            .addGroup(pnlAsideLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlAsideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlRecordForm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlLedgerRecordOperations, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlAsideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlRecordForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlLedgerRecordOperations, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(auditablePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlAsideLayout.setVerticalGroup(
@@ -332,6 +334,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                 .addComponent(pnlLedgerRecordOperations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlRecordForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(auditablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -537,8 +541,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlAside, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(pnlAside, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -548,6 +551,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel auditablePanel;
     private javax.swing.ButtonGroup bgRecordType;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddEntry;

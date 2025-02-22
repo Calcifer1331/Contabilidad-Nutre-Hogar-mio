@@ -87,34 +87,34 @@
         <element kind="image" uuid="73afc1ad-2832-4d32-b4ff-16fbff6ff99f" x="24" y="80" width="11" height="12" hImageAlign="Center" vImageAlign="Bottom">
             <expression><![CDATA[$P{IMG_DIR}+"email_icon.png"]]></expression>
         </element>
-        <element kind="textField" uuid="97a87cf5-de0f-4840-be07-b701a97f0f74" x="37" y="79" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="97a87cf5-de0f-4840-be07-b701a97f0f74" x="37" y="79" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
             <expression><![CDATA[$P{EMAIL}]]></expression>
         </element>
-        <element kind="textField" uuid="a610da1d-5c0d-4aa4-8c30-3e81d865d9a4" x="37" y="56" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="a610da1d-5c0d-4aa4-8c30-3e81d865d9a4" x="37" y="56" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
             <expression><![CDATA[$P{PHONE}]]></expression>
         </element>
-        <element kind="textField" uuid="623e265f-2a30-449b-b117-ec766520a767" x="37" y="34" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="623e265f-2a30-449b-b117-ec766520a767" x="37" y="34" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
             <expression><![CDATA[$P{LOCATION}]]></expression>
         </element>
-        <element kind="textField" uuid="a4f52453-2e63-412c-843e-6ca6301fda9c" x="37" y="13" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="a4f52453-2e63-412c-843e-6ca6301fda9c" x="37" y="13" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
             <expression><![CDATA[$P{MANAGER_NAME}]]></expression>
         </element>
-        <element kind="textField" uuid="2478e073-9de6-4a8f-8068-eddcd820b9ff" x="348" y="76" width="200" height="14" forecolor="#323232" fontName="Roboto Regular" bold="false" hTextAlign="Right">
+        <element kind="textField" uuid="2478e073-9de6-4a8f-8068-eddcd820b9ff" x="349" y="67" width="200" height="14" forecolor="#323232" fontName="Roboto Regular" bold="false" hTextAlign="Right">
             <expression><![CDATA[$P{ENTRY_DATE}]]></expression>
         </element>
-        <element kind="textField" uuid="20f60122-16f9-496c-8fb8-24fd9ae16175" x="268" y="40" width="257" height="35" forecolor="#133E58" markup="none" fontName="Roboto Black" fontSize="29.0" bold="false" hTextAlign="Right" vTextAlign="Top">
+        <element kind="textField" uuid="20f60122-16f9-496c-8fb8-24fd9ae16175" x="269" y="31" width="257" height="35" forecolor="#133E58" markup="none" fontName="Roboto Black" fontSize="29.0" bold="false" hTextAlign="Right" vTextAlign="Top">
             <paragraph lineSpacingSize="0.0"/>
             <expression><![CDATA[$P{ENTRY_ID}]]></expression>
         </element>
-        <element kind="staticText" uuid="b9d0e1fd-5bd5-498f-b118-f7b12d8a6edd" x="525" y="40" width="25" height="35" forecolor="#323232" fontName="Roboto Bold" fontSize="28.0" hTextAlign="Center" vTextAlign="Top">
+        <element kind="staticText" uuid="b9d0e1fd-5bd5-498f-b118-f7b12d8a6edd" x="526" y="31" width="25" height="35" forecolor="#323232" fontName="Roboto Bold" fontSize="28.0" hTextAlign="Center" vTextAlign="Top">
             <text><![CDATA[#]]></text>
         </element>
-        <element kind="staticText" uuid="7f5e066f-b43b-4f3d-a794-e8540c4c1c86" x="267" y="13" width="283" height="27" forecolor="#323232" fontName="Roboto Black" fontSize="21.0" hTextAlign="Right" vTextAlign="Top">
+        <element kind="staticText" uuid="7f5e066f-b43b-4f3d-a794-e8540c4c1c86" x="268" y="4" width="283" height="27" forecolor="#323232" fontName="Roboto Black" fontSize="21.0" hTextAlign="Right" vTextAlign="Top">
             <text><![CDATA[FORMULARIO DE REGISTRO]]></text>
         </element>
     </pageHeader>
     <columnHeader height="75">
-        <element kind="rectangle" uuid="e07114b8-c7eb-4030-8afb-6ac14aeff137" x="22" y="4" width="10" height="66" forecolor="#FFFFFF" backcolor="#133E58">
+        <element kind="rectangle" uuid="e07114b8-c7eb-4030-8afb-6ac14aeff137" x="22" y="4" width="10" height="46" forecolor="#FFFFFF" backcolor="#133E58">
             <pen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
         </element>
         <element kind="image" uuid="6eda5699-3ca3-4146-9c3c-4e89b271e6e6" x="362" y="17" width="187" height="33" hImageAlign="Right">
@@ -124,31 +124,31 @@
             <paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
             <text><![CDATA[Monto:]]></text>
         </element>
-        <element kind="textField" uuid="cfd22468-e9ea-410e-9f97-2230f3fcc622" x="40" y="20" width="259" height="50" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="cfd22468-e9ea-410e-9f97-2230f3fcc622" x="40" y="20" width="285" height="30" forecolor="#323232" fontName="Roboto Regular">
             <expression><![CDATA[$P{ENTRY_CONCEPT}]]></expression>
         </element>
         <element kind="textField" uuid="e7a1a17d-4d20-4f99-82eb-e80ca0fe8ece" x="40" y="4" width="259" height="14" forecolor="#323232" fontName="Roboto Bold" evaluationTime="Column" bold="true">
             <expression><![CDATA[$P{ENTRY_NAME}]]></expression>
         </element>
-        <element kind="textField" uuid="ec08ce0d-21f9-4c52-b504-b84a4918ee73" x="429" y="17" width="115" height="33" forecolor="#FFFFFF" fontName="Roboto Black" fontSize="12.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
+        <element kind="textField" uuid="ec08ce0d-21f9-4c52-b504-b84a4918ee73" x="429" y="17" width="115" height="33" forecolor="#FFFFFF" fontName="Roboto Black" fontSize="16.0" bold="true" hTextAlign="Right" vTextAlign="Middle">
             <expression><![CDATA[$P{ENTRY_AMOUNT}]]></expression>
         </element>
     </columnHeader>
     <detail>
-        <band height="93" splitType="Stretch">
-            <element kind="component" uuid="dbe5c476-f549-40e5-8a86-7c5e57c0c061" x="0" y="0" width="572" height="59">
+        <band height="77" splitType="Stretch">
+            <element kind="component" uuid="dbe5c476-f549-40e5-8a86-7c5e57c0c061" x="22" y="10" width="526" height="59">
                 <component kind="table">
                     <datasetRun uuid="9aa619a6-7b4c-4eb4-b603-41e40419346b" subDataset="Dataset1">
                         <dataSourceExpression><![CDATA[$P{TABLE_DATA_SOURCE}]]></dataSourceExpression>
                     </datasetRun>
-                    <column kind="single" uuid="d43fda0d-910f-49a0-9e89-17d41a7f9f15" width="94">
+                    <column kind="single" uuid="d43fda0d-910f-49a0-9e89-17d41a7f9f15" width="86">
                         <columnHeader height="30" rowSpan="1" style="Table 1_CH">
-                            <element kind="staticText" uuid="d7b86c64-7c9d-4b3c-b66f-05cb3ceadee9" x="0" y="0" width="94" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="staticText" uuid="d7b86c64-7c9d-4b3c-b66f-05cb3ceadee9" x="0" y="0" width="86" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
                                 <text><![CDATA[Tipo]]></text>
                             </element>
                         </columnHeader>
                         <detailCell height="30" style="Table 1_TD">
-                            <element kind="textField" uuid="ce2ffa0b-da83-4e0a-a8fb-fe37f2f046b9" x="0" y="0" width="94" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" linkType="None" linkTarget="Self" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="textField" uuid="ce2ffa0b-da83-4e0a-a8fb-fe37f2f046b9" x="0" y="0" width="86" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" linkType="None" linkTarget="Self" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
                                 <expression><![CDATA[$F{documentType}]]></expression>
                                 <box>
                                     <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -160,66 +160,66 @@
                         </detailCell>
                         <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
                     </column>
-                    <column kind="single" uuid="8ccc5e49-bd57-4e99-8303-10cc9497cdc7" width="96">
+                    <column kind="single" uuid="8ccc5e49-bd57-4e99-8303-10cc9497cdc7" width="88">
                         <columnHeader height="30" rowSpan="1" style="Table 1_CH">
-                            <element kind="staticText" uuid="87f36947-a315-40cf-8b98-e90876a35f0a" x="0" y="0" width="96" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="staticText" uuid="87f36947-a315-40cf-8b98-e90876a35f0a" x="0" y="0" width="88" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
                                 <text><![CDATA[Comprobante]]></text>
                             </element>
                         </columnHeader>
                         <detailCell height="30" style="Table 1_TD">
-                            <element kind="textField" uuid="787ad526-6e0a-4974-9e30-31607ed28a08" x="0" y="0" width="96" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="textField" uuid="787ad526-6e0a-4974-9e30-31607ed28a08" x="0" y="0" width="88" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
                                 <expression><![CDATA[$F{voucher}]]></expression>
                             </element>
                         </detailCell>
                         <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
                     </column>
-                    <column kind="single" uuid="e7f0de16-e155-4690-892c-e0f26e986935" width="94">
+                    <column kind="single" uuid="e7f0de16-e155-4690-892c-e0f26e986935" width="87">
                         <columnHeader height="30" rowSpan="1" style="Table 1_CH">
-                            <element kind="staticText" uuid="518d3ed9-64e2-4411-9aed-92e196efae77" x="0" y="0" width="94" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="staticText" uuid="518d3ed9-64e2-4411-9aed-92e196efae77" x="0" y="0" width="87" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
                                 <text><![CDATA[Referencia]]></text>
                             </element>
                         </columnHeader>
                         <detailCell height="30" style="Table 1_TD">
-                            <element kind="textField" uuid="0a9e9bbd-5b17-4b06-8f65-eb1a07a978c7" x="0" y="0" width="94" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="textField" uuid="0a9e9bbd-5b17-4b06-8f65-eb1a07a978c7" x="0" y="0" width="87" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
                                 <expression><![CDATA[$F{reference}]]></expression>
                             </element>
                         </detailCell>
                         <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
                     </column>
-                    <column kind="single" uuid="79be98c9-c6d4-4ffb-9c6b-59b288d7add6" width="96">
+                    <column kind="single" uuid="79be98c9-c6d4-4ffb-9c6b-59b288d7add6" width="88">
                         <columnHeader height="30" rowSpan="1" style="Table 1_CH">
-                            <element kind="staticText" uuid="442c02e8-de2f-4495-bb12-aaacc1bb8733" x="0" y="0" width="96" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="staticText" uuid="442c02e8-de2f-4495-bb12-aaacc1bb8733" x="0" y="0" width="88" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
                                 <text><![CDATA[Cuenta]]></text>
                             </element>
                         </columnHeader>
                         <detailCell height="30" style="Table 1_TD">
-                            <element kind="textField" uuid="b6b0f2f3-ed43-4591-8129-7102bb6431d5" x="0" y="0" width="96" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="textField" uuid="b6b0f2f3-ed43-4591-8129-7102bb6431d5" x="0" y="0" width="88" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
                                 <expression><![CDATA[$F{accountId}]]></expression>
                             </element>
                         </detailCell>
                         <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
                     </column>
-                    <column kind="single" uuid="b8762da9-f1a7-44f9-a0bb-e37a49cef452" width="96">
+                    <column kind="single" uuid="b8762da9-f1a7-44f9-a0bb-e37a49cef452" width="88">
                         <columnHeader height="30" rowSpan="1" style="Table 1_CH">
-                            <element kind="staticText" uuid="a63f72a7-f984-4a25-a498-d5549d6f1d91" x="0" y="0" width="96" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="staticText" uuid="a63f72a7-f984-4a25-a498-d5549d6f1d91" x="0" y="0" width="88" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
                                 <text><![CDATA[Debíto]]></text>
                             </element>
                         </columnHeader>
                         <detailCell height="30" style="Table 1_TD">
-                            <element kind="textField" uuid="5d7c799b-381b-4bf5-97d4-94172d7af4e6" x="0" y="0" width="96" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="textField" uuid="5d7c799b-381b-4bf5-97d4-94172d7af4e6" x="0" y="0" width="88" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
                                 <expression><![CDATA[$F{debit}]]></expression>
                             </element>
                         </detailCell>
                         <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
                     </column>
-                    <column kind="single" uuid="03a3f9e5-ecda-48d3-a169-ae2399e5dd59" width="96">
+                    <column kind="single" uuid="03a3f9e5-ecda-48d3-a169-ae2399e5dd59" width="89">
                         <columnHeader height="30" rowSpan="1" style="Table 1_CH">
-                            <element kind="staticText" uuid="92084ef6-b8a3-4932-b679-bbf93d2d7a12" x="0" y="0" width="96" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="staticText" uuid="92084ef6-b8a3-4932-b679-bbf93d2d7a12" x="0" y="0" width="89" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
                                 <text><![CDATA[Crédito]]></text>
                             </element>
                         </columnHeader>
                         <detailCell height="30" style="Table 1_TD">
-                            <element kind="textField" uuid="f96028df-8897-47ad-8ba3-0874a775394c" x="0" y="0" width="96" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+                            <element kind="textField" uuid="f96028df-8897-47ad-8ba3-0874a775394c" x="0" y="0" width="89" height="30" forecolor="#323232" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
                                 <expression><![CDATA[$F{credit}]]></expression>
                             </element>
                         </detailCell>
@@ -234,42 +234,42 @@
             <property name="com.jaspersoft.studio.unit.height" value="px"/>
         </band>
     </detail>
-    <columnFooter height="46">
-        <element kind="line" uuid="13959dc2-0572-4104-9a94-e91afcbd6329" x="33" y="15" width="150" height="1">
+    <columnFooter height="63">
+        <element kind="line" uuid="13959dc2-0572-4104-9a94-e91afcbd6329" x="31" y="37" width="150" height="1">
             <property name="com.jaspersoft.studio.unit.height" value="px"/>
             <property name="com.jaspersoft.studio.unit.width" value="px"/>
         </element>
-        <element kind="textField" uuid="d7ce1e5b-46d4-4f13-8c6a-34c6c974b4ac" x="33" y="16" width="150" height="20" forecolor="#323232" fontName="Roboto Regular" fontSize="9.0" hTextAlign="Left" vTextAlign="Top">
+        <element kind="textField" uuid="d7ce1e5b-46d4-4f13-8c6a-34c6c974b4ac" x="31" y="38" width="150" height="20" forecolor="#323232" fontName="Roboto Regular" fontSize="9.0" hTextAlign="Left" vTextAlign="Top">
             <expression><![CDATA["Solicitado por: "+ $P{MANAGER_NAME}]]></expression>
         </element>
-        <element kind="line" uuid="a629b177-05b4-4314-95cf-46bb73589dd5" x="213" y="15" width="150" height="1">
+        <element kind="line" uuid="a629b177-05b4-4314-95cf-46bb73589dd5" x="211" y="37" width="150" height="1">
             <property name="com.jaspersoft.studio.unit.height" value="px"/>
         </element>
-        <element kind="line" uuid="d0aea5c6-6564-48e1-85b7-c62cda90477b" x="388" y="15" width="150" height="1">
+        <element kind="line" uuid="d0aea5c6-6564-48e1-85b7-c62cda90477b" x="386" y="37" width="150" height="1">
             <property name="com.jaspersoft.studio.unit.height" value="px"/>
         </element>
-        <element kind="staticText" uuid="f3e6e144-7d4b-4b84-b3f9-247537482e06" x="213" y="15" width="150" height="21" forecolor="#323232" fontName="Roboto Regular" fontSize="10.0" vTextAlign="Top">
+        <element kind="staticText" uuid="f3e6e144-7d4b-4b84-b3f9-247537482e06" x="211" y="37" width="150" height="21" forecolor="#323232" fontName="Roboto Regular" fontSize="10.0" vTextAlign="Top">
             <text><![CDATA[Revisado por:]]></text>
         </element>
-        <element kind="staticText" uuid="fd3cad01-044f-426a-9852-a9df00808ede" x="388" y="16" width="150" height="20" forecolor="#323232" fontName="Roboto Regular" fontSize="10.0" vTextAlign="Top">
+        <element kind="staticText" uuid="fd3cad01-044f-426a-9852-a9df00808ede" x="386" y="38" width="150" height="20" forecolor="#323232" fontName="Roboto Regular" fontSize="10.0" vTextAlign="Top">
             <text><![CDATA[Aprobado por:]]></text>
         </element>
     </columnFooter>
-    <pageFooter height="101" splitType="Stretch">
-        <element kind="line" uuid="11abb8f7-d8a1-43a7-8c2f-a81f70320d00" x="22" y="10" width="528" height="1" forecolor="#323232">
+    <pageFooter height="86" splitType="Stretch">
+        <element kind="line" uuid="11abb8f7-d8a1-43a7-8c2f-a81f70320d00" x="22" y="6" width="528" height="1" forecolor="#323232">
             <property name="com.jaspersoft.studio.unit.height" value="px"/>
             <pen lineStyle="Dotted"/>
         </element>
-        <element kind="image" uuid="92d77809-6b1c-4e49-b6a2-1b86e9dc0149" x="47" y="31" width="64" height="64">
+        <element kind="image" uuid="92d77809-6b1c-4e49-b6a2-1b86e9dc0149" x="47" y="17" width="64" height="64" hImageAlign="Center">
             <expression><![CDATA[$P{IMG_DIR}+"logo_big.png"]]></expression>
         </element>
-        <element kind="textField" uuid="d75d33bd-01d1-4441-9dc8-6fa7c3e238a5" x="125" y="79" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="d75d33bd-01d1-4441-9dc8-6fa7c3e238a5" x="125" y="65" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
             <expression><![CDATA[$P{EMAIL}]]></expression>
         </element>
-        <element kind="textField" uuid="e78aaf97-32f0-40c4-bf8f-3e727357cbef" x="125" y="56" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="e78aaf97-32f0-40c4-bf8f-3e727357cbef" x="125" y="42" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
             <expression><![CDATA[$P{PHONE}]]></expression>
         </element>
-        <element kind="textField" uuid="640815a3-5f1e-4186-841c-2f83bf48948c" x="125" y="34" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
+        <element kind="textField" uuid="640815a3-5f1e-4186-841c-2f83bf48948c" x="125" y="20" width="200" height="14" forecolor="#323232" fontName="Roboto Regular">
             <expression><![CDATA[$P{LOCATION}]]></expression>
         </element>
     </pageFooter>

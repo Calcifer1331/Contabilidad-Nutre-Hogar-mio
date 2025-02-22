@@ -1,0 +1,84 @@
+2025-02-22 09:32:56 [main] INFO  c.n.s.a.report.ReportController - C:\Users\Calci\Sistema_Contable\template\
+2025-02-22 09:33:52 [main] INFO  c.n.s.a.report.ReportController - C:\Users\Calci\Sistema_Contable\template\
+2025-02-22 09:33:55 [main] INFO  n.s.j.engine.design.JRJdk13Compiler - Note: Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_59d72682f746b1fefbc06c6674d7c071c3a696898edf4686269a08ed5cc25ed9.java:83: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_59d72682f746b1fefbc06c6674d7c071c3a696898edf4686269a08ed5cc25ed9.java:166: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getOldValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_59d72682f746b1fefbc06c6674d7c071c3a696898edf4686269a08ed5cc25ed9.java:249: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getEstimatedValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:79: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:102: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getOldValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:125: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getEstimatedValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+6 warnings
+
+2025-02-22 09:49:17 [main] INFO  c.n.s.a.report.ReportController - C:\Users\Calci\Sistema_Contable\template\
+2025-02-22 09:49:20 [main] INFO  n.s.j.engine.design.JRJdk13Compiler - Note: Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_59d72682f746b1fefbc06c6674d7c071c3a696898edf4686269a08ed5cc25ed9.java:83: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_59d72682f746b1fefbc06c6674d7c071c3a696898edf4686269a08ed5cc25ed9.java:166: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getOldValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_59d72682f746b1fefbc06c6674d7c071c3a696898edf4686269a08ed5cc25ed9.java:249: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getEstimatedValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:79: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:102: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getOldValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:125: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getEstimatedValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+6 warnings
+
+2025-02-22 09:49:26 [main] INFO  n.s.j.engine.design.JRJdk13Compiler - Note: Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_452eb88dc1abc64201644eff62c05b250255c90da50a77a6a1757014fc129813.java:83: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_452eb88dc1abc64201644eff62c05b250255c90da50a77a6a1757014fc129813.java:171: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getOldValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_452eb88dc1abc64201644eff62c05b250255c90da50a77a6a1757014fc129813.java:259: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getEstimatedValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:79: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:102: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getOldValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+D:\projects\Java\Contabilidad-Nutre-Hogar-mio\RegistrationForm_Dataset1_1ef85335e96e4bde97394ac197e8816122c0bdffab17e8e3991d2f8b36a0521d.java:125: warning: [removal] Boolean(boolean) in Boolean has been deprecated and marked for removal
+                value = new Boolean(((java.lang.Integer)variable_REPORT_COUNT.getEstimatedValue()).intValue()%2==0); //$JR_EXPR_ID=0$
+                        ^
+6 warnings
+

@@ -1,5 +1,6 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
+import com.nutrehogar.sistemacontable.application.MainClass;
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
 import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
@@ -332,6 +333,9 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             return;
         }
         try {
+            // TODO Este esta de mas
+            entry.setUser(MainClass.USER);
+            for (var record : entry.getLedgerRecords()) record.setUser(MainClass.USER);
             journalRepository.save(entry);
             showMessage("El Registro actualizado exitosamente.");
             prepareToEditEntry(entry);
