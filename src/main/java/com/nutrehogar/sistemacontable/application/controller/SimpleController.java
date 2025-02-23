@@ -2,8 +2,10 @@ package com.nutrehogar.sistemacontable.application.controller;
 
 
 import com.nutrehogar.sistemacontable.application.controller.service.BackupController;
+import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
 import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
+import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
 import com.nutrehogar.sistemacontable.ui.view.SimpleView;
@@ -23,15 +25,20 @@ import java.util.List;
 @Slf4j
 @Getter
 @Setter
-public abstract class SimpleController<T> extends Controller {
-    private final SimpleRepository<T> repository;
-    private List<T> data = new ArrayList<>();
-    private T selected;
-    private AbstractTableModel tblModel;
+public abstract class SimpleController<T, R> extends Controller {
+    protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+    protected final SimpleRepository<R> repository;
+    protected List<T> data = new ArrayList<>();
+    protected T selected;
+    protected AbstractTableModel tblModel;
+    protected ReportController reportController;
+    protected final User user;
 
-    public SimpleController(SimpleRepository<T> repository, SimpleView view) {
+    public SimpleController(SimpleRepository<R> repository, SimpleView view, ReportController reportController, User user) {
         super(view);
         this.repository = repository;
+        this.reportController = reportController;
+        this.user = user;
         initialize();
     }
 
@@ -64,18 +71,7 @@ public abstract class SimpleController<T> extends Controller {
 
     protected abstract void setElementSelected(@NotNull MouseEvent e);
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
-
-    protected <K extends AuditableEntity> void setAuditoria(K auditoria) {
-        SwingUtilities.invokeLater(() -> {
-            getAuditablePanel().getLblCreateAt().setText(auditoria.getCreatedAt() == null ? "" : auditoria.getCreatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblCreateBy().setText(auditoria.getCreatedBy() == null ? "" : auditoria.getCreatedBy());
-            getAuditablePanel().getLblUpdateAt().setText(auditoria.getUpdatedAt() == null ? "" : auditoria.getUpdatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblUpdateBy().setText(auditoria.getUpdatedBy() == null ? "" : auditoria.getUpdatedBy());
-            getAuditablePanel().revalidate();
-            getAuditablePanel().repaint();
-        });
-    }
+    protected abstract void setAuditoria();
 
     @Override
     public SimpleView getView() {

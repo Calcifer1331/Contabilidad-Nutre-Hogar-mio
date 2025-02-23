@@ -5,7 +5,6 @@ import com.nutrehogar.sistemacontable.exception.ReportException;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import javax.swing.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Map;
@@ -23,6 +22,7 @@ public sealed class EntryForm extends Report<JournalEntryDTO> permits PaymentVou
         parameters.put("ENTRY_NAME", dto.name());
         parameters.put("ENTRY_CONCEPT", dto.concept());
         parameters.put("ENTRY_AMOUNT", dto.amount());
+        parameters.put("ENTRY_CHECK_NUMBER", dto.checkNumber());
         parameters.put("TABLE_DATA_SOURCE", new JRBeanCollectionDataSource(dto.ledgerRecords()));
     }
 

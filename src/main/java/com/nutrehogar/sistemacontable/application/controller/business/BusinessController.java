@@ -1,7 +1,12 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
-import com.nutrehogar.sistemacontable.application.repository.business.BusinessRepository;
+import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.application.dto.AuditableDTO;
+import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
+import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
+import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
+import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.LocalDateSpinner;
 import com.nutrehogar.sistemacontable.ui.components.LocalDateSpinnerModel;
 import com.nutrehogar.sistemacontable.ui.view.business.BusinessView;
@@ -10,24 +15,25 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static com.nutrehogar.sistemacontable.ui.components.LocalDateSpinnerModel.CURRENT_DATE;
 
 @Getter
 @Setter
-public abstract class BusinessController<T> extends SimpleController<T> {
+public abstract class BusinessController<T extends AuditableDTO, R> extends SimpleController<T, R> {
     public static final LocalDate END_PERIOD = LocalDate.of(CURRENT_DATE.getYear(), 12, 31);
     public static final LocalDate START_PERIOD = LocalDate.of(CURRENT_DATE.getYear(), 1, 1);
 
-    private LocalDateSpinnerModel spnModelStartPeriod;
-    private LocalDateSpinnerModel spnModelEndPeriod;
-    private final Consumer<Integer> editJournalEntry;
-    private Integer journalEntryId;
+    protected LocalDateSpinnerModel spnModelStartPeriod;
+    protected LocalDateSpinnerModel spnModelEndPeriod;
+    protected final Consumer<Integer> editJournalEntry;
+    protected Integer journalEntryId;
 
 
-    public BusinessController(BusinessRepository<T> repository, BusinessView view, Consumer<Integer> editJournalEntry) {
-        super(repository, view);
+    public BusinessController(SimpleRepository<R> repository, BusinessView view, Consumer<Integer> editJournalEntry, ReportController reportController, User user) {
+        super(repository, view, reportController,user);
         this.editJournalEntry = editJournalEntry;
     }
 
@@ -63,7 +69,7 @@ public abstract class BusinessController<T> extends SimpleController<T> {
     @Override
     protected void setupViewListeners() {
         getBtnEdit().setEnabled(false);
-        getBtnEdit().addActionListener(e-> editJournalEntry.accept(journalEntryId));
+        getBtnEdit().addActionListener(e -> editJournalEntry.accept(journalEntryId));
         getBtnFilter().addActionListener(e -> {
             loadData();
             setSelected(null);
@@ -80,22 +86,28 @@ public abstract class BusinessController<T> extends SimpleController<T> {
         super.setupViewListeners();
     }
 
+    @Override
+    protected void setAuditoria() {
+        SwingUtilities.invokeLater(() -> {
+            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? "" : getSelected().getCreatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? "" : getSelected().getCreatedBy());
+            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? "" : getSelected().getUpdatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? "" : getSelected().getUpdatedBy());
+            getAuditablePanel().revalidate();
+            getAuditablePanel().repaint();
+        });
+    }
+
     public void clearView() {
         setSelected(null);
         getBtnEdit().setEnabled(false);
-        getData().clear();
+        setData(List.of());
         loadData();
     }
-
 
     @Override
     public BusinessView getView() {
         return (BusinessView) super.getView();
-    }
-
-    @Override
-    public BusinessRepository<T> getRepository() {
-        return (BusinessRepository<T>) super.getRepository();
     }
 
     public LocalDateSpinner getSpnStart() {

@@ -60,8 +60,6 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         lblRecordAccount = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         cbxRecordAccount = new javax.swing.JComboBox<>();
-        labelSection1 = new javax.swing.JLabel();
-        sepaSection1 = new javax.swing.JSeparator();
         btnUpdate = new javax.swing.JButton();
         lblSave = new javax.swing.JLabel();
         lblUpdate = new javax.swing.JLabel();
@@ -87,12 +85,17 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         btnUpdateEntry = new javax.swing.JButton();
         btnDeleteEntry = new javax.swing.JButton();
         btnAddEntry = new javax.swing.JButton();
-        pnlFooter = new javax.swing.JPanel();
         pnlSourceDocuments = new javax.swing.JPanel();
-        lblPaymentVoucher = new javax.swing.JLabel();
         btnGeneratePaymentVoucher = new javax.swing.JButton();
         btnGenerateRegistrationForm = new javax.swing.JButton();
-        lblEdit2 = new javax.swing.JLabel();
+        lblCreateBy = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblCreateAt = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblUpdateBy = new javax.swing.JLabel();
+        lblUpdateAt = new javax.swing.JLabel();
 
         setOpaque(false);
 
@@ -111,7 +114,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
 
         pnlAside.setOpaque(false);
 
-        pnlLedgerRecordOperations.setBorder(javax.swing.BorderFactory.createTitledBorder("Operaciones"));
+        pnlLedgerRecordOperations.setBorder(javax.swing.BorderFactory.createTitledBorder(" Operaciones "));
         pnlLedgerRecordOperations.setOpaque(false);
 
         btnAdd.setText("Crear");
@@ -173,7 +176,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                     .addComponent(btnDelete)))
         );
 
-        pnlRecordForm.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro Contable"));
+        pnlRecordForm.setBorder(javax.swing.BorderFactory.createTitledBorder(" Registro Contable "));
         pnlRecordForm.setOpaque(false);
 
         lblRecordVoucher.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -199,9 +202,6 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         btnSave.setText("Guardar");
 
         cbxRecordAccount.setModel(new javax.swing.DefaultComboBoxModel<>());
-
-        labelSection1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        labelSection1.setText("Operaciones");
 
         btnUpdate.setText("Actualizar");
 
@@ -236,10 +236,6 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
             .addGroup(pnlRecordFormLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlRecordFormLayout.createSequentialGroup()
-                        .addComponent(labelSection1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sepaSection1))
                     .addGroup(pnlRecordFormLayout.createSequentialGroup()
                         .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblRecordAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -277,7 +273,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         pnlRecordFormLayout.setVerticalGroup(
             pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRecordFormLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRecordDocumentType)
                     .addComponent(cbxRecordDocumentType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -302,18 +298,15 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                 .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRecordAmount)
                     .addComponent(txtRecordAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelSection1)
-                    .addComponent(sepaSection1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(lblSave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate)))
+                    .addComponent(btnUpdate))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlAsideLayout = new javax.swing.GroupLayout(pnlAside);
@@ -336,10 +329,10 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                 .addComponent(pnlRecordForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(auditablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        pnlEntryForm.setBorder(javax.swing.BorderFactory.createTitledBorder("Entrada de Diario"));
+        pnlEntryForm.setBorder(javax.swing.BorderFactory.createTitledBorder("  Entrada de Diario  "));
         pnlEntryForm.setOpaque(false);
 
         lblEntryName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -450,16 +443,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                 .addContainerGap())
         );
 
-        pnlFooter.setOpaque(false);
-
         pnlSourceDocuments.setBorder(javax.swing.BorderFactory.createTitledBorder("Documentos Fuente"));
         pnlSourceDocuments.setOpaque(false);
-
-        lblPaymentVoucher.setLabelFor(btnEdit);
-        lblPaymentVoucher.setText("<html><p>Genera un comprobante de pago de la entrada</p></html>");
-        lblPaymentVoucher.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        lblPaymentVoucher.setMaximumSize(new java.awt.Dimension(255, 40));
-        lblPaymentVoucher.setPreferredSize(new java.awt.Dimension(100, 40));
 
         btnGeneratePaymentVoucher.setText("Comprobante");
 
@@ -470,11 +455,21 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
             }
         });
 
-        lblEdit2.setLabelFor(btnGenerateRegistrationForm);
-        lblEdit2.setText("<html><p>Genera un comprobante de registro</p></html>");
-        lblEdit2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        lblEdit2.setMaximumSize(new java.awt.Dimension(196, 40));
-        lblEdit2.setPreferredSize(new java.awt.Dimension(100, 40));
+        lblCreateBy.setText("nadie");
+
+        jLabel1.setText("Creado por: ");
+
+        jLabel2.setText("Fecha creación: ");
+
+        lblCreateAt.setText("nada");
+
+        jLabel4.setText("Actualizado por: ");
+
+        jLabel3.setText("Fecha actualización: ");
+
+        lblUpdateBy.setText("nadie");
+
+        lblUpdateAt.setText("nada");
 
         javax.swing.GroupLayout pnlSourceDocumentsLayout = new javax.swing.GroupLayout(pnlSourceDocuments);
         pnlSourceDocuments.setLayout(pnlSourceDocumentsLayout);
@@ -482,39 +477,55 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
             pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSourceDocumentsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPaymentVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGeneratePaymentVoucher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGenerateRegistrationForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGeneratePaymentVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblCreateBy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCreateAt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblEdit2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGenerateRegistrationForm, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblUpdateAt)
+                    .addComponent(lblUpdateBy))
+                .addContainerGap(182, Short.MAX_VALUE))
         );
         pnlSourceDocumentsLayout.setVerticalGroup(
             pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblPaymentVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnGeneratePaymentVoucher)
-                .addComponent(lblEdit2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnGenerateRegistrationForm))
-        );
-
-        javax.swing.GroupLayout pnlFooterLayout = new javax.swing.GroupLayout(pnlFooter);
-        pnlFooter.setLayout(pnlFooterLayout);
-        pnlFooterLayout.setHorizontalGroup(
-            pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFooterLayout.createSequentialGroup()
+            .addGroup(pnlSourceDocumentsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlSourceDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlFooterLayout.setVerticalGroup(
-            pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFooterLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlSourceDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlSourceDocumentsLayout.createSequentialGroup()
+                        .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblCreateBy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lblCreateAt)))
+                    .addGroup(pnlSourceDocumentsLayout.createSequentialGroup()
+                        .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlSourceDocumentsLayout.createSequentialGroup()
+                                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(lblUpdateBy))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlSourceDocumentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(lblUpdateAt)))
+                            .addGroup(pnlSourceDocumentsLayout.createSequentialGroup()
+                                .addComponent(btnGeneratePaymentVoucher)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGenerateRegistrationForm)))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -526,7 +537,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlEntryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(pnlFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlSourceDocuments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlAside, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -540,7 +551,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnlSourceDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))
                     .addComponent(pnlAside, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -566,19 +578,22 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
     private javax.swing.JButton btnUpdateEntry;
     private javax.swing.JComboBox<Account> cbxRecordAccount;
     private javax.swing.JComboBox<DocumentType> cbxRecordDocumentType;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel labelSection1;
     private javax.swing.JLabel lblAdd;
     private javax.swing.JLabel lblConcept;
+    private javax.swing.JLabel lblCreateAt;
+    private javax.swing.JLabel lblCreateBy;
     private javax.swing.JLabel lblDelete;
     private javax.swing.JLabel lblEdit;
-    private javax.swing.JLabel lblEdit2;
     private javax.swing.JLabel lblEntryCeckNumber;
     private javax.swing.JLabel lblEntryDate;
     private javax.swing.JLabel lblEntryDocumentNumber;
     private javax.swing.JLabel lblEntryName;
-    private javax.swing.JLabel lblPaymentVoucher;
     private javax.swing.JLabel lblRecordAccount;
     private javax.swing.JLabel lblRecordAmount;
     private javax.swing.JLabel lblRecordDocumentType;
@@ -587,15 +602,15 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
     private javax.swing.JLabel lblRecordVoucher;
     private javax.swing.JLabel lblSave;
     private javax.swing.JLabel lblUpdate;
+    private javax.swing.JLabel lblUpdateAt;
+    private javax.swing.JLabel lblUpdateBy;
     private javax.swing.JPanel pnlAside;
     private javax.swing.JPanel pnlEntryForm;
-    private javax.swing.JPanel pnlFooter;
     private javax.swing.JPanel pnlLedgerRecordOperations;
     private javax.swing.JPanel pnlRecordForm;
     private javax.swing.JPanel pnlSourceDocuments;
     private javax.swing.JRadioButton rbtRecordCredit;
     private javax.swing.JRadioButton rbtRecordDebit;
-    private javax.swing.JSeparator sepaSection1;
     private com.nutrehogar.sistemacontable.ui.components.LocalDateSpinner spnEntryDate;
     private javax.swing.JTextArea taEntryConcept;
     private javax.swing.JTable tblData;

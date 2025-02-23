@@ -1,6 +1,7 @@
 package com.nutrehogar.sistemacontable.ui;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.icons.FlatRadioButtonIcon;
 import com.formdev.flatlaf.util.UIScale;
 
 import javax.swing.*;
@@ -17,11 +18,38 @@ public class ThemeConfig {
         System.setProperty("flatlaf.menuBarEmbedded", "true");
         System.setProperty("flatlaf.useWindowDecorations", "true");
         UIManager.put("ScrollBar.width", 6); // Cambia el ancho
-        UIManager.put("ScrollBar.thumbArc", 10); // Bordes redondeados
-        UIManager.put("ScrollBar.thumb", ThemeConfig.Palette.URANIAN_BLUE); // Color de la barra
-        UIManager.put("ScrollBar.track", ThemeConfig.Palette.TRANSPARENT); // Color del fondo
-        UIManager.put("ScrollBar.trackArc", 10); // Bordes redondeados para el fondo
+        UIManager.put("ScrollBar.thumbArc", 20); // Bordes redondeados
+        UIManager.put("ScrollBar.thumb", Palette.SOLITUDE_200); // Color de la barra
+        UIManager.put("ScrollBar.track", Color.WHITE); // Color del fondo
+        UIManager.put("ScrollBar.trackArc", 7); // Bordes redondeados para el fondo
         UIManager.put("defaultFont", Typography.FONT_SM);
+        UIManager.put("Table.background", Color.WHITE); // Fondo de la tabla
+        UIManager.put("Table.foreground", Color.BLACK); // Color del textoa
+        UIManager.put("Table.alternateRowColor", Palette.SOLITUDE_300); // Color de filas alternas (FlatLaf)
+        UIManager.put("Table.selectionBackground", Palette.SOLITUDE_200); // Fondo de selección
+        UIManager.put("Table.selectionForeground", Palette.SOLITUDE_600); // Texto de selección
+        UIManager.put("Button.background", Color.WHITE);
+        UIManager.put("Button.foreground", Color.BLACK);
+        UIManager.put("Button.arc", 10);
+        UIManager.put("Button.focusedBorderColor", Palette.SOLITUDE_400);
+        UIManager.put("Button.hoverBorderColor", Palette.SOLITUDE_300);
+        UIManager.put("TextComponent.background", Color.WHITE);
+        UIManager.put("TextComponent.foreground", Color.BLACK);
+        UIManager.put("TextComponent.focusedBorderColor", Palette.SOLITUDE_400);
+        UIManager.put("TextComponent.caretForeground", Palette.SOLITUDE_600);
+        UIManager.put("TextComponent.arc", 7);
+
+        UIManager.put("ComboBox.selectionBackground", Palette.SOLITUDE_200); // Color de fondo al seleccionar
+        UIManager.put("ComboBox.buttonBackground", Color.WHITE); // Fondo del botón del desplegable
+        UIManager.put("ComboBox.buttonHoverBackground", Palette.SOLITUDE_200); // Fondo del botón al pasar el mouse
+        UIManager.put("ComboBox.arrowButtonBackground", Palette.SOLITUDE_200); // Fondo del botón de la flecha
+        UIManager.put("ComboBox.arrowButtonHoverBackground", Palette.TRUE_BLUE); // Fondo de la flecha al pasar el mouse
+        UIManager.put("ComboBox.arc", 7); // Esquinas redondeadas (solo en FlatLaf)
+        UIManager.put("ComboBox.selectionBackground", Palette.SOLITUDE_200); // Color de fondo del item seleccionado
+        UIManager.put("ComboBox.selectionForeground", Palette.SOLITUDE_700); // Color del texto del item seleccionado
+        UIManager.put("ComboBox.rendererUseListColors", true); // Usa colores de la lista en los items
+        UIManager.put("ComboBox.popup.arc", 7); // Redondeo de las esquinas
+
         FlatLightLaf.setup();
     }
 

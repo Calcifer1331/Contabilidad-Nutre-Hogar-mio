@@ -20,7 +20,7 @@ public class JournalEntryRepositoryImpl extends CRUDRepositoryImpl<JournalEntry,
     public List<JournalEntry> findAllByDateRange(LocalDate startDate, LocalDate endDate) throws RepositoryException {
         return executeInTransaction(() ->
                 getSession().createQuery(
-                                "FROM JournalEntry WHERE date BETWEEN :startDate AND :endDate ORDER BY date",
+                                "FROM JournalEntry WHERE date BETWEEN :startDate AND :endDate ORDER BY date DESC",
                                 JournalEntry.class
                         )
                         .setParameter("startDate", startDate)

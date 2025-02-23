@@ -5,6 +5,8 @@ import com.nutrehogar.sistemacontable.application.controller.SimpleController;
 import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.application.dto.LedgerRecordDTO;
+import com.nutrehogar.sistemacontable.application.report.PaymentVoucher;
+import com.nutrehogar.sistemacontable.application.report.RegistrationForm;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.LedgerRecordRepository;
@@ -12,6 +14,7 @@ import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
 import com.nutrehogar.sistemacontable.domain.model.LedgerRecord;
+import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.ui.components.*;
 import com.nutrehogar.sistemacontable.ui.view.crud.AccountingEntryFormView;
@@ -29,13 +32,14 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
-public class AccountingEntryFormController extends SimpleController<LedgerRecord> {
+public class AccountingEntryFormController extends SimpleController<LedgerRecord, LedgerRecord> {
     private final JournalEntryRepository journalRepository;
     private final AccountRepository accountRepository;
     private Optional<JournalEntry> journalEntry;
@@ -45,14 +49,11 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     private boolean isBeingAdded;
     private boolean isBeingEdited;
     public static final BigDecimal ZERO = BigDecimal.valueOf(0, 2);
-    private ReportController reportController;
 
-
-    public AccountingEntryFormController(LedgerRecordRepository repository, AccountingEntryFormView view, JournalEntryRepository journalRepository, AccountRepository accountRepository) {
-        super(repository, view);
+    public AccountingEntryFormController(LedgerRecordRepository repository, AccountingEntryFormView view, JournalEntryRepository journalRepository, AccountRepository accountRepository, ReportController reportController, User user) {
+        super(repository, view, reportController,user);
         this.journalRepository = journalRepository;
         this.accountRepository = accountRepository;
-        reportController = new ReportController();
         loadDataAccount();
     }
 
@@ -97,7 +98,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getBtnUpdateEntry().addActionListener(e -> updateEntry());
         getBtnGeneratePaymentVoucher().addActionListener(e -> {
             try {
-                reportController.generateReport(ReportController.ReportType.PAYMENT_VOUCHER, getJournalEntryDTO());
+                reportController.generateReport(PaymentVoucher.class, getJournalEntryDTO());
             } catch (Exception ex) {
                 log.info(ex.getMessage());
                 throw new RuntimeException(ex);
@@ -105,7 +106,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         });
         getBtnGenerateRegistrationForm().addActionListener(e -> {
             try {
-                reportController.generateReport(ReportController.ReportType.REGISTRATION_FORM, getJournalEntryDTO());
+                reportController.generateReport(RegistrationForm.class, getJournalEntryDTO());
             } catch (Exception ex) {
                 log.info(ex.getMessage());
                 throw new RuntimeException(ex);
@@ -145,12 +146,25 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
                 return;
             }
             setSelected(getData().get(selectedRow));
+            setAuditoria();
             getBtnDeleteRecord().setEnabled(true);
             getBtnEdit().setEnabled(true);
         } else {
             getBtnDeleteRecord().setEnabled(false);
             getBtnEdit().setEnabled(false);
         }
+    }
+
+    @Override
+    protected void setAuditoria() {
+        SwingUtilities.invokeLater(() -> {
+            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? "" : getSelected().getCreatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? "" : getSelected().getCreatedBy());
+            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? "" : getSelected().getUpdatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? "" : getSelected().getUpdatedBy());
+            getAuditablePanel().revalidate();
+            getAuditablePanel().repaint();
+        });
     }
 
     private void saveRecord() {
@@ -411,6 +425,10 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getTaEntryConcept().setText(je.getConcept());
         getSpnEntryDate().getModel().setValue(je.getDate());
         getTxtEntryCheckNumber().setText(je.getCheckNumber());
+        getLblCreateBy().setText(je.getCreatedBy() == null ? "" : je.getCreatedBy());
+        getLblCreateAt().setText(je.getCreatedAt() == null ? "" : je.getCreatedAt().format(DATE_FORMATTER));
+        getLblUpdateBy().setText(je.getUpdatedBy() == null ? "" : je.getUpdatedBy());
+        getLblUpdateAt().setText(je.getUpdatedAt() == null ? "" : je.getUpdatedAt().format(DATE_FORMATTER));
         prepareBtnToEditEntry();
         prepareToAddRecord();
         loadData();
@@ -432,6 +450,10 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getTxtEntryDocumentNumber().setText("");
         getSpnEntryDate().getModel().resetValue();
         getTxtEntryCheckNumber().setText("");
+        getLblCreateBy().setText("");
+        getLblCreateAt().setText("");
+        getLblUpdateBy().setText("");
+        getLblUpdateAt().setText("");
         prepareBtnToAddEntry();
         prepareToAddRecord();
         loadData();
@@ -489,7 +511,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     public class LedgerRecordTableModel extends AbstractTableModel {
 
-        private final String[] COLUMN_NAMES = {"Tipo de Documento", "Comprobante", "Referencia", "Código", "Debíto", "Crédito"};
+        private final String[] COLUMN_NAMES = {"Tipo de Documento", "Comprobante", "Referencia", "Cuenta", "Debíto", "Crédito"};
 
         @Override
         public int getRowCount() {
@@ -634,6 +656,22 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     public JButton getBtnGenerateRegistrationForm() {
         return getView().getBtnGenerateRegistrationForm();
+    }
+
+    public JLabel getLblCreateAt() {
+        return getView().getLblCreateAt();
+    }
+
+    public JLabel getLblCreateBy() {
+        return getView().getLblCreateBy();
+    }
+
+    public JLabel getLblUpdateAt() {
+        return getView().getLblUpdateAt();
+    }
+
+    public JLabel getLblUpdateBy() {
+        return getView().getLblUpdateBy();
     }
 
 }

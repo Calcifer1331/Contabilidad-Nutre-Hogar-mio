@@ -1,10 +1,12 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
+import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
+import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.CustomComboBoxModel;
 import com.nutrehogar.sistemacontable.ui.components.CustomListCellRenderer;
 import com.nutrehogar.sistemacontable.ui.components.DocumentSizeFilter;
@@ -21,8 +23,8 @@ public class AccountController extends CRUDController<Account, Integer> {
     private CustomComboBoxModel<AccountSubtype> cbxModelSubtype;
     private DocumentSizeFilter documentSizeFilter;
 
-    public AccountController(AccountRepository repository, AccountView view, AccountSubtypeRepository subtypeRepository) {
-        super(repository, view);
+    public AccountController(AccountRepository repository, AccountView view, AccountSubtypeRepository subtypeRepository, ReportController reportController, User user) {
+        super(repository, view, reportController, user);
         this.subtypeRepository = subtypeRepository;
         loadDataSubtype();
         setTextToLbAccountTypeId();
@@ -125,7 +127,7 @@ public class AccountController extends CRUDController<Account, Integer> {
             return null;
         }
 
-        var account = new Account();
+        var account = new Account(user);
         account.setAccountSubtype(cbxModelSubtype.getSelectedItem());
         try {
             account.setId(id);

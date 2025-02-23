@@ -16,6 +16,10 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "ledger_record")
 public class LedgerRecord extends AuditableEntity{
+    public LedgerRecord(User user) {
+        super(user);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

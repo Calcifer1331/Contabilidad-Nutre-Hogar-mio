@@ -1,10 +1,12 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
+import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.dto.JournalDTO;
+import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
-import com.nutrehogar.sistemacontable.domain.helper.OrderDirection;
 import com.nutrehogar.sistemacontable.domain.model.Account;
-import com.nutrehogar.sistemacontable.domain.repository.JournalRepositoryImpl;
+import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
+import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.view.business.JournalView;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,9 +16,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
-public class JournalController extends BusinessController<JournalDTO> {
-    public JournalController(JournalRepositoryImpl repository, JournalView view, Consumer<Integer> editJournalEntry) {
-        super(repository, view, editJournalEntry);
+public class JournalController extends BusinessController<JournalDTO, JournalEntry> {
+    public JournalController(JournalEntryRepository repository, JournalView view, Consumer<Integer> editJournalEntry, ReportController reportController, User user) {
+        super(repository, view, editJournalEntry, reportController, user);
     }
 
     @Override
@@ -27,9 +29,26 @@ public class JournalController extends BusinessController<JournalDTO> {
 
     @Override
     protected void loadData() {
-        getData().clear();
-        var lista = getRepository().find(JournalRepositoryImpl.Field.JOURNAL_DATE, OrderDirection.DESCENDING, new JournalRepositoryImpl.Filter.ByDateRange(getSpnModelStartPeriod().getValue(), getSpnModelEndPeriod().getValue()));
-        setData(lista);
+        var list = getRepository().findAllByDateRange(spnModelStartPeriod.getValue(), spnModelEndPeriod.getValue())
+                .stream()
+                .flatMap(journalEntry -> journalEntry.getLedgerRecords().stream()
+                        .map(ledgerRecord -> new JournalDTO(
+                                ledgerRecord.getCreatedBy(),
+                                ledgerRecord.getUpdatedBy(),
+                                ledgerRecord.getCreatedAt(),
+                                ledgerRecord.getUpdatedAt(),
+                                journalEntry.getId(),
+                                journalEntry.getDate(),
+                                ledgerRecord.getDocumentType(),
+                                ledgerRecord.getAccount().getId(),
+                                ledgerRecord.getVoucher(),
+                                ledgerRecord.getReference(),
+                                ledgerRecord.getDebit(),
+                                ledgerRecord.getCredit()
+                        ))
+                )
+                .toList(); // Java 17+, usa `collect(Collectors.toList())` en Java 8-16
+        setData(list);
         super.loadData();
     }
 
@@ -40,8 +59,9 @@ public class JournalController extends BusinessController<JournalDTO> {
             int selectedRow = getTblData().getSelectedRow();
             if (selectedRow >= 0 && selectedRow < getData().size()) {
                 setSelected(getData().get(selectedRow));
+                setAuditoria();
                 getBtnEdit().setEnabled(true);
-                setJournalEntryId(getSelected().journalEntryId());
+                setJournalEntryId(getSelected().getEntryId());
             } else {
                 getBtnEdit().setEnabled(false);
             }
@@ -49,6 +69,10 @@ public class JournalController extends BusinessController<JournalDTO> {
     }
 
     public class JournalTableModel extends AbstractTableModel {
+        private final String[] COLUMN_NAMES =
+                {
+                        "Fecha", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito"
+                };
 
         @Override
         public int getRowCount() {
@@ -57,25 +81,25 @@ public class JournalController extends BusinessController<JournalDTO> {
 
         @Override
         public int getColumnCount() {
-            return JournalRepositoryImpl.Field.values().length;
+            return COLUMN_NAMES.length;
         }
 
         @Override
         public String getColumnName(int column) {
-            return JournalRepositoryImpl.Field.values()[column].getFieldName();
+            return COLUMN_NAMES[column];
         }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             var dto = getData().get(rowIndex);
             return switch (columnIndex) {
-                case 0 -> dto.journalEntryFecha();
-                case 1 -> dto.ledgerRecordDocumentType();
-                case 2 -> Account.getCellRenderer(dto.accountId());
-                case 3 -> dto.ledgerRecordVoucher();
-                case 4 -> dto.ledgerRecordReference();
-                case 5 -> dto.ledgerRecordDebit();
-                case 6 -> dto.ledgerRecordCredit();
+                case 0 -> dto.getEntryDate();
+                case 1 -> dto.getDocumentType();
+                case 2 -> Account.getCellRenderer(dto.getAccountId());
+                case 3 -> dto.getVoucher();
+                case 4 -> dto.getReference();
+                case 5 -> dto.getDebit();
+                case 6 -> dto.getCredit();
                 default -> "Element not found";
             };
         }
@@ -94,11 +118,12 @@ public class JournalController extends BusinessController<JournalDTO> {
 
     @Override
     public JournalView getView() {
+
         return (JournalView) super.getView();
     }
 
     @Override
-    public JournalRepositoryImpl getRepository() {
-        return (JournalRepositoryImpl) super.getRepository();
+    public JournalEntryRepository getRepository() {
+        return (JournalEntryRepository) super.getRepository();
     }
 }

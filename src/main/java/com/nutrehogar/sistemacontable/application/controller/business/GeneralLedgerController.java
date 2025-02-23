@@ -1,17 +1,18 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
+import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.dto.GeneralLedgerDTO;
+import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
-import com.nutrehogar.sistemacontable.domain.helper.OrderDirection;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
-import com.nutrehogar.sistemacontable.domain.repository.GeneralLedgerRepositoryImpl;
-import com.nutrehogar.sistemacontable.domain.repository.TrialBalanceRepositoryImpl;
+import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.CustomComboBoxModel;
 import com.nutrehogar.sistemacontable.ui.components.CustomListCellRenderer;
 import com.nutrehogar.sistemacontable.ui.view.business.GeneralLedgerView;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -23,17 +24,19 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO> {
+@Slf4j
+public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO, Account> {
     private final AccountSubtypeRepository subtypeRepository;
     private CustomComboBoxModel<AccountType> cbxModelAccountType;
     private CustomComboBoxModel<Account> cbxModelAccount;
     private CustomComboBoxModel<AccountSubtype> cbxModelSubtype;
 
-    public GeneralLedgerController(GeneralLedgerRepositoryImpl repository, GeneralLedgerView view, Consumer<Integer> editJournalEntry, AccountSubtypeRepository subtypeRepository) {
-        super(repository, view, editJournalEntry);
+    public GeneralLedgerController(AccountRepository repository, GeneralLedgerView view, Consumer<Integer> editJournalEntry, AccountSubtypeRepository subtypeRepository, ReportController reportController, User user) {
+        super(repository, view, editJournalEntry, reportController, user);
         this.subtypeRepository = subtypeRepository;
         loadDataSubtype();
     }
@@ -63,33 +66,44 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
 
     @Override
     protected void loadData() {
-        var entity = cbxModelAccount.getSelectedItem();
-        if (entity == null) {
+        var account = cbxModelAccount.getSelectedItem();
+        if (account == null) {
             return;
         }
-        Integer id = entity.getId();
-        if (id == null) {
+        Integer accountId = account.getId();
+        if (accountId == null) {
             return;
         }
         getData().clear();
-
-        var list = getRepository().find(
-                GeneralLedgerRepositoryImpl.Field.JOURNAL_ENTRY_DATE,
-                OrderDirection.DESCENDING,
-                new GeneralLedgerRepositoryImpl.Filter.ByDateRange(
-                        getSpnModelStartPeriod().getValue(),
-                        getSpnModelEndPeriod().getValue()),
-                new GeneralLedgerRepositoryImpl.Filter.ByAccountId(id)
-        );
+        var generalLedgers = new ArrayList<GeneralLedgerDTO>();
+        for (var record : account.getLedgerRecords()) {
+            generalLedgers.add(new GeneralLedgerDTO(
+                    record.getCreatedBy(),
+                    record.getUpdatedBy(),
+                    record.getCreatedAt(),
+                    record.getUpdatedAt(),
+                    record.getJournalEntry().getId(),
+                    record.getJournalEntry().getDate(),
+                    record.getJournalEntry().getName(),
+                    record.getDocumentType(),
+                    account.getId(),
+                    account.getAccountSubtype().getAccountType(),
+                    record.getVoucher(),
+                    record.getReference(),
+                    record.getDebit(),
+                    record.getCredit(),
+                    BigDecimal.ZERO
+            ));
+        }
 
         var balance = BigDecimal.ZERO;
         var debitSum = BigDecimal.ZERO;
         var creditSum = BigDecimal.ZERO;
 
-        for (GeneralLedgerDTO dto : list) {
-            balance = dto.getAccountType().getBalance(balance, dto.getLedgerRecordCredit(), dto.getLedgerRecordDebit());
-            debitSum = debitSum.add(dto.getLedgerRecordDebit(), MathContext.DECIMAL128).setScale(2, RoundingMode.HALF_UP);
-            creditSum = creditSum.add(dto.getLedgerRecordCredit(), MathContext.DECIMAL128).setScale(2, RoundingMode.HALF_UP);
+        for (GeneralLedgerDTO dto : generalLedgers) {
+            balance = dto.getAccountType().getBalance(balance, dto.getCredit(), dto.getDebit());
+            debitSum = debitSum.add(dto.getDebit(), MathContext.DECIMAL128).setScale(2, RoundingMode.HALF_UP);
+            creditSum = creditSum.add(dto.getCredit(), MathContext.DECIMAL128).setScale(2, RoundingMode.HALF_UP);
             dto.setBalance(balance);
         }
 
@@ -98,8 +112,8 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
                 creditSum, // suma haber
                 balance // diferencia
         );
-        list.add(totalDTO);
-        setData(list);
+        generalLedgers.add(totalDTO);
+        setData(generalLedgers);
         super.loadData();
     }
 
@@ -175,8 +189,9 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
             int selectedRow = getTblData().getSelectedRow();
             if (selectedRow >= 0 && selectedRow < getData().size() - 1) {
                 setSelected(getData().get(selectedRow));
+                setAuditoria();
                 getBtnEdit().setEnabled(true);
-                setJournalEntryId(getSelected().getJournalEntryId());
+                setJournalEntryId(getSelected().getEntryId());
             } else {
                 getBtnEdit().setEnabled(false);
             }
@@ -185,6 +200,11 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
 
     public class GeneralLedgerTableModel extends AbstractTableModel {
 
+        private final String[] COLUMN_NAMES =
+                {
+                        "Fecha", "Nombre de Asiento", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito", "Saldo"
+                };
+
         @Override
         public int getRowCount() {
             return getData().size();
@@ -192,26 +212,28 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
 
         @Override
         public int getColumnCount() {
-            return TrialBalanceRepositoryImpl.Field.values().length;
+            return COLUMN_NAMES.length;
         }
 
         @Override
         public String getColumnName(int column) {
-            return TrialBalanceRepositoryImpl.Field.values()[column].getFieldName();
+            return COLUMN_NAMES[column];
         }
+
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             var dto = getData().get(rowIndex);
             return switch (columnIndex) {
-                case 0 -> dto.getJournalEntryDate();
-                case 1 -> dto.getJournalEntryName();
-                case 2 -> dto.getLedgerRecordDocumentType();
+                case 0 -> dto.getEntryDate();
+                case 1 -> dto.getEntryName();
+                case 2 -> dto.getDocumentType();
                 case 3 -> Account.getCellRenderer(dto.getAccountId());
-                case 4 -> dto.getLedgerRecordReference();
-                case 5 -> dto.getLedgerRecordDebit();
-                case 6 -> dto.getLedgerRecordCredit();
-                case 7 -> dto.getBalance();
+                case 4 -> dto.getVoucher();
+                case 5 -> dto.getReference();
+                case 6 -> dto.getDebit();
+                case 7 -> dto.getCredit();
+                case 8 -> dto.getBalance();
                 default -> null;
             };
         }
@@ -221,8 +243,8 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
             return switch (columnIndex) {
                 case 0 -> LocalDate.class;
                 case 2 -> DocumentType.class;
-                case 1, 3, 4 -> String.class;
-                case 5, 6, 7 -> BigDecimal.class;
+                case 1, 3, 4, 5 -> String.class;
+                case 6, 7, 8 -> BigDecimal.class;
                 default -> Object.class;
             };
         }
@@ -231,11 +253,6 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
     @Override
     public GeneralLedgerView getView() {
         return (GeneralLedgerView) super.getView();
-    }
-
-    @Override
-    public GeneralLedgerRepositoryImpl getRepository() {
-        return (GeneralLedgerRepositoryImpl) super.getRepository();
     }
 
     private JComboBox<AccountType> getCbxAccountType() {
@@ -250,4 +267,8 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
         return getView().getCbxAccount();
     }
 
+    @Override
+    public AccountRepository getRepository() {
+        return (AccountRepository) super.getRepository();
+    }
 }

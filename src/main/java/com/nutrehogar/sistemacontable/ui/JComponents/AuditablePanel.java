@@ -26,7 +26,7 @@ public class AuditablePanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         lblUpdateAt = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("   Auditoria   "));
+        setBorder(javax.swing.BorderFactory.createTitledBorder("  Auditoria  "));
         setOpaque(false);
 
         lblCreateBy.setText("nadie");

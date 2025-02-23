@@ -11,13 +11,18 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString(exclude = "ledgerRecords")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "account")
 public class Account extends AuditableEntity {
+    public Account(User user) {
+        super(user);
+    }
+
     public static final int MAX_ID_LENGTH = 5;
     public static final int MAX_CANONICAL_ID_LENGTH = 3;
     @Id

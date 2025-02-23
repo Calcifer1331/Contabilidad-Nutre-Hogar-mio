@@ -18,6 +18,10 @@ import java.util.List;
 @Entity
 @Table(name = "journal_entry")
 public class JournalEntry extends AuditableEntity {
+    public JournalEntry(User user) {
+        super(user);
+    }
+
     @Id
     @Column(name = "id")
     Integer id;

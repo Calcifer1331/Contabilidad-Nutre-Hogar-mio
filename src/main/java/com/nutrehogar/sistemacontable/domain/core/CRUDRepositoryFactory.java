@@ -78,7 +78,6 @@ public class CRUDRepositoryFactory {
     }
 
     public static Throwable searchRepo(Throwable throwable) {
-        System.out.println("************" + throwable);
         if (throwable instanceof RepositoryException repositoryException) return repositoryException;
         return searchRepo(throwable.getCause());
     }

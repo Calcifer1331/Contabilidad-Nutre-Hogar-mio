@@ -4,10 +4,7 @@ Este proyecto es una aplicación de escritorio para la gestión contable de Nutr
 transacciones contables, incluyendo la generación de reportes de libro diario mayor y general.
 
 ## Indicaciones
-- balance general debe estar ordenado por codigo de cuenta
-- los encabezados de las tablas de bussines
 - el numero de cheque en los JaspertReports
-- El Comprobante en las tablas de balance y mayor general
 
 ### crear exe
 

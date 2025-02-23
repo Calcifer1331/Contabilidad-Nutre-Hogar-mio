@@ -45,4 +45,12 @@ public abstract class AccountingEntryFormView extends CRUDView {
 
     public abstract ButtonGroup getBgRecordType();
 
+    public abstract JLabel getLblCreateAt();
+
+    public abstract JLabel getLblCreateBy();
+
+    public abstract JLabel getLblUpdateAt();
+
+    public abstract JLabel getLblUpdateBy();
+
 }

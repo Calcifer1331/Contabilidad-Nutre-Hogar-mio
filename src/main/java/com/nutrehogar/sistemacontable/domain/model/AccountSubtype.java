@@ -1,6 +1,7 @@
 package com.nutrehogar.sistemacontable.domain.model;
 
 import com.nutrehogar.sistemacontable.application.dto.Pair;
+import com.nutrehogar.sistemacontable.application.repository.Auditable;
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,11 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "account_subtype")
-public class AccountSubtype extends AuditableEntity{
+public class AccountSubtype extends AuditableEntity {
+    public AccountSubtype(User user) {
+        super(user);
+    }
+
     public static final int MAX_ID_LENGTH = 4;
     public static final int MAX_CANONICAL_ID_LENGTH = 3;
     @Id

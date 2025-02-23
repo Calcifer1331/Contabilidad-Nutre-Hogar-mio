@@ -9,13 +9,7 @@ import com.nutrehogar.sistemacontable.application.controller.crud.AccountSubtype
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountingEntryFormController;
 import com.nutrehogar.sistemacontable.application.repository.crud.*;
 import com.nutrehogar.sistemacontable.domain.core.CRUDRepositoryFactory;
-import com.nutrehogar.sistemacontable.domain.model.Account;
-import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
-import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
-import com.nutrehogar.sistemacontable.domain.model.LedgerRecord;
-import com.nutrehogar.sistemacontable.domain.repository.GeneralLedgerRepositoryImpl;
-import com.nutrehogar.sistemacontable.domain.repository.JournalRepositoryImpl;
-import com.nutrehogar.sistemacontable.domain.repository.TrialBalanceRepositoryImpl;
+import com.nutrehogar.sistemacontable.domain.model.*;
 import com.nutrehogar.sistemacontable.ui.view.business.GeneralLedgerView;
 import com.nutrehogar.sistemacontable.ui.view.business.JournalView;
 import com.nutrehogar.sistemacontable.ui.view.business.TrialBalanceView;
@@ -44,9 +38,6 @@ public class DashboardController extends Controller {
     private JournalEntryRepository journalEntryRepository;
     private LedgerRecordRepository ledgerRecordRepository;
     private final UserRepository userRepository;
-    private JournalRepositoryImpl journalRepository;
-    private TrialBalanceRepositoryImpl trialBalanceRepository;
-    private GeneralLedgerRepositoryImpl generalLedgerRepository;
 
     private AccountingEntryFormController accountingEntryFormController;
     private AccountController accountController;
@@ -55,6 +46,7 @@ public class DashboardController extends Controller {
     private TrialBalanceController trialBalanceController;
     private GeneralLedgerController generalLedgerController;
     private BackupController backupController;
+    private ReportController reportController;
 
     private AccountingEntryFormView accountingEntryFormView;
     private AccountView accountView;
@@ -66,12 +58,14 @@ public class DashboardController extends Controller {
 
     private Consumer<Integer> prepareToEditJournalEntry;
     private final JFrame parent;
+    private final User user;
 
-    public DashboardController(DashboardView view, JFrame parent, UserRepository userRepository, Session session) {
+    public DashboardController(DashboardView view, JFrame parent, UserRepository userRepository, Session session, User user) {
         super(view);
         this.userRepository = userRepository;
         this.session = session;
         this.parent = parent;
+        this.user = user;
         initialize();
     }
 
@@ -173,44 +167,37 @@ public class DashboardController extends Controller {
         return ledgerRecordRepository = ensureInitialized(ledgerRecordRepository, () -> CRUDRepositoryFactory.createRepository(LedgerRecordRepository.class, LedgerRecord.class, session));
     }
 
-    public JournalRepositoryImpl getJournalRepositoryImpl() {
-        return journalRepository = ensureInitialized(journalRepository, () -> new JournalRepositoryImpl(session));
-    }
-
-    public TrialBalanceRepositoryImpl getTrialBalanceRepositoryImpl() {
-        return trialBalanceRepository = ensureInitialized(trialBalanceRepository, () -> new TrialBalanceRepositoryImpl(session));
-    }
-
-    public GeneralLedgerRepositoryImpl getGeneralLedgerRepositoryImpl() {
-        return generalLedgerRepository = ensureInitialized(generalLedgerRepository, () -> new GeneralLedgerRepositoryImpl(session));
-    }
-
     public AccountingEntryFormController getAccountingEntryFormController() {
-        return accountingEntryFormController = ensureInitialized(accountingEntryFormController, () -> new AccountingEntryFormController(getLedgerRecordRepository(), getAccountingEntryFormView(), getJournalEntryRepository(), getAccountRepository()));
+        return accountingEntryFormController = ensureInitialized(accountingEntryFormController, () -> new AccountingEntryFormController(getLedgerRecordRepository(), getAccountingEntryFormView(), getJournalEntryRepository(), getAccountRepository(), getReportController(), user));
     }
 
     public AccountController getAccountController() {
-        return accountController = ensureInitialized(accountController, () -> new AccountController(getAccountRepository(), getAccountView(), getAccountSubtypeRepository()));
+        return accountController = ensureInitialized(accountController, () -> new AccountController(getAccountRepository(), getAccountView(), getAccountSubtypeRepository(), getReportController(), user));
     }
 
     public AccountSubtypeController getAccountSubtypeController() {
-        return accountSubtypeController = ensureInitialized(accountSubtypeController, () -> new AccountSubtypeController(getAccountSubtypeRepository(), getAccountSubtypeView()));
+        return accountSubtypeController = ensureInitialized(accountSubtypeController, () -> new AccountSubtypeController(getAccountSubtypeRepository(), getAccountSubtypeView(), getReportController(), user));
     }
 
     public JournalController getJournalController() {
-        return journalController = ensureInitialized(journalController, () -> new JournalController(getJournalRepositoryImpl(), getJournalView(), prepareToEditJournalEntry));
+        return journalController = ensureInitialized(journalController, () -> new JournalController(getJournalEntryRepository(), getJournalView(), prepareToEditJournalEntry, getReportController(), user));
     }
 
     public TrialBalanceController getTrialBalanceController() {
-        return trialBalanceController = ensureInitialized(trialBalanceController, () -> new TrialBalanceController(getTrialBalanceRepositoryImpl(), getTrialBalanceView(), prepareToEditJournalEntry));
+        return trialBalanceController = ensureInitialized(trialBalanceController, () -> new TrialBalanceController(getJournalEntryRepository(), getTrialBalanceView(), prepareToEditJournalEntry, getReportController(), user));
     }
 
+    //
     public GeneralLedgerController getGeneralLedgerController() {
-        return generalLedgerController = ensureInitialized(generalLedgerController, () -> new GeneralLedgerController(getGeneralLedgerRepositoryImpl(), getGeneralLedgerView(), prepareToEditJournalEntry, getAccountSubtypeRepository()));
+        return generalLedgerController = ensureInitialized(generalLedgerController, () -> new GeneralLedgerController(getAccountRepository(), getGeneralLedgerView(), prepareToEditJournalEntry, getAccountSubtypeRepository(), getReportController(), user));
     }
 
     public BackupController getBackupController() {
         return backupController = ensureInitialized(backupController, () -> new BackupController(getBackupView(), session, parent));
+    }
+
+    public ReportController getReportController() {
+        return reportController = ensureInitialized(reportController, ReportController::new);
     }
 
     @Override

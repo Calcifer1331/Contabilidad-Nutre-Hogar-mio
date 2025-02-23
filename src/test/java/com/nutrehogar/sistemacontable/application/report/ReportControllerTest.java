@@ -1,6 +1,7 @@
 package com.nutrehogar.sistemacontable.application.report;
 
 import com.nutrehogar.sistemacontable.application.MainClass;
+import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.application.dto.LedgerRecordDTO;
 import com.nutrehogar.sistemacontable.domain.model.User;

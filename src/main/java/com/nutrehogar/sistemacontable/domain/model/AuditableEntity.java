@@ -5,17 +5,19 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @MappedSuperclass
 @Getter
 @Setter
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PROTECTED)
 public abstract class AuditableEntity {
 
     @Transient
-    public User user;
+    private User user;
 
-    @Column(name = "created_by", updatable = false)
+    @Column(name = "created_by", updatable = false, nullable = false)
     String createdBy;
 
     @Column(name = "updated_by")
@@ -24,7 +26,7 @@ public abstract class AuditableEntity {
     @Column(name = "deleted_by")
     String deletedBy;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     LocalDateTime createdAt;
 
     @Column(name = "updated_at")
@@ -32,6 +34,11 @@ public abstract class AuditableEntity {
 
     @Column(name = "deleted_at")
     LocalDateTime deletedAt;
+
+    public AuditableEntity(User user) {
+        this.user = Optional.ofNullable(user)
+                .orElseThrow(() -> new IllegalArgumentException("user is null"));
+    }
 
     @PrePersist
     protected void prePersist() {
@@ -46,6 +53,8 @@ public abstract class AuditableEntity {
     }
 
     private String getUsername() {
-        return user.getUsername() == null ? "no hay usuario!" : user.getUsername();
+        return Optional.ofNullable(user.getUsername())
+                .orElse("unknown user");
     }
+
 }

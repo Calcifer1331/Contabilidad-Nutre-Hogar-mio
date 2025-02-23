@@ -40,9 +40,9 @@ public class DefaultBackupView extends BackupView {
         sepaSection1 = new javax.swing.JSeparator();
         panelSection2 = new javax.swing.JPanel();
         labelDescriptionRestarBackup = new javax.swing.JLabel();
-        btnRestore = new JButton();
+        btnRestore = new javax.swing.JButton();
         labelDescriptionRestarBackup1 = new javax.swing.JLabel();
-        btnAdd = new JButton();
+        btnAdd = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -59,7 +59,7 @@ public class DefaultBackupView extends BackupView {
             }
         ) {
             Class[] types = new Class [] {
-                String.class, String.class, String.class, String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -160,8 +160,8 @@ public class DefaultBackupView extends BackupView {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JButton btnAdd;
-    private JButton btnRestore;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnRestore;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelDescription1;
     private javax.swing.JLabel labelDescriptionRestarBackup;

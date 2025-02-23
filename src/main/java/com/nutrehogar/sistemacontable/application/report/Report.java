@@ -1,6 +1,5 @@
 package com.nutrehogar.sistemacontable.application.report;
 
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
 import com.nutrehogar.sistemacontable.exception.ReportException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public abstract class Report<T> {
 
     private void initializeJasperReport() throws ReportException {
         try {
-            InputStream templateStream = ReportController.class.getResourceAsStream(TEMPLATE_PATH + getTemplateName());
+            InputStream templateStream = Report.class.getResourceAsStream(TEMPLATE_PATH + getTemplateName());
             if (templateStream == null) {
                 throw new ReportException("Template not found: " + TEMPLATE_PATH + getTemplateName());
             }

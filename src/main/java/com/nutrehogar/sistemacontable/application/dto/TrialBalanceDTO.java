@@ -6,59 +6,53 @@ package com.nutrehogar.sistemacontable.application.dto;
 
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
+import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TrialBalanceDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class TrialBalanceDTO extends AuditableDTO {
     Integer journalId;
     LocalDate journalDate;
-    DocumentType ledgeRecordDocumentType;
+    DocumentType documentType;
     Integer accountId;
     String accountName;
     AccountType accountType;
-    String ledgerRecordReference;
-    BigDecimal ledgerRecordDebit;
-    BigDecimal ledgerRecordCredit;
+    String voucher;
+    String reference;
+    BigDecimal debit;
+    BigDecimal credit;
     @Setter
     BigDecimal balance;
 
-    public TrialBalanceDTO(Integer journalId, LocalDate journalDate, DocumentType ledgeRecordDocumentType, Integer accountId, String accountName, AccountType accountType, String ledgerRecordReference, BigDecimal ledgerRecordDebit, BigDecimal ledgerRecordCredit) {
+    public TrialBalanceDTO(String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt, Integer journalId, LocalDate journalDate, DocumentType documentType, Integer accountId, String accountName, AccountType accountType, String voucher, String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
+        super(createdBy, updatedBy, createdAt, updatedAt);
         this.journalId = journalId;
         this.journalDate = journalDate;
-        this.ledgeRecordDocumentType = ledgeRecordDocumentType;
+        this.documentType = documentType;
         this.accountId = accountId;
         this.accountName = accountName;
         this.accountType = accountType;
-        this.ledgerRecordReference = ledgerRecordReference;
-        this.ledgerRecordDebit = ledgerRecordDebit;
-        this.ledgerRecordCredit = ledgerRecordCredit;
-        this.balance = BigDecimal.ZERO;
-    }
-
-    public TrialBalanceDTO(Integer journalId, LocalDate journalDate, DocumentType ledgeRecordDocumentType, Integer accountId, String accountName, AccountType accountType, String ledgerRecordReference, BigDecimal ledgerRecordDebit, BigDecimal ledgerRecordCredit, BigDecimal balance) {
-        this.journalId = journalId;
-        this.journalDate = journalDate;
-        this.ledgeRecordDocumentType = ledgeRecordDocumentType;
-        this.accountId = accountId;
-        this.accountName = accountName;
-        this.accountType = accountType;
-        this.ledgerRecordReference = ledgerRecordReference;
-        this.ledgerRecordDebit = ledgerRecordDebit;
-        this.ledgerRecordCredit = ledgerRecordCredit;
+        this.voucher = voucher;
+        this.reference = reference;
+        this.debit = debit;
+        this.credit = credit;
         this.balance = balance;
     }
 
-    public TrialBalanceDTO(String ledgerRecordReference, BigDecimal ledgerRecordDebit, BigDecimal ledgerRecordCredit, BigDecimal balance) {
-        this.ledgerRecordReference = ledgerRecordReference;
-        this.ledgerRecordDebit = ledgerRecordDebit;
-        this.ledgerRecordCredit = ledgerRecordCredit;
+    public TrialBalanceDTO(String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
+        this.reference = reference;
+        this.debit = debit;
+        this.credit = credit;
         this.balance = balance;
     }
 }
