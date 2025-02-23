@@ -1,6 +1,6 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.GeneralLedgerDTO;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
@@ -35,8 +35,8 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
     private CustomComboBoxModel<Account> cbxModelAccount;
     private CustomComboBoxModel<AccountSubtype> cbxModelSubtype;
 
-    public GeneralLedgerController(AccountRepository repository, GeneralLedgerView view, Consumer<Integer> editJournalEntry, AccountSubtypeRepository subtypeRepository, ReportController reportController, User user) {
-        super(repository, view, editJournalEntry, reportController, user);
+    public GeneralLedgerController(AccountRepository repository, GeneralLedgerView view, Consumer<Integer> editJournalEntry, AccountSubtypeRepository subtypeRepository, ReportService reportService, User user) {
+        super(repository, view, editJournalEntry, reportService, user);
         this.subtypeRepository = subtypeRepository;
         loadDataSubtype();
     }

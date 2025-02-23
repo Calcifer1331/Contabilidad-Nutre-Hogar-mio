@@ -1,11 +1,9 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.AuditableDTO;
 import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
-import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
-import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.LocalDateSpinner;
 import com.nutrehogar.sistemacontable.ui.components.LocalDateSpinnerModel;
@@ -32,8 +30,8 @@ public abstract class BusinessController<T extends AuditableDTO, R> extends Simp
     protected Integer journalEntryId;
 
 
-    public BusinessController(SimpleRepository<R> repository, BusinessView view, Consumer<Integer> editJournalEntry, ReportController reportController, User user) {
-        super(repository, view, reportController,user);
+    public BusinessController(SimpleRepository<R> repository, BusinessView view, Consumer<Integer> editJournalEntry, ReportService reportService, User user) {
+        super(repository, view, reportService,user);
         this.editJournalEntry = editJournalEntry;
     }
 

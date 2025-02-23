@@ -1,10 +1,8 @@
 package com.nutrehogar.sistemacontable.application.controller;
 
 
-import com.nutrehogar.sistemacontable.application.controller.service.BackupController;
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
-import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
@@ -31,13 +29,13 @@ public abstract class SimpleController<T, R> extends Controller {
     protected List<T> data = new ArrayList<>();
     protected T selected;
     protected AbstractTableModel tblModel;
-    protected ReportController reportController;
+    protected ReportService reportService;
     protected final User user;
 
-    public SimpleController(SimpleRepository<R> repository, SimpleView view, ReportController reportController, User user) {
+    public SimpleController(SimpleRepository<R> repository, SimpleView view, ReportService reportService, User user) {
         super(view);
         this.repository = repository;
-        this.reportController = reportController;
+        this.reportService = reportService;
         this.user = user;
         initialize();
     }

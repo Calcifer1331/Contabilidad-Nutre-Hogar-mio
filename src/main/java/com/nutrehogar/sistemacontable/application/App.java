@@ -3,7 +3,7 @@ package com.nutrehogar.sistemacontable.application;
 import com.nutrehogar.sistemacontable.application.repository.crud.*;
 import com.nutrehogar.sistemacontable.domain.model.*;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.nutrehogar.sistemacontable.application.config.HibernateUtil;
+import com.nutrehogar.sistemacontable.infrastructure.persistence.HibernateUtil;
 import com.nutrehogar.sistemacontable.application.controller.service.DashboardController;
 import com.nutrehogar.sistemacontable.domain.core.CRUDRepositoryFactory;
 import com.nutrehogar.sistemacontable.ui.ThemeConfig;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 
 import javax.swing.*;
-import java.awt.*;
 
 @Slf4j
 public class App {

@@ -1,6 +1,6 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.JournalDTO;
 import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
@@ -17,8 +17,8 @@ import java.time.LocalDate;
 import java.util.function.Consumer;
 
 public class JournalController extends BusinessController<JournalDTO, JournalEntry> {
-    public JournalController(JournalEntryRepository repository, JournalView view, Consumer<Integer> editJournalEntry, ReportController reportController, User user) {
-        super(repository, view, editJournalEntry, reportController, user);
+    public JournalController(JournalEntryRepository repository, JournalView view, Consumer<Integer> editJournalEntry, ReportService reportService, User user) {
+        super(repository, view, editJournalEntry, reportService, user);
     }
 
     @Override

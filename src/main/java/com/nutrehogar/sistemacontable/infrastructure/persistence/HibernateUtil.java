@@ -1,5 +1,6 @@
-package com.nutrehogar.sistemacontable.application.config;
+package com.nutrehogar.sistemacontable.infrastructure.persistence;
 
+import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

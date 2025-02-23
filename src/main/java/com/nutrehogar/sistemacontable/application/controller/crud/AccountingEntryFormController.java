@@ -2,11 +2,11 @@ package com.nutrehogar.sistemacontable.application.controller.crud;
 
 import com.nutrehogar.sistemacontable.application.MainClass;
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.application.dto.LedgerRecordDTO;
-import com.nutrehogar.sistemacontable.application.report.PaymentVoucher;
-import com.nutrehogar.sistemacontable.application.report.RegistrationForm;
+import com.nutrehogar.sistemacontable.infrastructure.report.PaymentVoucher;
+import com.nutrehogar.sistemacontable.infrastructure.report.RegistrationForm;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.LedgerRecordRepository;
@@ -32,7 +32,6 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,8 +49,8 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     private boolean isBeingEdited;
     public static final BigDecimal ZERO = BigDecimal.valueOf(0, 2);
 
-    public AccountingEntryFormController(LedgerRecordRepository repository, AccountingEntryFormView view, JournalEntryRepository journalRepository, AccountRepository accountRepository, ReportController reportController, User user) {
-        super(repository, view, reportController,user);
+    public AccountingEntryFormController(LedgerRecordRepository repository, AccountingEntryFormView view, JournalEntryRepository journalRepository, AccountRepository accountRepository, ReportService reportService, User user) {
+        super(repository, view, reportService,user);
         this.journalRepository = journalRepository;
         this.accountRepository = accountRepository;
         loadDataAccount();
@@ -98,7 +97,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getBtnUpdateEntry().addActionListener(e -> updateEntry());
         getBtnGeneratePaymentVoucher().addActionListener(e -> {
             try {
-                reportController.generateReport(PaymentVoucher.class, getJournalEntryDTO());
+                reportService.generateReport(PaymentVoucher.class, getJournalEntryDTO());
             } catch (Exception ex) {
                 log.info(ex.getMessage());
                 throw new RuntimeException(ex);
@@ -106,7 +105,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         });
         getBtnGenerateRegistrationForm().addActionListener(e -> {
             try {
-                reportController.generateReport(RegistrationForm.class, getJournalEntryDTO());
+                reportService.generateReport(RegistrationForm.class, getJournalEntryDTO());
             } catch (Exception ex) {
                 log.info(ex.getMessage());
                 throw new RuntimeException(ex);

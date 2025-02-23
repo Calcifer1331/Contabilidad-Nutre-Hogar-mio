@@ -10,6 +10,7 @@ import com.nutrehogar.sistemacontable.application.controller.crud.AccountingEntr
 import com.nutrehogar.sistemacontable.application.repository.crud.*;
 import com.nutrehogar.sistemacontable.domain.core.CRUDRepositoryFactory;
 import com.nutrehogar.sistemacontable.domain.model.*;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.ui.view.business.GeneralLedgerView;
 import com.nutrehogar.sistemacontable.ui.view.business.JournalView;
 import com.nutrehogar.sistemacontable.ui.view.business.TrialBalanceView;
@@ -21,7 +22,6 @@ import com.nutrehogar.sistemacontable.ui.view.imple.*;
 import com.nutrehogar.sistemacontable.ui.view.service.BackupView;
 import com.nutrehogar.sistemacontable.ui.view.service.DashboardView;
 import com.nutrehogar.sistemacontable.ui.view.business.BusinessView;
-import lombok.Getter;
 import org.hibernate.Session;
 
 import javax.swing.*;
@@ -46,7 +46,7 @@ public class DashboardController extends Controller {
     private TrialBalanceController trialBalanceController;
     private GeneralLedgerController generalLedgerController;
     private BackupController backupController;
-    private ReportController reportController;
+    private ReportService reportService;
 
     private AccountingEntryFormView accountingEntryFormView;
     private AccountView accountView;
@@ -196,8 +196,8 @@ public class DashboardController extends Controller {
         return backupController = ensureInitialized(backupController, () -> new BackupController(getBackupView(), session, parent));
     }
 
-    public ReportController getReportController() {
-        return reportController = ensureInitialized(reportController, ReportController::new);
+    public ReportService getReportController() {
+        return reportService = ensureInitialized(reportService, ReportService::new);
     }
 
     @Override

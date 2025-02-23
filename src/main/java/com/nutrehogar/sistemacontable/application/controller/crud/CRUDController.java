@@ -2,9 +2,8 @@ package com.nutrehogar.sistemacontable.application.controller.crud;
 
 import com.nutrehogar.sistemacontable.application.MainClass;
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.repository.crud.CRUDRepository;
-import com.nutrehogar.sistemacontable.domain.Permissions;
 import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
@@ -12,18 +11,16 @@ import com.nutrehogar.sistemacontable.ui.view.crud.CRUDView;
 import jakarta.persistence.EntityExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectDeletedException;
-import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 @Slf4j
 public abstract class CRUDController<T extends AuditableEntity, ID> extends SimpleController<T, T> {
-    public CRUDController(CRUDRepository<T, ID> repository, CRUDView view, ReportController reportController, User user) {
-        super(repository, view, reportController, user);
+    public CRUDController(CRUDRepository<T, ID> repository, CRUDView view, ReportService reportService, User user) {
+        super(repository, view, reportService, user);
     }
 
     @Override

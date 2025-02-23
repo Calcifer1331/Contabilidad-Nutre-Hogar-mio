@@ -1,4 +1,4 @@
-package com.nutrehogar.sistemacontable.application.report.dto;
+package com.nutrehogar.sistemacontable.infrastructure.report.dto;
 
 import com.nutrehogar.sistemacontable.application.dto.JournalDTO;
 import lombok.AccessLevel;

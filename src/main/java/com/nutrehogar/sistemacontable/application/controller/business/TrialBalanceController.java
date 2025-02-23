@@ -1,6 +1,6 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.TrialBalanceDTO;
 import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TrialBalanceController extends BusinessController<TrialBalanceDTO, JournalEntry> {
 
-    public TrialBalanceController(JournalEntryRepository repository, TrialBalanceView view, Consumer<Integer> editJournalEntry, ReportController reportController, User user) {
-        super(repository, view, editJournalEntry, reportController, user);
+    public TrialBalanceController(JournalEntryRepository repository, TrialBalanceView view, Consumer<Integer> editJournalEntry, ReportService reportService, User user) {
+        super(repository, view, editJournalEntry, reportService, user);
     }
 
     @Override

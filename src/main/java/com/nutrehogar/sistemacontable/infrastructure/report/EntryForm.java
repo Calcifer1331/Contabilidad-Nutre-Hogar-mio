@@ -1,4 +1,4 @@
-package com.nutrehogar.sistemacontable.application.report;
+package com.nutrehogar.sistemacontable.infrastructure.report;
 
 import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.exception.ReportException;

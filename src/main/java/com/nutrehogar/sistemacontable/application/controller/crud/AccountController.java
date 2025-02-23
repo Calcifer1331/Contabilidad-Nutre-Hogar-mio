@@ -1,6 +1,6 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
-import com.nutrehogar.sistemacontable.application.controller.service.ReportController;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.domain.AccountType;
@@ -23,8 +23,8 @@ public class AccountController extends CRUDController<Account, Integer> {
     private CustomComboBoxModel<AccountSubtype> cbxModelSubtype;
     private DocumentSizeFilter documentSizeFilter;
 
-    public AccountController(AccountRepository repository, AccountView view, AccountSubtypeRepository subtypeRepository, ReportController reportController, User user) {
-        super(repository, view, reportController, user);
+    public AccountController(AccountRepository repository, AccountView view, AccountSubtypeRepository subtypeRepository, ReportService reportService, User user) {
+        super(repository, view, reportService, user);
         this.subtypeRepository = subtypeRepository;
         loadDataSubtype();
         setTextToLbAccountTypeId();

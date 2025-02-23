@@ -1,6 +1,6 @@
 package com.nutrehogar.sistemacontable.domain.repository;
 
-import com.nutrehogar.sistemacontable.application.config.HibernateUtil;
+import com.nutrehogar.sistemacontable.infrastructure.persistence.HibernateUtil;
 import com.nutrehogar.sistemacontable.application.dto.JournalDTO;
 import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.core.CRUDRepositoryFactory;
@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class JournalEntryRepositoryImplTest {
 

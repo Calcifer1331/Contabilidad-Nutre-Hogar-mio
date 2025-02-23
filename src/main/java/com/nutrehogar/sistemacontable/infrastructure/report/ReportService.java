@@ -1,10 +1,7 @@
-package com.nutrehogar.sistemacontable.application.controller.service;
+package com.nutrehogar.sistemacontable.infrastructure.report;
 
 import com.nutrehogar.sistemacontable.application.MainClass;
 import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
-import com.nutrehogar.sistemacontable.application.report.PaymentVoucher;
-import com.nutrehogar.sistemacontable.application.report.RegistrationForm;
-import com.nutrehogar.sistemacontable.application.report.Report;
 import com.nutrehogar.sistemacontable.exception.ReportException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,13 +11,13 @@ import java.util.Map;
 
 
 @Slf4j
-public class ReportController {
+public class ReportService {
     private final String IMG_DIR;
     private final Map<String, Object> parameters;
     private PaymentVoucher paymentVoucher;
     private RegistrationForm registrationForm;
 
-    public ReportController() {
+    public ReportService() {
         parameters = new HashMap<>();
         IMG_DIR = ConfigLoader.Props.DIR_REPORTS_TEMPLATE_NAME.getPath().toString() + File.separator;
         log.info(IMG_DIR);
