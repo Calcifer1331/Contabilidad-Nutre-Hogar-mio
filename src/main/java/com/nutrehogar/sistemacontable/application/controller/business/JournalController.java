@@ -2,12 +2,12 @@ package com.nutrehogar.sistemacontable.application.controller.business;
 
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.JournalDTO;
-import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
+import com.nutrehogar.sistemacontable.application.repository.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
 import com.nutrehogar.sistemacontable.domain.model.User;
-import com.nutrehogar.sistemacontable.ui.view.business.JournalView;
+import com.nutrehogar.sistemacontable.application.view.business.JournalView;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.table.AbstractTableModel;

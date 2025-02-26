@@ -1,6 +1,0 @@
-package com.nutrehogar.sistemacontable.application.repository.crud;
-
-import com.nutrehogar.sistemacontable.domain.model.User;
-
-public interface UserRepository extends CRUDRepository<User, Integer> {
-}

@@ -15,7 +15,7 @@ import java.util.Optional;
 public abstract class AuditableEntity {
 
     @Transient
-    private User user;
+    private static User user;
 
     @Column(name = "created_by", updatable = false, nullable = false)
     String createdBy;

@@ -1,76 +1,71 @@
 package com.nutrehogar.sistemacontable.domain.core;
 
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
+import com.nutrehogar.sistemacontable.infrastructure.persistence.HibernateUtil;
 import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.OptimisticLockException;
-import jakarta.persistence.PersistenceException;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.HibernateException;
-import org.hibernate.ObjectDeletedException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 
+import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Slf4j
-@Getter
-@Setter
 public class TransactionManager {
-    private final Session session;
 
-    public TransactionManager(final Session session) {
-        this.session = session;
-    }
-
-    public <R> R executeInTransaction(Supplier<R> operation) throws RepositoryException {
-        Transaction transaction = session.getTransaction();
+    public static <R> R executeInTransaction(Function<Session, R> operation) throws RepositoryException {
+        Session session = null;
+        Transaction transaction = null;
         try {
-            if (!transaction.isActive()) {
-                transaction.begin();
-            }
+            session = HibernateUtil.getSession(); // Obtener sesión del pool
+            transaction = session.beginTransaction();
 
-            R result = operation.get();
+            R result = operation.apply(session); // Pasar la sesión a la operación
             transaction.commit();
             return result;
 
-        } catch (Exception e) { // Captura todas las excepciones
-            String message;
-            if (transaction != null && transaction.isActive()) {
-                try {
-                    transaction.rollback();
-                } catch (Exception rollbackEx) {
-                    log.error("Error al intentar hacer rollback de la transacción", rollbackEx);
-                }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RepositoryException("Error al obtener sesión", e);
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
-
-            message = switch (e) {
-                case ConstraintViolationException constraintViolationException ->
-                        "Violación de restricción en la base de datos";
-                case EntityExistsException entityExistsException -> "La entidad ya existe en la base de datos";
-                case ObjectDeletedException objectDeletedException ->
-                        "Se intentó operar sobre una entidad ya eliminada";
-                case OptimisticLockException optimisticLockException -> "Error de concurrencia detectado";
-                case EntityNotFoundException entityNotFoundException -> "Entidad no encontrada";
-                case HibernateException hibernateException -> "Problema relacionado con Hibernate";
-                case PersistenceException persistenceException -> "Error general de persistencia";
-                case IllegalArgumentException illegalArgumentException -> "Argumento ilegal en la operación";
-                case NullPointerException nullPointerException -> "Referencia nula detectada";
-                default -> "Error inesperado en la transacción";
-            };
-
-            log.error(message, e);
-            throw new RepositoryException(message, e);
+            handleException(e); // Manejar excepciones específicas
+            throw new RepositoryException("Error en transacción", e);
+        } finally {
+            if (session != null) {
+                HibernateUtil.returnSession(session); // Devolver sesión al pool
+            }
         }
     }
+    /*
+    public class TransactionManager {
+    public static <T> T execute(Supplier<T> operation) {
+        try (Session session = SessionPool.getSession()) {
+            return session.getTransaction().execute(s -> {
+                try {
+                    return operation.get();
+                } catch (Exception e) {
+                    throw new RepositoryException(e);
+                }
+            });
+        }
+    }
+}
+     */
 
-    public void executeInTransaction(Runnable operation) {
-        executeInTransaction(() -> {
-            operation.run();
-            return null;
-        });
+    private static void handleException(Exception e) {
+        String message = switch (e) {
+            case EntityExistsException ex -> "Registro ya existe: " + ex.getMessage();
+            case ConstraintViolationException ex when Objects.equals(ex.getConstraintName(), "UK_ACCOUNT_CODE") ->
+                    "Código de cuenta duplicado";
+            case null -> "Error desconocido";
+            default -> "Error: " + e.getMessage();
+        };
+        System.out.println(message);
+
     }
 }

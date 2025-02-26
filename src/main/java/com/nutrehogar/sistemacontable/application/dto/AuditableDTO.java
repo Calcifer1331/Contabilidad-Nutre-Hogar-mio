@@ -1,6 +1,5 @@
 package com.nutrehogar.sistemacontable.application.dto;
 
-import com.nutrehogar.sistemacontable.application.repository.Auditable;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -6,7 +6,7 @@ import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
-import com.nutrehogar.sistemacontable.ui.view.SimpleView;
+import com.nutrehogar.sistemacontable.application.view.SimpleView;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

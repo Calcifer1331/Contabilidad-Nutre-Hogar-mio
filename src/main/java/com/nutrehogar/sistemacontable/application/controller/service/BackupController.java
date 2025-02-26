@@ -4,7 +4,7 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
 import com.nutrehogar.sistemacontable.application.controller.Controller;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
-import com.nutrehogar.sistemacontable.ui.view.service.BackupView;
+import com.nutrehogar.sistemacontable.application.view.service.BackupView;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
-import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
+import com.nutrehogar.sistemacontable.application.repository.AccountRepository;
+import com.nutrehogar.sistemacontable.application.repository.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
@@ -10,7 +10,7 @@ import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.CustomComboBoxModel;
 import com.nutrehogar.sistemacontable.ui.components.CustomListCellRenderer;
 import com.nutrehogar.sistemacontable.ui.components.DocumentSizeFilter;
-import com.nutrehogar.sistemacontable.ui.view.crud.AccountView;
+import com.nutrehogar.sistemacontable.application.view.crud.AccountView;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;

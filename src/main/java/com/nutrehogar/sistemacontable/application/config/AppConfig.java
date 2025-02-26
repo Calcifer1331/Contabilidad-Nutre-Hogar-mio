@@ -1,5 +1,11 @@
 package com.nutrehogar.sistemacontable.application.config;
 
+import com.nutrehogar.sistemacontable.ui.view.business.DefaultGeneralLedgerView;
+import com.nutrehogar.sistemacontable.ui.view.business.DefaultJournalView;
+import com.nutrehogar.sistemacontable.ui.view.service.DefaultBackupView;
+import com.nutrehogar.sistemacontable.ui.view.crud.DefaultAccountView;
+import com.nutrehogar.sistemacontable.ui.view.crud.DefaultAccountEntryFormView;
+import com.nutrehogar.sistemacontable.ui.view.crud.DefaultAccountSubtypeView;
 import com.nutrehogar.sistemacontable.application.controller.business.GeneralLedgerController;
 import com.nutrehogar.sistemacontable.application.controller.business.JournalController;
 import com.nutrehogar.sistemacontable.application.controller.business.TrialBalanceController;
@@ -7,12 +13,11 @@ import com.nutrehogar.sistemacontable.application.controller.crud.AccountControl
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountSubtypeController;
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountingEntryFormController;
 import com.nutrehogar.sistemacontable.application.controller.service.BackupController;
-import com.nutrehogar.sistemacontable.application.repository.crud.*;
+import com.nutrehogar.sistemacontable.application.repository.*;
+import com.nutrehogar.sistemacontable.domain.repository.*;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.domain.core.CRUDRepositoryFactory;
 import com.nutrehogar.sistemacontable.domain.model.*;
-import com.nutrehogar.sistemacontable.ui.view.crud.DefaultTrialBalanceView;
-import com.nutrehogar.sistemacontable.ui.view.imple.*;
+import com.nutrehogar.sistemacontable.ui.view.business.DefaultTrialBalanceView;
 import org.hibernate.Session;
 
 import javax.swing.*;
@@ -22,14 +27,14 @@ public class AppConfig {
         ApplicationContext context = new ApplicationContext();
 
         // Registro de repositorios
-        context.registerBean(AccountRepository.class, CRUDRepositoryFactory.createRepository(AccountRepository.class, Account.class, session));
-        context.registerBean(AccountSubtypeRepository.class, CRUDRepositoryFactory.createRepository(AccountSubtypeRepository.class, AccountSubtype.class, session));
-        context.registerBean(JournalEntryRepository.class, CRUDRepositoryFactory.createRepository(JournalEntryRepository.class, JournalEntry.class, session));
-        context.registerBean(LedgerRecordRepository.class, CRUDRepositoryFactory.createRepository(LedgerRecordRepository.class, LedgerRecord.class, session));
-        context.registerBean(UserRepository.class, CRUDRepositoryFactory.createRepository(UserRepository.class, User.class, session));
+        context.registerBean(AccountRepository.class, new AccountRepo());
+        context.registerBean(AccountSubtypeRepository.class, new AccountSubtypeRepo());
+        context.registerBean(JournalEntryRepository.class, new JournalEntryRepo());
+        context.registerBean(LedgerRecordRepository.class, new LedgerRecordRepo());
+        context.registerBean(UserRepository.class, new UserRepo());
 
         // Registro de servicios
-        context.registerBean(ReportService.class, new ReportService());
+        context.registerBean(ReportService.class, new ReportService(user));
 
         // Registro de controladores
         context.registerBean(AccountingEntryFormController.class, new AccountingEntryFormController(

@@ -1,15 +1,14 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
+import com.nutrehogar.sistemacontable.application.repository.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.domain.AccountType;
-import com.nutrehogar.sistemacontable.domain.helper.AccountSubtypeIdComparator;
 import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.CustomComboBoxModel;
 import com.nutrehogar.sistemacontable.ui.components.CustomListCellRenderer;
 import com.nutrehogar.sistemacontable.ui.components.DocumentSizeFilter;
-import com.nutrehogar.sistemacontable.ui.view.crud.AccountSubtypeView;
+import com.nutrehogar.sistemacontable.application.view.crud.AccountSubtypeView;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -35,7 +34,7 @@ public class AccountSubtypeController extends CRUDController<AccountSubtype, Int
 
     @Override
     protected void updateView() {
-        getData().sort(new AccountSubtypeIdComparator());
+        getData().sort(new AccountSubtype.Comparator());
         super.updateView();
     }
 

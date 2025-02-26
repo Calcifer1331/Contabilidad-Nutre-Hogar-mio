@@ -7,7 +7,7 @@ import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.LocalDateSpinner;
 import com.nutrehogar.sistemacontable.ui.components.LocalDateSpinnerModel;
-import com.nutrehogar.sistemacontable.ui.view.business.BusinessView;
+import com.nutrehogar.sistemacontable.application.view.business.BusinessView;
 import lombok.Getter;
 import lombok.Setter;
 

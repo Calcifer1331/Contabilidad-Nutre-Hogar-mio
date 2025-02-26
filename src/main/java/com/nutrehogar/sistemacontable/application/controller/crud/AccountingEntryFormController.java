@@ -7,9 +7,9 @@ import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.application.dto.LedgerRecordDTO;
 import com.nutrehogar.sistemacontable.infrastructure.report.PaymentVoucher;
 import com.nutrehogar.sistemacontable.infrastructure.report.RegistrationForm;
-import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
-import com.nutrehogar.sistemacontable.application.repository.crud.JournalEntryRepository;
-import com.nutrehogar.sistemacontable.application.repository.crud.LedgerRecordRepository;
+import com.nutrehogar.sistemacontable.application.repository.AccountRepository;
+import com.nutrehogar.sistemacontable.application.repository.JournalEntryRepository;
+import com.nutrehogar.sistemacontable.application.repository.LedgerRecordRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
@@ -17,7 +17,7 @@ import com.nutrehogar.sistemacontable.domain.model.LedgerRecord;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.ui.components.*;
-import com.nutrehogar.sistemacontable.ui.view.crud.AccountingEntryFormView;
+import com.nutrehogar.sistemacontable.application.view.crud.AccountingEntryFormView;
 import jakarta.persistence.EntityExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectDeletedException;
@@ -35,6 +35,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -413,6 +414,8 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
                 case null, default -> e.getMessage();
             };
             showError("Error al guardar: " + fullMessage);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

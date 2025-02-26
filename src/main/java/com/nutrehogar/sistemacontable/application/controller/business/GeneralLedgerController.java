@@ -2,8 +2,8 @@ package com.nutrehogar.sistemacontable.application.controller.business;
 
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.GeneralLedgerDTO;
-import com.nutrehogar.sistemacontable.application.repository.crud.AccountRepository;
-import com.nutrehogar.sistemacontable.application.repository.crud.AccountSubtypeRepository;
+import com.nutrehogar.sistemacontable.application.repository.AccountRepository;
+import com.nutrehogar.sistemacontable.application.repository.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
@@ -11,7 +11,7 @@ import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.ui.components.CustomComboBoxModel;
 import com.nutrehogar.sistemacontable.ui.components.CustomListCellRenderer;
-import com.nutrehogar.sistemacontable.ui.view.business.GeneralLedgerView;
+import com.nutrehogar.sistemacontable.application.view.business.GeneralLedgerView;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 

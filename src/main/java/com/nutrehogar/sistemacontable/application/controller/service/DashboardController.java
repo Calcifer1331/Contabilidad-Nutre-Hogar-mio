@@ -8,8 +8,8 @@ import com.nutrehogar.sistemacontable.application.controller.business.TrialBalan
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountController;
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountSubtypeController;
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountingEntryFormController;
-import com.nutrehogar.sistemacontable.ui.view.business.BusinessView;
-import com.nutrehogar.sistemacontable.ui.view.service.DashboardView;
+import com.nutrehogar.sistemacontable.application.view.business.BusinessView;
+import com.nutrehogar.sistemacontable.application.view.service.DashboardView;
 
 import javax.swing.*;
 import java.awt.*;

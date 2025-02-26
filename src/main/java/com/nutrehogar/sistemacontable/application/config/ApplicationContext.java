@@ -1,8 +1,13 @@
 package com.nutrehogar.sistemacontable.application.config;
 
+import com.nutrehogar.sistemacontable.domain.core.WriteExecutor;
+import com.nutrehogar.sistemacontable.infrastructure.persistence.HibernateUtil;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class ApplicationContext implements AutoCloseable {
     private final Map<Class<?>, Object> beans = new HashMap<>();
 
@@ -17,7 +22,8 @@ public class ApplicationContext implements AutoCloseable {
 
     @Override
     public void close() {
-        // Liberar recursos (por ejemplo, cerrar conexiones de base de datos)
-        System.out.println("Cerrando ApplicationContext...");
+        HibernateUtil.shutdown();
+        WriteExecutor.shutdown();
+        log.info("Cerrando ApplicationContext...");
     }
 }
