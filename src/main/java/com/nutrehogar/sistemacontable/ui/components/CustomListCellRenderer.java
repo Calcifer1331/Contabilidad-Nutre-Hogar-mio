@@ -2,6 +2,7 @@ package com.nutrehogar.sistemacontable.ui.components;
 
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
+import com.nutrehogar.sistemacontable.domain.Permissions;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
 
@@ -19,7 +20,7 @@ public class CustomListCellRenderer extends DefaultListCellRenderer {
                             tipoCuenta.getAccountType().getId() + "." + tipoCuenta.getCanonicalId() + " " + tipoCuenta.getName();
                     case Account account -> account.getFormattedId();
                     case DocumentType documentType -> documentType.getName();
-
+                    case Permissions permissions -> permissions.getName();
                     case null -> "";
                     default -> value.toString();
                 }

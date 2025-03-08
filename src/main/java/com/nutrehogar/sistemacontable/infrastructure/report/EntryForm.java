@@ -1,6 +1,6 @@
 package com.nutrehogar.sistemacontable.infrastructure.report;
 
-import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
+import com.nutrehogar.sistemacontable.application.controller.crud.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.exception.ReportException;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;

@@ -96,7 +96,7 @@ public class AccountSubtypeController extends CRUDController<AccountSubtype, Int
             return null;
         }
 
-        var accountSubtype = new AccountSubtype();
+        var accountSubtype = new AccountSubtype(user);
         accountSubtype.setAccountType(cbxModelAccountType.getSelectedItem());
         try {
             accountSubtype.setId(id);
@@ -121,6 +121,7 @@ public class AccountSubtypeController extends CRUDController<AccountSubtype, Int
             return null;
         }
         getSelected().setName(getTxtAccountSubtypeName().getText());
+        getSelected().setUser(user);
         return getSelected();
     }
 

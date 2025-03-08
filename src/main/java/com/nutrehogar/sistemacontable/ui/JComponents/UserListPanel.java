@@ -75,8 +75,8 @@ public class UserListPanel extends JPanel {
     @EqualsAndHashCode(callSuper = true)
     @Getter
     public static class UserListElement extends JLabel {
-        private static final FlatSVGIcon userIcon = new FlatSVGIcon("svgs/user.svg", ThemeConfig.ICON_MD, ThemeConfig.ICON_MD);
-        private static final FlatSVGIcon userDisableIcon = new FlatSVGIcon("svgs/user_disable.svg", ThemeConfig.ICON_MD, ThemeConfig.ICON_MD);
+        public static final FlatSVGIcon userIcon = new FlatSVGIcon("svgs/user.svg", ThemeConfig.ICON_MD, ThemeConfig.ICON_MD);
+        public static final FlatSVGIcon userDisableIcon = new FlatSVGIcon("svgs/user_disable.svg", ThemeConfig.ICON_MD, ThemeConfig.ICON_MD);
         private final User user;
         private boolean isSelected = false;
 

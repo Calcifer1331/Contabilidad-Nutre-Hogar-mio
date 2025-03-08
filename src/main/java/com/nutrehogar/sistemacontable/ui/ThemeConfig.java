@@ -1,7 +1,6 @@
 package com.nutrehogar.sistemacontable.ui;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.icons.FlatRadioButtonIcon;
 import com.formdev.flatlaf.util.UIScale;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ public class ThemeConfig {
         throw new IllegalStateException("Configure Class");
     }
 
-    public static void init() {
+    public static void setup() {
         System.setProperty("flatlaf.animation", "true");
         System.setProperty("flatlaf.menuBarEmbedded", "true");
         System.setProperty("flatlaf.useWindowDecorations", "true");

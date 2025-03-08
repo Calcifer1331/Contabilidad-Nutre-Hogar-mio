@@ -15,7 +15,7 @@ import java.util.Optional;
 public abstract class AuditableEntity {
 
     @Transient
-    private static User user;
+    private User user;
 
     @Column(name = "created_by", updatable = false, nullable = false)
     String createdBy;
@@ -23,17 +23,12 @@ public abstract class AuditableEntity {
     @Column(name = "updated_by")
     String updatedBy;
 
-    @Column(name = "deleted_by")
-    String deletedBy;
-
     @Column(name = "created_at", updatable = false, nullable = false)
     LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
 
-    @Column(name = "deleted_at")
-    LocalDateTime deletedAt;
 
     public AuditableEntity(User user) {
         this.user = Optional.ofNullable(user)

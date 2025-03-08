@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -26,8 +27,8 @@ public abstract class CRUDController<T extends AuditableEntity, ID> extends Simp
 
     @Override
     protected void initialize() {
-        getBtnAdd().setEnabled(MainClass.USER.isAuthorized());
-        getBtnSave().setEnabled(MainClass.USER.isAuthorized());
+        getBtnAdd().setEnabled(user.isAuthorized());
+        getBtnSave().setEnabled(user.isAuthorized());
         super.initialize();
     }
 
@@ -51,7 +52,7 @@ public abstract class CRUDController<T extends AuditableEntity, ID> extends Simp
     private void save(T entity) {
         if (entity == null) return;
         try {
-            entity.setUser(MainClass.USER);
+            entity.setUser(user);
             getRepository().save(entity);
             loadData(); // Recargar datos después de guardar
             prepareToAdd();
@@ -69,7 +70,7 @@ public abstract class CRUDController<T extends AuditableEntity, ID> extends Simp
     private void update(T entity) {
         if (entity == null) return;
         try {
-            getSelected().setUser(MainClass.USER);
+            getSelected().setUser(user);
             getRepository().update(getSelected());
             loadData(); // Recargar datos después de eliminar
             prepareToAdd();
@@ -110,7 +111,7 @@ public abstract class CRUDController<T extends AuditableEntity, ID> extends Simp
     }
 
     protected void select() {
-        if (!MainClass.USER.isAuthorized()) return;
+        if (!user.isAuthorized()) return;
         getBtnDelete().setEnabled(true);
         getBtnEdit().setEnabled(true);
     }
@@ -138,24 +139,24 @@ public abstract class CRUDController<T extends AuditableEntity, ID> extends Simp
     @Override
     protected void setAuditoria() {
         SwingUtilities.invokeLater(() -> {
-            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? "" : getSelected().getCreatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? "" : getSelected().getCreatedBy());
-            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? "" : getSelected().getUpdatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? "" : getSelected().getUpdatedBy());
+            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? NA : getSelected().getCreatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? NA : getSelected().getCreatedBy());
+            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? NA : getSelected().getUpdatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? NA : getSelected().getUpdatedBy());
             getAuditablePanel().revalidate();
             getAuditablePanel().repaint();
         });
     }
 
     protected void prepareToEdit() {
-        getBtnUpdate().setEnabled(MainClass.USER.isAuthorized());
+        getBtnUpdate().setEnabled(user.isAuthorized());
         getBtnSave().setEnabled(false);
     }
 
     protected void prepareToAdd() {
         deselect();
         getBtnUpdate().setEnabled(false);
-        getBtnSave().setEnabled(MainClass.USER.isAuthorized());
+        getBtnSave().setEnabled(user.isAuthorized());
     }
 
     protected abstract ID prepareToDelete();

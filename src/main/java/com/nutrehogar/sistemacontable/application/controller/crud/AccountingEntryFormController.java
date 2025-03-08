@@ -1,10 +1,9 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
-import com.nutrehogar.sistemacontable.application.MainClass;
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.dto.JournalEntryDTO;
-import com.nutrehogar.sistemacontable.application.dto.LedgerRecordDTO;
+import com.nutrehogar.sistemacontable.application.controller.crud.dto.JournalEntryDTO;
+import com.nutrehogar.sistemacontable.application.controller.crud.dto.LedgerRecordDTO;
 import com.nutrehogar.sistemacontable.infrastructure.report.PaymentVoucher;
 import com.nutrehogar.sistemacontable.infrastructure.report.RegistrationForm;
 import com.nutrehogar.sistemacontable.application.repository.AccountRepository;
@@ -51,7 +50,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     public static final BigDecimal ZERO = BigDecimal.valueOf(0, 2);
 
     public AccountingEntryFormController(LedgerRecordRepository repository, AccountingEntryFormView view, JournalEntryRepository journalRepository, AccountRepository accountRepository, ReportService reportService, User user) {
-        super(repository, view, reportService,user);
+        super(repository, view, reportService, user);
         this.journalRepository = journalRepository;
         this.accountRepository = accountRepository;
         loadDataAccount();
@@ -66,6 +65,16 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         tblDataList = new ArrayList<>();
         prepareBtnToAddEntry();
         prepareBtnToAddRecord();
+        if (!user.isAuthorized()) {
+            getBtnAddRecord().setEnabled(false);
+            getBtnDeleteRecord().setEnabled(false);
+            getBtnSaveRecord().setEnabled(false);
+            getBtnUpdateRecord().setEnabled(false);
+            getBtnEdit().setEnabled(false);
+            getBtnAddEntry().setEnabled(false);
+            getBtnUpdateEntry().setEnabled(false);
+            getBtnSaveEntry().setEnabled(false);
+        }
         super.initialize();
     }
 
@@ -99,17 +108,17 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getBtnGeneratePaymentVoucher().addActionListener(e -> {
             try {
                 reportService.generateReport(PaymentVoucher.class, getJournalEntryDTO());
-            } catch (Exception ex) {
-                log.info(ex.getMessage());
-                throw new RuntimeException(ex);
+                showMessage("Reporte generado!");
+            } catch (RepositoryException ex) {
+                showError("Error al crear el Reporte.", ex);
             }
         });
         getBtnGenerateRegistrationForm().addActionListener(e -> {
             try {
                 reportService.generateReport(RegistrationForm.class, getJournalEntryDTO());
-            } catch (Exception ex) {
-                log.info(ex.getMessage());
-                throw new RuntimeException(ex);
+                showMessage("Reporte generado!");
+            } catch (RepositoryException ex) {
+                showError("Error al crear el Reporte.", ex);
             }
         });
         ((AbstractDocument) getTxtRecordAmount().getDocument()).setDocumentFilter(new CustomDocumentFilter(CustomDocumentFilter.Type.DECIMAL));
@@ -158,10 +167,10 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     @Override
     protected void setAuditoria() {
         SwingUtilities.invokeLater(() -> {
-            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? "" : getSelected().getCreatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? "" : getSelected().getCreatedBy());
-            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? "" : getSelected().getUpdatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? "" : getSelected().getUpdatedBy());
+            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? NA : getSelected().getCreatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? NA : getSelected().getCreatedBy());
+            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? NA : getSelected().getUpdatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? NA : getSelected().getUpdatedBy());
             getAuditablePanel().revalidate();
             getAuditablePanel().repaint();
         });
@@ -172,7 +181,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             showError("La Entrada esta vaciá.");
             return;
         }
-        var record = getLedgerRecordByForm(new LedgerRecord());
+        var record = getLedgerRecordByForm(new LedgerRecord(user));
         if (record.isEmpty()) {
             return;
         }
@@ -263,6 +272,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         if (record.isEmpty()) {
             return;
         }
+        record.get().setUser(user);
         loadData();
         prepareToAddRecord();
     }
@@ -326,7 +336,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             showError("Error: journal repository is null!");
             return;
         }
-        JournalEntry entry = new JournalEntry();
+        JournalEntry entry = new JournalEntry(user);
         String documentNo = getTxtEntryDocumentNumber().getText();
         if (!documentNo.isBlank()) {
             int id;
@@ -347,9 +357,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             return;
         }
         try {
-            // TODO Este esta de mas
-            entry.setUser(MainClass.USER);
-            for (var record : entry.getLedgerRecords()) record.setUser(MainClass.USER);
+            for (var record : entry.getLedgerRecords()) record.setUser(user);
             journalRepository.save(entry);
             showMessage("El Registro actualizado exitosamente.");
             prepareToEditEntry(entry);
@@ -402,6 +410,8 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             return;
         }
         entry = optional.get();
+        entry.setUser(user);
+        for (var record : entry.getLedgerRecords()) record.setUser(user);
         try {
             entry = journalRepository.update(entry);
             showMessage("El Registro actualizado exitosamente.");
@@ -427,10 +437,10 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getTaEntryConcept().setText(je.getConcept());
         getSpnEntryDate().getModel().setValue(je.getDate());
         getTxtEntryCheckNumber().setText(je.getCheckNumber());
-        getLblCreateBy().setText(je.getCreatedBy() == null ? "" : je.getCreatedBy());
-        getLblCreateAt().setText(je.getCreatedAt() == null ? "" : je.getCreatedAt().format(DATE_FORMATTER));
-        getLblUpdateBy().setText(je.getUpdatedBy() == null ? "" : je.getUpdatedBy());
-        getLblUpdateAt().setText(je.getUpdatedAt() == null ? "" : je.getUpdatedAt().format(DATE_FORMATTER));
+        getLblCreateBy().setText(je.getCreatedBy() == null ? NA : je.getCreatedBy());
+        getLblCreateAt().setText(je.getCreatedAt() == null ? NA : je.getCreatedAt().format(DATE_FORMATTER));
+        getLblUpdateBy().setText(je.getUpdatedBy() == null ? NA : je.getUpdatedBy());
+        getLblUpdateAt().setText(je.getUpdatedAt() == null ? NA : je.getUpdatedAt().format(DATE_FORMATTER));
         prepareBtnToEditEntry();
         prepareToAddRecord();
         loadData();
@@ -452,10 +462,10 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         getTxtEntryDocumentNumber().setText("");
         getSpnEntryDate().getModel().resetValue();
         getTxtEntryCheckNumber().setText("");
-        getLblCreateBy().setText("");
-        getLblCreateAt().setText("");
-        getLblUpdateBy().setText("");
-        getLblUpdateAt().setText("");
+        getLblCreateBy().setText(NA);
+        getLblCreateAt().setText(NA);
+        getLblUpdateBy().setText(NA);
+        getLblUpdateAt().setText(NA);
         prepareBtnToAddEntry();
         prepareToAddRecord();
         loadData();

@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class AuthView extends JDialog implements View {
-    public AuthView(Frame owner) {
-        super(owner, true);
+    public AuthView() {
+        setModal(true);
     }
 
     public abstract JButton getBtnOk();

@@ -15,7 +15,9 @@ import com.nutrehogar.sistemacontable.application.view.crud.AccountView;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.text.PlainDocument;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class AccountController extends CRUDController<Account, Integer> {
     private final AccountSubtypeRepository subtypeRepository;
@@ -36,6 +38,11 @@ public class AccountController extends CRUDController<Account, Integer> {
         var accountType = cbxModelAccountType.getSelectedItem();
         List<AccountSubtype> list = subtypeRepository.findAllByAccountType(accountType != null ? accountType : AccountType.ASSETS);
         cbxModelSubtype.setData(list);
+    }
+
+    @Override
+    public void loadData() {
+        super.loadData();
     }
 
     @Override
@@ -69,7 +76,6 @@ public class AccountController extends CRUDController<Account, Integer> {
         if (cbxModelAccountType.getSelectedItem() == null) return;
         var id = cbxModelAccountType.getSelectedItem().getId();
         getView().getLblAccountTypeId().setText(id + ".");
-
     }
 
     private void setTextToLbAccountSubtypeId() {
@@ -152,6 +158,7 @@ public class AccountController extends CRUDController<Account, Integer> {
             return null;
         }
         getSelected().setName(getTxtAccountName().getText());
+        getSelected().setUser(user);
         return getSelected();
     }
 

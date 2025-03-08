@@ -181,4 +181,9 @@ public class DefaultBackupView extends BackupView {
     public AuditablePanel getAuditablePanel() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public JButton getBtnGenerateReport() {
+        return null;
+    }
 }

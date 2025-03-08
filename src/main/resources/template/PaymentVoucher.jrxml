@@ -61,18 +61,19 @@
 		<defaultValueExpression><![CDATA["./img/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="TABLE_DATA_SOURCE" evaluationTime="Early" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="ENTRY_CHECK_NUMBER" class="java.lang.String"/>
 	<query language="sql"><![CDATA[]]></query>
 	<background splitType="Stretch"/>
 	<title height="62" splitType="Stretch">
 		<element kind="image" uuid="6dafed81-7dd3-47d9-8fba-a636d6af1c7d" x="268" y="25" width="282" height="10">
-			<expression><![CDATA[$P{IMG_DIR}+"Rectangle 1.png"]]></expression>
+			<expression><![CDATA[$P{IMG_DIR}+"Rectangle1_blue.png"]]></expression>
 		</element>
-		<element kind="staticText" uuid="cb249c6d-b33b-4697-8a4f-f0153332e090" x="22" y="3" width="234" height="54" forecolor="#5CD2D6" fontName="Roboto Black" fontSize="40.0" hTextAlign="Left" vTextAlign="Middle">
+		<element kind="staticText" uuid="cb249c6d-b33b-4697-8a4f-f0153332e090" x="22" y="3" width="234" height="54" forecolor="#133E58" fontName="Roboto Black" fontSize="40.0" hTextAlign="Left" vTextAlign="Middle">
 			<text><![CDATA[Nutre Hogar]]></text>
 		</element>
 		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 	</title>
-	<pageHeader height="104" splitType="Stretch">
+	<pageHeader height="120" splitType="Stretch">
 		<element kind="image" uuid="2f7d3709-dbab-4788-be1f-42842df70be7" x="22" y="14" width="15" height="12" hImageAlign="Center" vImageAlign="Bottom">
 			<expression><![CDATA[$P{IMG_DIR}+"calculator.png"]]></expression>
 		</element>
@@ -100,7 +101,7 @@
 		<element kind="textField" uuid="2478e073-9de6-4a8f-8068-eddcd820b9ff" x="347" y="69" width="200" height="14" forecolor="#323232" fontName="Roboto Regular" bold="false" hTextAlign="Right">
 			<expression><![CDATA[$P{ENTRY_DATE}]]></expression>
 		</element>
-		<element kind="textField" uuid="20f60122-16f9-496c-8fb8-24fd9ae16175" x="267" y="33" width="257" height="35" forecolor="#5CD2D6" markup="none" fontName="Roboto Black" fontSize="29.0" bold="false" hTextAlign="Right" vTextAlign="Top">
+		<element kind="textField" uuid="20f60122-16f9-496c-8fb8-24fd9ae16175" x="267" y="33" width="257" height="35" forecolor="#133E58" markup="none" fontName="Roboto Black" fontSize="29.0" bold="false" hTextAlign="Right" vTextAlign="Top">
 			<paragraph lineSpacingSize="0.0"/>
 			<expression><![CDATA[$P{ENTRY_ID}]]></expression>
 		</element>
@@ -110,13 +111,17 @@
 		<element kind="staticText" uuid="7f5e066f-b43b-4f3d-a794-e8540c4c1c86" x="266" y="6" width="283" height="27" forecolor="#323232" fontName="Roboto Black" fontSize="21.0" hTextAlign="Right" vTextAlign="Top">
 			<text><![CDATA[COMPROBANTE DE PAGO]]></text>
 		</element>
+		<element kind="textField" uuid="6eb0550c-ff72-43a4-8867-61c84b9ac717" x="294" y="85" width="254" height="24" forecolor="#133E58" markup="none" fontName="Roboto Black" fontSize="16.0" bold="false" hTextAlign="Right" vTextAlign="Top">
+			<paragraph lineSpacingSize="0.0"/>
+			<expression><![CDATA[$P{ENTRY_CHECK_NUMBER}]]></expression>
+		</element>
 	</pageHeader>
 	<columnHeader height="74">
-		<element kind="rectangle" uuid="e07114b8-c7eb-4030-8afb-6ac14aeff137" x="22" y="4" width="10" height="46" forecolor="#5CD2D6" backcolor="#5CD2D6">
+		<element kind="rectangle" uuid="e07114b8-c7eb-4030-8afb-6ac14aeff137" x="22" y="4" width="10" height="46" forecolor="#133E58" backcolor="#133E58">
 			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 		</element>
 		<element kind="image" uuid="6eda5699-3ca3-4146-9c3c-4e89b271e6e6" x="362" y="17" width="187" height="33" hImageAlign="Right">
-			<expression><![CDATA[$P{IMG_DIR}+"Rectangle 2.png"]]></expression>
+			<expression><![CDATA[$P{IMG_DIR}+"Rectangle2-blue.png"]]></expression>
 		</element>
 		<element kind="staticText" uuid="0bbfe33c-f7ea-42f0-bf01-24bb4be734ac" x="374" y="17" width="55" height="33" forecolor="#FFFFFF" fontName="Roboto" fontSize="16.0" bold="false" hTextAlign="Center" vTextAlign="Middle">
 			<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>

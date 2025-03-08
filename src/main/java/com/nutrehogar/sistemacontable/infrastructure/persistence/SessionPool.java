@@ -1,10 +1,13 @@
 package com.nutrehogar.sistemacontable.infrastructure.persistence;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+@Slf4j
 public class SessionPool {
     private final BlockingQueue<Session> sessionQueue;
     private final SessionFactory sessionFactory;
@@ -15,6 +18,8 @@ public class SessionPool {
         this.maxPoolSize = maxPoolSize;
         this.sessionQueue = new LinkedBlockingQueue<>(maxPoolSize);
         initializePool();
+        log.info("SessionPool initialized");
+        log.info("SessionPool - maxPoolSize: {}", maxPoolSize);
     }
 
     private void initializePool() {

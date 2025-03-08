@@ -10,4 +10,6 @@ public abstract class SimpleView extends JPanel implements View {
     public abstract JButton getBtnEdit();
 
     public abstract AuditablePanel getAuditablePanel();
+
+    public abstract JButton getBtnGenerateReport();
 }

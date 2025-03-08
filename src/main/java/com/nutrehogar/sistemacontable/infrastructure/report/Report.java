@@ -49,7 +49,6 @@ public abstract class Report<T> {
             JasperPrint print = generate(parameters);
             JasperExportManager.exportReportToPdfFile(print, getDirReportPath(dto));
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
             throw new ReportException(e.getMessage(), e);
         }
     }

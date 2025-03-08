@@ -1,6 +1,9 @@
 package com.nutrehogar.sistemacontable.application.controller;
 
 
+import com.nutrehogar.sistemacontable.application.config.Util;
+import com.nutrehogar.sistemacontable.exception.RepositoryException;
+import com.nutrehogar.sistemacontable.infrastructure.report.Report;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
 import com.nutrehogar.sistemacontable.domain.model.User;
@@ -24,13 +27,14 @@ import java.util.List;
 @Getter
 @Setter
 public abstract class SimpleController<T, R> extends Controller {
-    protected static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
     protected final SimpleRepository<R> repository;
     protected List<T> data = new ArrayList<>();
     protected T selected;
     protected AbstractTableModel tblModel;
     protected ReportService reportService;
     protected final User user;
+    protected static final String NA = Util.NA;
 
     public SimpleController(SimpleRepository<R> repository, SimpleView view, ReportService reportService, User user) {
         super(view);
@@ -38,6 +42,14 @@ public abstract class SimpleController<T, R> extends Controller {
         this.reportService = reportService;
         this.user = user;
         initialize();
+    }
+
+    protected void generateReport(Class<? extends Report<T>> reportClass) {
+        try {
+            reportService.generateReport(reportClass, getSelected());
+        } catch (RepositoryException e) {
+            showError("Error al generar report", e);
+        }
     }
 
     @Override
@@ -71,6 +83,29 @@ public abstract class SimpleController<T, R> extends Controller {
 
     protected abstract void setAuditoria();
 
+    public abstract class CustomTableModel extends AbstractTableModel {
+        private final String[] COLUMN_NAMES;
+
+        public CustomTableModel(String... COLUMN_NAMES) {
+            this.COLUMN_NAMES = COLUMN_NAMES;
+        }
+
+        @Override
+        public int getRowCount() {
+            return getData().size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return COLUMN_NAMES.length;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return COLUMN_NAMES[column];
+        }
+    }
+
     @Override
     public SimpleView getView() {
         return (SimpleView) super.getView();
@@ -86,5 +121,9 @@ public abstract class SimpleController<T, R> extends Controller {
 
     public AuditablePanel getAuditablePanel() {
         return getView().getAuditablePanel();
+    }
+
+    public JButton getBtnGenerateReport() {
+        return getView().getBtnGenerateReport();
     }
 }

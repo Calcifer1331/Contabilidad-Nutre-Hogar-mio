@@ -1,13 +1,18 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
+import com.nutrehogar.sistemacontable.domain.AccountType;
+import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.dto.TrialBalanceDTO;
+import com.nutrehogar.sistemacontable.application.controller.business.dto.TrialBalanceDTO;
 import com.nutrehogar.sistemacontable.application.repository.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.application.view.business.TrialBalanceView;
+import com.nutrehogar.sistemacontable.infrastructure.report.TrialBalance;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.SimpleReportDTO;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.TrialBalanceReportDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +24,10 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.nutrehogar.sistemacontable.application.config.Util.*;
 
 @Slf4j
 public class TrialBalanceController extends BusinessController<TrialBalanceDTO, JournalEntry> {
@@ -35,41 +43,34 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
     }
 
     @Override
-    protected void loadData() {
-        var trialBalanceList = getRepository().findAllByDateRange(spnModelStartPeriod.getValue(), spnModelEndPeriod.getValue())
-                .stream()
-                .flatMap(journalEntry -> journalEntry.getLedgerRecords().stream()
-                        .map(ledgerRecord -> new TrialBalanceDTO(
-                                ledgerRecord.getCreatedBy(),
-                                ledgerRecord.getUpdatedBy(),
-                                ledgerRecord.getCreatedAt(),
-                                ledgerRecord.getUpdatedAt(),
-                                journalEntry.getId(),
-                                journalEntry.getDate(),
-                                ledgerRecord.getDocumentType(),
-                                ledgerRecord.getAccount().getId(),
-                                ledgerRecord.getAccount().getName(),
-                                ledgerRecord.getAccount().getAccountSubtype().getAccountType(),
-                                ledgerRecord.getVoucher(),
-                                ledgerRecord.getReference(),
-                                ledgerRecord.getDebit(),
-                                ledgerRecord.getCredit(),
-                                BigDecimal.ZERO
-                        ))
-                )
-                .toList();
+    protected void setupViewListeners() {
+        super.setupViewListeners();
+        getBtnGenerateReport().addActionListener(e -> {
+            try {
+                var dtos = new ArrayList<TrialBalanceReportDTO>();
+                data.forEach(t -> dtos.add(toDTO(t)));
+                var simpleReportDTO = new SimpleReportDTO<>(spnModelStartPeriod.getValue(), spnModelEndPeriod.getValue(), dtos);
+                reportService.generateReport(TrialBalance.class, simpleReportDTO);
+                showMessage("Reporte generado!");
+            } catch (RepositoryException ex) {
+                showError("Error al crear el Reporte.", ex);
+            }
+        });
+    }
 
-        Map<Integer, List<TrialBalanceDTO>> groupedByAccount = trialBalanceList.stream()
-                .collect(Collectors.groupingBy(
-                        TrialBalanceDTO::getAccountId,
-                        TreeMap::new, // Usa un TreeMap para que las claves (accountId) estén ordenadas
-                        Collectors.collectingAndThen(
-                                Collectors.toList(),
-                                list -> list.stream()
-                                        .sorted(Comparator.comparing(TrialBalanceDTO::getJournalDate)) // Ordenar por fecha
-                                        .toList()
-                        )
-                ));
+    public TrialBalanceReportDTO toDTO(TrialBalanceDTO t) {
+        if (t == null) t = new TrialBalanceDTO();
+        return new TrialBalanceReportDTO(toStringSafe(t.getJournalId()), toStringSafe(t.getJournalDate()), toStringSafe(t.getDocumentType(), DocumentType::getName), toStringSafe(t.getAccountId(), Account::getCellRenderer), toStringSafe(t.getVoucher()), toStringSafe(t.getReference()), formatDecimalSafe(t.getDebit()), formatDecimalSafe(t.getCredit()), formatDecimalSafe(t.getBalance()));
+    }
+
+
+    @Override
+    public void loadData() {
+        var trialBalanceList = getRepository().findAllByDateRange(spnModelStartPeriod.getValue(), spnModelEndPeriod.getValue()).stream().flatMap(journalEntry -> journalEntry.getLedgerRecords().stream().map(ledgerRecord -> new TrialBalanceDTO(ledgerRecord.getCreatedBy(), ledgerRecord.getUpdatedBy(), ledgerRecord.getCreatedAt(), ledgerRecord.getUpdatedAt(), journalEntry.getId(), journalEntry.getDate(), ledgerRecord.getDocumentType(), ledgerRecord.getAccount().getId(), ledgerRecord.getAccount().getName(), ledgerRecord.getAccount().getAccountSubtype().getAccountType(), ledgerRecord.getVoucher(), ledgerRecord.getReference(), ledgerRecord.getDebit(), ledgerRecord.getCredit(), BigDecimal.ZERO))).toList();
+
+        Map<Integer, List<TrialBalanceDTO>> groupedByAccount = trialBalanceList.stream().collect(Collectors.groupingBy(TrialBalanceDTO::getAccountId, TreeMap::new, // Usa un TreeMap para que las claves (accountId) estén ordenadas
+                Collectors.collectingAndThen(Collectors.toList(), list -> list.stream().sorted(Comparator.comparing(TrialBalanceDTO::getJournalDate)) // Ordenar por fecha
+                        .toList())));
 
         var list = new ArrayList<TrialBalanceDTO>();
 
@@ -93,8 +94,7 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
             }
 
             // Agregar el total de la cuenta
-            TrialBalanceDTO totalDTO = new TrialBalanceDTO(
-                    "TOTAL", // referencia
+            TrialBalanceDTO totalDTO = new TrialBalanceDTO("TOTAL", // referencia
                     debitSum, // suma debe
                     creditSum, // suma haber
                     balance // diferencia final
@@ -102,7 +102,7 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
             processedList.add(totalDTO);
 
             // Agregar una línea en blanco para separación visual
-            processedList.add(new TrialBalanceDTO("", null, null, null));
+//            processedList.add(new TrialBalanceDTO("", null, null, null));
 
             // 3️⃣ Agregar la lista procesada al mapa final
             list.addAll(processedList);
@@ -128,17 +128,14 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
             }
             setSelected(selected);
             setAuditoria();
-            getBtnEdit().setEnabled(true);
+            getBtnEdit().setEnabled(user.isAuthorized());
             setJournalEntryId(selected.getJournalId());
         }
     }
 
 
     public class TrialBalanceTableModel extends AbstractTableModel {
-        private final String[] COLUMN_NAMES =
-                {
-                        "Fecha", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito", "Saldo"
-                };
+        private final String[] COLUMN_NAMES = {"Fecha", "Documento No.", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito", "Saldo"};
 
         @Override
         public int getRowCount() {
@@ -160,14 +157,15 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
             var dto = getData().get(rowIndex);
             return switch (columnIndex) {
                 case 0 -> dto.getJournalDate();
-                case 1 -> dto.getDocumentType();
-                case 2 -> Account.getCellRenderer(dto.getAccountId());
-                case 3 -> dto.getVoucher();
-                case 4 -> dto.getAccountName();
-                case 5 -> dto.getReference();
-                case 6 -> dto.getDebit();
-                case 7 -> dto.getCredit();
-                case 8 -> dto.getBalance();
+                case 1 -> dto.getJournalId();
+                case 2 -> dto.getDocumentType();
+                case 3 -> Account.getCellRenderer(dto.getAccountId());
+                case 4 -> dto.getVoucher();
+                case 5 -> dto.getAccountName();
+                case 6 -> dto.getReference();
+                case 7 -> dto.getDebit();
+                case 8 -> dto.getCredit();
+                case 9 -> dto.getBalance();
                 default -> "Element not found";
             };
         }
@@ -176,9 +174,10 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
         public Class<?> getColumnClass(int columnIndex) {
             return switch (columnIndex) {
                 case 0 -> LocalDate.class;
-                case 1 -> DocumentType.class;
-                case 2, 3, 4, 5 -> String.class;
-                case 6, 7, 8 -> BigDecimal.class;
+                case 1 -> Integer.class;
+                case 2 -> DocumentType.class;
+                case 3, 4, 5, 6 -> String.class;
+                case 7, 8, 9 -> BigDecimal.class;
                 default -> Object.class;
             };
         }

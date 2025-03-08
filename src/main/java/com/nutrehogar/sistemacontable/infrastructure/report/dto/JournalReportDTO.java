@@ -1,16 +1,22 @@
 package com.nutrehogar.sistemacontable.infrastructure.report.dto;
 
-import com.nutrehogar.sistemacontable.application.dto.JournalDTO;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-import java.util.List;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class JournalReportDTO {
-    LocalDate startDate;
-    LocalDate endDate ;
-    List<JournalDTO> journal;
+    String entryId;
+    String entryDate;
+    String documentType;
+    String accountId;
+    String voucher;
+    String reference;
+    String debit;
+    String credit;
 }

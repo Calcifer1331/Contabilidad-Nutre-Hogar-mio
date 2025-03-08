@@ -18,7 +18,6 @@ public class CRUDRepositoryImpl<T, ID> implements CRUDRepository<T, ID> {
 
     @Override
     public List<T> findAll() throws RepositoryException {
-
         return TransactionManager.executeInTransaction(session ->
                 session.createQuery("from " + entityClass.getSimpleName() + " order by id", entityClass).list()
         );
@@ -27,24 +26,24 @@ public class CRUDRepositoryImpl<T, ID> implements CRUDRepository<T, ID> {
     // ... (implementar otros métodos de manera similar)
     @Override
     public void save(T entity) throws RepositoryException {
-        WriteExecutor.submitWrite(() -> {
+//        WriteExecutor.submitWrite(() -> {
             TransactionManager.executeInTransaction(session -> {
                 session.persist(entity);
                 return null;
             });
-            return null;
-        });
+//            return null;
+//        });
     }
 
     @Override
     public void saveAll(List<T> entities) throws RepositoryException {
-        WriteExecutor.submitWrite(() -> {
+//        WriteExecutor.submitWrite(() -> {
             TransactionManager.executeInTransaction(session -> {
                 entities.forEach(session::persist);
                 return null;
             });
-            return null;
-        });
+//            return null;
+//        });
     }
 
     @Override
@@ -56,25 +55,25 @@ public class CRUDRepositoryImpl<T, ID> implements CRUDRepository<T, ID> {
 
     @Override
     public T update(T entity) throws RepositoryException, ExecutionException, InterruptedException {
-        return WriteExecutor.submitWrite(() ->
-                TransactionManager.executeInTransaction(session -> session.merge(entity))
-        ).get(); // Usar .get() para obtener el resultado del Future
+//        return WriteExecutor.submitWrite(() ->
+               return TransactionManager.executeInTransaction(session -> session.merge(entity));
+//        ).get(); // Usar .get() para obtener el resultado del Future
     }
 
     @Override
     public void delete(T entity) throws RepositoryException {
-        WriteExecutor.submitWrite(() -> {
+//        WriteExecutor.submitWrite(() -> {
             TransactionManager.executeInTransaction(session -> {
                 session.remove(session.contains(entity) ? entity : session.merge(entity));
                 return null;
             });
-            return null;
-        });
+//            return null;
+//        });
     }
 
     @Override
     public void deleteById(ID id) throws RepositoryException {
-        WriteExecutor.submitWrite(() -> {
+//        WriteExecutor.submitWrite(() -> {
             TransactionManager.executeInTransaction(session -> {
                 T entity = session.get(entityClass, id);
                 if (entity != null) {
@@ -82,8 +81,8 @@ public class CRUDRepositoryImpl<T, ID> implements CRUDRepository<T, ID> {
                 }
                 return null;
             });
-            return null;
-        });
+//            return null;
+//        });
     }
 
     @Override

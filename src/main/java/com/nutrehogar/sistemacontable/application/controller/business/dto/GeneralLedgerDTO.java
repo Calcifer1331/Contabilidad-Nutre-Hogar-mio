@@ -1,12 +1,9 @@
-package com.nutrehogar.sistemacontable.application.dto;
+package com.nutrehogar.sistemacontable.application.controller.business.dto;
 
-/**
- * @author Jayson
- */
 
+import com.nutrehogar.sistemacontable.application.dto.AuditableDTO;
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
-import com.nutrehogar.sistemacontable.domain.model.AuditableEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,18 +11,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@ToString
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
+@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
-@NoArgsConstructor
-public class TrialBalanceDTO extends AuditableDTO {
-    Integer journalId;
-    LocalDate journalDate;
+public class GeneralLedgerDTO extends AuditableDTO {
+    Integer entryId;
+    LocalDate entryDate;
+    String entryName;
     DocumentType documentType;
     Integer accountId;
-    String accountName;
     AccountType accountType;
     String voucher;
     String reference;
@@ -34,13 +29,13 @@ public class TrialBalanceDTO extends AuditableDTO {
     @Setter
     BigDecimal balance;
 
-    public TrialBalanceDTO(String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt, Integer journalId, LocalDate journalDate, DocumentType documentType, Integer accountId, String accountName, AccountType accountType, String voucher, String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
+    public GeneralLedgerDTO(String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt, Integer entryId, LocalDate entryDate, String entryName, DocumentType documentType, Integer accountId, AccountType accountType, String voucher, String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
         super(createdBy, updatedBy, createdAt, updatedAt);
-        this.journalId = journalId;
-        this.journalDate = journalDate;
+        this.entryId = entryId;
+        this.entryDate = entryDate;
+        this.entryName = entryName;
         this.documentType = documentType;
         this.accountId = accountId;
-        this.accountName = accountName;
         this.accountType = accountType;
         this.voucher = voucher;
         this.reference = reference;
@@ -49,7 +44,7 @@ public class TrialBalanceDTO extends AuditableDTO {
         this.balance = balance;
     }
 
-    public TrialBalanceDTO(String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
+    public GeneralLedgerDTO(String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
         this.reference = reference;
         this.debit = debit;
         this.credit = credit;

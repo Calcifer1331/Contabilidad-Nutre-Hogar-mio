@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 public final class AuthController extends Controller {
@@ -16,20 +17,22 @@ public final class AuthController extends Controller {
     private final DefaultListModel<User> userListModel;
     @Getter
     private User authenticatedUser;
-    private final User adminUser;
+    private User adminUser;
 
     public AuthController(AuthView view, UserRepository userRepository, User adminUser) {
         super(view);
         this.userRepository = userRepository;
         this.adminUser = adminUser;
         this.userListModel = new DefaultListModel<>();
-        getLstUser().setModel(userListModel);
         initialize();
     }
 
     @Override
     protected void initialize() {
-        SwingUtilities.invokeLater(() -> getView().setVisible(true));
+        getLstUser().setModel(userListModel);
+        SwingUtilities.invokeLater(() -> {
+            getBtnOk().setEnabled(false);
+        });
         new SwingWorker<ArrayList<User>, Void>() {
             @Override
             protected ArrayList<User> doInBackground() {
@@ -41,8 +44,12 @@ public final class AuthController extends Controller {
                 try {
                     userListModel.addAll(get());
                     userListModel.addElement(adminUser);
-                } catch (Exception e) {
-                    showError("Error al cargar datos de usuario", new ApplicationException("Failure to find all users."));
+                    if (!userListModel.isEmpty()) {
+                        getLstUser().setSelectedIndex(0);
+                        getBtnOk().setEnabled(true);
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    showError("Error al cargar datos de usuario", new ApplicationException("Failure to find all users.", e));
                 }
             }
         }.execute();
@@ -52,10 +59,14 @@ public final class AuthController extends Controller {
     @Override
     protected void setupViewListeners() {
         getBtnOk().addActionListener(e -> {
-            if (String.valueOf(getTxtPing().getPassword()).equals(getLstUser().getSelectedValue().getUsername())) {
-                authenticatedUser = getLstUser().getSelectedValue();
+            if (userListModel.isEmpty()) return;
+            User selectedUser = getLstUser().getSelectedValue();
+            if (selectedUser != null && String.valueOf(getTxtPing().getPassword()).equals(selectedUser.getPassword())) {
+                authenticatedUser = selectedUser;
                 getView().setVisible(false);
                 getView().dispose();
+            } else {
+                showMessage("Contraseña Incorrecta.");
             }
         });
         getBtnCancel().addActionListener(e -> {

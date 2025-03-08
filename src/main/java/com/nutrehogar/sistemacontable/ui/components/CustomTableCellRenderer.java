@@ -2,12 +2,15 @@ package com.nutrehogar.sistemacontable.ui.components;
 
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
+import com.nutrehogar.sistemacontable.domain.Permissions;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+
+import static com.nutrehogar.sistemacontable.application.config.Util.DECIMAL_FORMAT;
 
 
 /**
@@ -22,7 +25,6 @@ import java.text.DecimalFormat;
  * @see DefaultTableCellRenderer
  */
 public class CustomTableCellRenderer extends DefaultTableCellRenderer {
-    public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00");
 
     @Override
     protected void setValue(Object value) {
@@ -34,6 +36,7 @@ public class CustomTableCellRenderer extends DefaultTableCellRenderer {
                     tipoCuenta.getAccountType().getId() + "." + tipoCuenta.getCanonicalId() + " " + tipoCuenta.getName();
             case Account account -> account.getId() + " " + account.getName();
             case DocumentType documentType -> documentType.getName();
+            case Permissions permissions -> permissions.getName();
             case null -> "";
             default -> value.toString();
         });

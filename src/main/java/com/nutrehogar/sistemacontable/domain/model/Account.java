@@ -25,6 +25,7 @@ public class Account extends AuditableEntity {
 
     public static final int MAX_ID_LENGTH = 5;
     public static final int MAX_CANONICAL_ID_LENGTH = 3;
+
     @Id
     @Column(name = "id", nullable = false)
     Integer id;

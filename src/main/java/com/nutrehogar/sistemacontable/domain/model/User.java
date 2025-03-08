@@ -9,12 +9,19 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "user")
 public class User extends AuditableEntity {
+    public static final int MIN_LENGTH = 4;
+    public static final int MAX_LENGTH = 120;
+
+    public User(User user) {
+        super(user);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;

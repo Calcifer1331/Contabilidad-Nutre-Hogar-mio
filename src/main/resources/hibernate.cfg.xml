@@ -2,7 +2,7 @@
     <session-factory>
         <!-- Configuración de la base de datos -->
         <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
-        <property name="hibernate.connection.url">jdbc:sqlite:sistemacontable.db;journal_mode=WAL</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:sistemacontable.db?journal_mode=WAL</property>
         <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
 
 <!--        <property name="hibernate.cache.use_second_level_cache">true</property>-->

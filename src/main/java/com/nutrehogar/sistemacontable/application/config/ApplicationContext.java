@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class ApplicationContext implements AutoCloseable {
+public class ApplicationContext {
     private final Map<Class<?>, Object> beans = new HashMap<>();
 
     public <T> void registerBean(Class<T> type, T instance) {
@@ -18,12 +18,5 @@ public class ApplicationContext implements AutoCloseable {
     @SuppressWarnings("unchecked")
     public <T> T getBean(Class<T> type) {
         return (T) beans.get(type);
-    }
-
-    @Override
-    public void close() {
-        HibernateUtil.shutdown();
-        WriteExecutor.shutdown();
-        log.info("Cerrando ApplicationContext...");
     }
 }

@@ -55,6 +55,7 @@ public class DefaultGeneralLedgerView extends GeneralLedgerView{
         lblAccountSubtype = new javax.swing.JLabel();
         lblAccount = new javax.swing.JLabel();
         auditablePanel = new com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel();
+        btnGenerateReport = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -203,6 +204,8 @@ public class DefaultGeneralLedgerView extends GeneralLedgerView{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnGenerateReport.setText("Generar Reporte");
+
         javax.swing.GroupLayout pnlAsideLayout = new javax.swing.GroupLayout(pnlAside);
         pnlAside.setLayout(pnlAsideLayout);
         pnlAsideLayout.setHorizontalGroup(
@@ -213,6 +216,10 @@ public class DefaultGeneralLedgerView extends GeneralLedgerView{
                     .addComponent(pnlOperations, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(auditablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAsideLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGenerateReport)
+                .addGap(15, 15, 15))
         );
         pnlAsideLayout.setVerticalGroup(
             pnlAsideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,6 +227,8 @@ public class DefaultGeneralLedgerView extends GeneralLedgerView{
                 .addComponent(pnlOperations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(auditablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGenerateReport)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -240,8 +249,7 @@ public class DefaultGeneralLedgerView extends GeneralLedgerView{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pnlAside, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -254,6 +262,7 @@ public class DefaultGeneralLedgerView extends GeneralLedgerView{
     private com.nutrehogar.sistemacontable.ui.JComponents.AuditablePanel auditablePanel;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnFilter;
+    private javax.swing.JButton btnGenerateReport;
     private javax.swing.JButton btnResetEnd;
     private javax.swing.JButton btnResetStart;
     private javax.swing.JComboBox<Account> cbxAccount;

@@ -3,6 +3,8 @@ package com.nutrehogar.sistemacontable.application.controller.service;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.nutrehogar.sistemacontable.application.config.ConfigLoader;
 import com.nutrehogar.sistemacontable.application.controller.Controller;
+import com.nutrehogar.sistemacontable.application.repository.BackupRepository;
+import com.nutrehogar.sistemacontable.exception.ReportException;
 import com.nutrehogar.sistemacontable.ui.components.CustomTableCellRenderer;
 import com.nutrehogar.sistemacontable.application.view.service.BackupView;
 import lombok.Getter;
@@ -37,14 +39,16 @@ public class BackupController extends Controller {
     private static final FlatSVGIcon ICON = new FlatSVGIcon("svgs/backup.svg");
     public static final DateTimeFormatter FILE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
     public static final SimpleDateFormat TABLE_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private BackupRepository repository;
     private List<Path> data = new ArrayList<>();
     private Path selected;
     private AbstractTableModel tblModel;
     private final Session session;
     private final JFrame frame;
 
-    public BackupController(BackupView view, Session session, JFrame frame) {
+    public BackupController(BackupRepository repository, BackupView view, Session session, JFrame frame) {
         super(view);
+        this.repository = repository;
         this.session = session;
         this.frame = frame;
         initialize();
@@ -78,7 +82,6 @@ public class BackupController extends Controller {
             showError("Error al cargar los datos de las copias de seguridad");
         }
         updateView();
-
     }
 
     @Override
@@ -127,7 +130,12 @@ public class BackupController extends Controller {
             } else {
                 showMessage("Se usara como nombre: " + fileName);
             }
-            backup(createFilePathForBackup(fileName));
+            try {
+                repository.backup(createFilePathForBackup(fileName));
+            } catch (ReportException e) {
+                showError("Error al crear la copia de seguridad.", e);
+                return 100;
+            }
             loadData();
         }
         return response;
@@ -146,7 +154,12 @@ public class BackupController extends Controller {
 
         if (result != JOptionPane.OK_OPTION) return;
 
-        restartBackup(getSelected().toAbsolutePath().toString());
+        try {
+            repository.restore(getSelected().toAbsolutePath().toString());
+        } catch (ReportException e) {
+            showError("Error al realizar la copia de  seguridad", e);
+            return;
+        }
         showMessage("Para hacer efectivo los cambios se cerrara el programa.", "Se cerrara el programa.");
         System.exit(1);//terminar proceso
     }
@@ -166,49 +179,6 @@ public class BackupController extends Controller {
                 getBtnRestore().setEnabled(false);
             }
         }
-    }
-
-    public void backup(String fileName) {
-        session.doWork(connection -> {
-            try (Statement stmt = connection.createStatement()) {
-                connection.setAutoCommit(true);
-                stmt.execute("VACUUM INTO '" + fileName + "';");
-                connection.setAutoCommit(false);
-            } catch (Exception e) {
-                log.error("Error while backup", e);
-                showError("Error al realizar copia de seguridad.");
-            }
-        });
-    }
-
-    public void restartBackup(String filePath) {
-        session.doWork(connection -> {
-            try (Statement stmt = connection.createStatement()) {
-                // Habilita el autocommit para ejecutar los comandos
-                connection.setAutoCommit(true);
-
-                // Elimina los datos actuales de las tablas
-                stmt.execute("DELETE FROM main.account_subtype;");
-                stmt.execute("DELETE FROM main.account;");
-                stmt.execute("DELETE FROM main.ledger_record;");
-                stmt.execute("DELETE FROM main.journal_entry;");
-
-                // Adjunta la base de datos de respaldo
-                stmt.execute("ATTACH DATABASE '" + filePath + "' AS BACKUP;");
-
-                // Copia los datos del respaldo a las tablas principales
-                stmt.execute("INSERT INTO main.account_subtype SELECT * FROM BACKUP.account_subtype;");
-                stmt.execute("INSERT INTO main.account SELECT * FROM BACKUP.account;");
-                stmt.execute("INSERT INTO main.ledger_record SELECT * FROM BACKUP.ledger_record;");
-                stmt.execute("INSERT INTO main.journal_entry SELECT * FROM BACKUP.journal_entry;");
-
-                // Restaurar el autocommit a su estado inicial
-                connection.setAutoCommit(false);
-            } catch (Exception e) {
-                log.error("Error al realizar copia de seguridad.", e);
-                showError("Error al realizar copia de seguridad");
-            }
-        });
     }
 
     private @NotNull String createFilePathForBackup(String fileName) {

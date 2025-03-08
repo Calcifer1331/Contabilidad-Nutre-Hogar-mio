@@ -1,6 +1,5 @@
 package com.nutrehogar.sistemacontable.domain.model;
 
-import com.nutrehogar.sistemacontable.application.dto.Pair;
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,11 +46,6 @@ public class AccountSubtype extends AuditableEntity {
         this.id = Integer.valueOf(accountType.getId() + id.toString());
     }
 
-    public Pair<Integer, Integer> getSeparateId() {
-        var tipoCuentaId = accountType.getId();
-        var subTipoCuentaId = id.toString().toCharArray()[0];
-        return new Pair<>(id, accountType.getId());
-    }
 
     public String getCanonicalId() {
         return id.toString().substring(1);

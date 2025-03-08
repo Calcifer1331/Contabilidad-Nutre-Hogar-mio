@@ -1,7 +1,9 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
+import com.nutrehogar.sistemacontable.exception.RepositoryException;
+import com.nutrehogar.sistemacontable.infrastructure.report.GeneralLedgerReport;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.dto.GeneralLedgerDTO;
+import com.nutrehogar.sistemacontable.application.controller.business.dto.GeneralLedgerDTO;
 import com.nutrehogar.sistemacontable.application.repository.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.AccountSubtypeRepository;
 import com.nutrehogar.sistemacontable.domain.AccountType;
@@ -9,6 +11,12 @@ import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.AccountSubtype;
 import com.nutrehogar.sistemacontable.domain.model.User;
+import com.nutrehogar.sistemacontable.infrastructure.report.TrialBalance;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.GeneralLedgerDTOReport;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.GeneralLedgerReportDTO;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.SimpleReportDTO;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.TrialBalanceReportDTO;
+import com.nutrehogar.sistemacontable.ui.components.AccountListCellRenderer;
 import com.nutrehogar.sistemacontable.ui.components.CustomComboBoxModel;
 import com.nutrehogar.sistemacontable.ui.components.CustomListCellRenderer;
 import com.nutrehogar.sistemacontable.application.view.business.GeneralLedgerView;
@@ -28,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static com.nutrehogar.sistemacontable.application.config.Util.*;
+
 @Slf4j
 public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO, Account> {
     private final AccountSubtypeRepository subtypeRepository;
@@ -40,6 +50,7 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
         this.subtypeRepository = subtypeRepository;
         loadDataSubtype();
     }
+
 
     private void loadDataSubtype() {
         var accountType = cbxModelAccountType.getSelectedItem();
@@ -65,7 +76,7 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
     }
 
     @Override
-    protected void loadData() {
+    public void loadData() {
         var account = cbxModelAccount.getSelectedItem();
         if (account == null) {
             return;
@@ -122,7 +133,7 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
         super.setupViewListeners();
         getCbxAccountType().setRenderer(new CustomListCellRenderer());
         getCbxAccountSubtype().setRenderer(new CustomListCellRenderer());
-        getCbxAccount().setRenderer(new CustomListCellRenderer());
+        getCbxAccount().setRenderer(new AccountListCellRenderer());
         getCbxAccountType().setModel(cbxModelAccountType);
         getCbxAccountSubtype().setModel(cbxModelSubtype);
         getCbxAccount().setModel(cbxModelAccount);
@@ -168,6 +179,22 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
                 loadData();
             }
         });
+        getBtnGenerateReport().addActionListener(e -> {
+            try {
+                var dtos = new ArrayList<GeneralLedgerReportDTO>();
+                data.forEach(t -> dtos.add(new GeneralLedgerReportDTO(
+                        toStringSafe(t.getEntryId()), toStringSafe(t.getEntryDate()), toStringSafe(t.getEntryName()), toStringSafe(t.getDocumentType(), DocumentType::getName), toStringSafe(t.getAccountId()), toStringSafe(t.getAccountType(), AccountType::getName), toStringSafe(t.getVoucher()), toStringSafe(t.getReference()), formatDecimalSafe(t.getDebit()), formatDecimalSafe(t.getCredit()), formatDecimalSafe(t.getBalance())
+                )));
+                var dto = new GeneralLedgerDTOReport(spnModelStartPeriod.getValue(),
+                        spnModelEndPeriod.getValue(),
+                        Account.getCellRenderer(cbxModelAccount.getSelectedItem().getId()) + " " + cbxModelAccount.getSelectedItem().getName(),
+                        dtos);
+                reportService.generateReport(GeneralLedgerReport.class, dto);
+                showMessage("Reporte generado!");
+            } catch (RepositoryException ex) {
+                showError("Error al crear el Reporte.", ex);
+            }
+        });
 //        getCbxAccountType().addItemListener(e -> {
 //            System.out.println("1 - AccountType ,Item: " + cbxModelAccountType.getSelectedItem());
 //            loadDataSubtype();
@@ -190,7 +217,7 @@ public class GeneralLedgerController extends BusinessController<GeneralLedgerDTO
             if (selectedRow >= 0 && selectedRow < getData().size() - 1) {
                 setSelected(getData().get(selectedRow));
                 setAuditoria();
-                getBtnEdit().setEnabled(true);
+                getBtnEdit().setEnabled(user.isAuthorized());
                 setJournalEntryId(getSelected().getEntryId());
             } else {
                 getBtnEdit().setEnabled(false);

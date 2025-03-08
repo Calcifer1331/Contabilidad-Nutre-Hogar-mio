@@ -9,6 +9,8 @@ import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.application.view.crud.AccountingEntryFormView;
 import lombok.Getter;
 
+import javax.swing.*;
+
 /**
  * @author Calci
  */
@@ -610,5 +612,10 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
     private javax.swing.JTextField txtRecordAmount;
     private javax.swing.JTextField txtRecordReference;
     private javax.swing.JTextField txtRecordVoucher;
+
+    @Override
+    public JButton getBtnGenerateReport() {
+        return null;
+    }
     // End of variables declaration//GEN-END:variables
 }

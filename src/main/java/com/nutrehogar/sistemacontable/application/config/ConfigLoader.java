@@ -35,13 +35,14 @@ public class ConfigLoader {
         DIR_REPORTS_NAME(Path.of(System.getProperty("user.home"), ("Reportes"))),
         DIR_PAYMENT_VOUCHER_NAME(DIR_REPORTS_NAME.path.resolve("Comprobantes")),
         DIR_REGISTRATION_FORM_NAME(DIR_REPORTS_NAME.path.resolve("Formularios")),
-        DIR_JOURNAL_NAME(DIR_REPORTS_NAME.path.resolve("Libro Diario"));
+        DIR_JOURNAL_NAME(DIR_REPORTS_NAME.path.resolve("Libro Diario")),
+        DIR_TRIAL_BALANCE_NAME(DIR_REPORTS_NAME.path.resolve("Balance de Comprobación")),
+        DIR_GENERAL_LEDGER_NAME(DIR_REPORTS_NAME.path.resolve("Mayor General")),;
 
         Path path;
 
     }
 
-    public static final String PING = "admin123";
 
     private ConfigLoader() {
         throw new IllegalStateException("Configure Class");

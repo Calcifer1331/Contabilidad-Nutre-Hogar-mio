@@ -34,7 +34,8 @@ public abstract class Controller {
     }
 
     public void showError(String message, AppException cause) {
-        log.error(cause.getMessage(), cause);
+        if (cause != null)
+            log.error(cause.getMessage(), cause);
         JOptionPane.showMessageDialog(isComponent(), message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 

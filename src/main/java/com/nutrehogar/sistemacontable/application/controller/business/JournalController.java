@@ -1,20 +1,28 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
+import com.nutrehogar.sistemacontable.exception.RepositoryException;
+import com.nutrehogar.sistemacontable.infrastructure.report.Journal;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.dto.JournalDTO;
+import com.nutrehogar.sistemacontable.application.controller.business.dto.JournalDTO;
 import com.nutrehogar.sistemacontable.application.repository.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
 import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
 import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.application.view.business.JournalView;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.JournalReportDTO;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.SimpleReportDTO;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.function.Consumer;
+
+import static com.nutrehogar.sistemacontable.application.config.Util.*;
+
 
 public class JournalController extends BusinessController<JournalDTO, JournalEntry> {
     public JournalController(JournalEntryRepository repository, JournalView view, Consumer<Integer> editJournalEntry, ReportService reportService, User user) {
@@ -28,7 +36,36 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
     }
 
     @Override
-    protected void loadData() {
+    protected void setupViewListeners() {
+        super.setupViewListeners();
+        getBtnGenerateReport().addActionListener(e -> {
+            try {
+                var journalReportDTOs = new ArrayList<JournalReportDTO>();
+                data.forEach(j -> journalReportDTOs.add(
+                        new JournalReportDTO(
+                                toStringSafe(j.getEntryId()),
+                                toStringSafe(j.getEntryDate()),
+                                toStringSafe(j.getDocumentType(), DocumentType::getName),
+                                toStringSafe(j.getAccountId(), Account::getCellRenderer),
+                                toStringSafe(j.getVoucher()),
+                                toStringSafe(j.getReference()),
+                                formatDecimalSafe(j.getDebit()),
+                                formatDecimalSafe(j.getCredit()))));
+                var simpleReportDTO = new SimpleReportDTO<>(
+                        spnModelStartPeriod.getValue(),
+                        spnModelEndPeriod.getValue(),
+                        journalReportDTOs
+                );
+                reportService.generateReport(Journal.class, simpleReportDTO);
+                showMessage("Reporte generado!");
+            } catch (RepositoryException ex) {
+                showError("Error al crear el Reporte.", ex);
+            }
+        });
+    }
+
+    @Override
+    public void loadData() {
         var list = getRepository().findAllByDateRange(spnModelStartPeriod.getValue(), spnModelEndPeriod.getValue())
                 .stream()
                 .flatMap(journalEntry -> journalEntry.getLedgerRecords().stream()
@@ -47,7 +84,7 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
                                 ledgerRecord.getCredit()
                         ))
                 )
-                .toList(); // Java 17+, usa `collect(Collectors.toList())` en Java 8-16
+                .toList();
         setData(list);
         super.loadData();
     }
@@ -60,7 +97,7 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
             if (selectedRow >= 0 && selectedRow < getData().size()) {
                 setSelected(getData().get(selectedRow));
                 setAuditoria();
-                getBtnEdit().setEnabled(true);
+                getBtnEdit().setEnabled(user.isAuthorized());
                 setJournalEntryId(getSelected().getEntryId());
             } else {
                 getBtnEdit().setEnabled(false);
@@ -71,7 +108,7 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
     public class JournalTableModel extends AbstractTableModel {
         private final String[] COLUMN_NAMES =
                 {
-                        "Fecha", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito"
+                        "Fecha", "Documento No.", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito"
                 };
 
         @Override
@@ -94,12 +131,13 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
             var dto = getData().get(rowIndex);
             return switch (columnIndex) {
                 case 0 -> dto.getEntryDate();
-                case 1 -> dto.getDocumentType();
-                case 2 -> Account.getCellRenderer(dto.getAccountId());
-                case 3 -> dto.getVoucher();
-                case 4 -> dto.getReference();
-                case 5 -> dto.getDebit();
-                case 6 -> dto.getCredit();
+                case 1 -> dto.getEntryId();
+                case 2 -> dto.getDocumentType();
+                case 3 -> Account.getCellRenderer(dto.getAccountId());
+                case 4 -> dto.getVoucher();
+                case 5 -> dto.getReference();
+                case 6 -> dto.getDebit();
+                case 7 -> dto.getCredit();
                 default -> "Element not found";
             };
         }
@@ -108,9 +146,10 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
         public Class<?> getColumnClass(int columnIndex) {
             return switch (columnIndex) {
                 case 0 -> LocalDate.class;
-                case 1 -> DocumentType.class;
-                case 2, 3, 4 -> String.class;
-                case 5, 6 -> BigDecimal.class;
+                case 1 -> Integer.class;
+                case 2 -> DocumentType.class;
+                case 3, 4, 5 -> String.class;
+                case 6, 7 -> BigDecimal.class;
                 default -> Object.class;
             };
         }

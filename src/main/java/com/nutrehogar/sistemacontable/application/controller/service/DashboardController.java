@@ -8,6 +8,7 @@ import com.nutrehogar.sistemacontable.application.controller.business.TrialBalan
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountController;
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountSubtypeController;
 import com.nutrehogar.sistemacontable.application.controller.crud.AccountingEntryFormController;
+import com.nutrehogar.sistemacontable.application.controller.crud.UserController;
 import com.nutrehogar.sistemacontable.application.view.business.BusinessView;
 import com.nutrehogar.sistemacontable.application.view.service.DashboardView;
 
@@ -38,14 +39,28 @@ public class DashboardController extends Controller {
     }
 
     protected void setupViewListeners() {
-        getBtnShowFormView().addActionListener(e -> setContent(context.getBean(AccountingEntryFormController.class).getView()));
+        getBtnShowFormView().addActionListener(e ->
+                setContent(context.getBean(AccountingEntryFormController.class).getView()));
         getBtnShowAccountSubtypeView().addActionListener(e -> setContent(context.getBean(AccountSubtypeController.class).getView()));
-        getBtnShowAccountView().addActionListener(e -> setContent(context.getBean(AccountController.class).getView()));
-        getBtnShowJournalView().addActionListener(e -> setContent(context.getBean(JournalController.class).getView()));
-        getBtnShowTrialBalanceView().addActionListener(e -> setContent(context.getBean(TrialBalanceController.class).getView()));
-        getBtnShowGeneralLedgerView().addActionListener(e -> setContent(context.getBean(GeneralLedgerController.class).getView()));
+        getBtnShowAccountView().addActionListener(e -> {
+            setContent(context.getBean(AccountController.class).getView());
+            context.getBean(AccountController.class).loadData();
+        });
+        getBtnShowJournalView().addActionListener(e -> {
+            setContent(context.getBean(JournalController.class).getView());
+            context.getBean(JournalController.class).loadData();
+        });
+        getBtnShowTrialBalanceView().addActionListener(e -> {
+            setContent(context.getBean(TrialBalanceController.class).getView());
+            context.getBean(TrialBalanceController.class).loadData();
+        });
+        getBtnShowGeneralLedgerView().addActionListener(e -> {
+            setContent(context.getBean(GeneralLedgerController.class).getView());
+            context.getBean(GeneralLedgerController.class).loadData();
+        });
         getBtnShowBackupView().addActionListener(e -> context.getBean(BackupController.class).showView());
         getBtnHome().addActionListener(e -> setContent(getPnlHome()));
+        getBtnShowUserView().addActionListener(e -> setContent(context.getBean(UserController.class).getView()));
     }
 
     public void setContent(JPanel p) {
@@ -104,6 +119,11 @@ public class DashboardController extends Controller {
     public JButton getBtnShowBackupView() {
         return getView().getBtnShowBackupView();
     }
+
+    public JButton getBtnShowUserView() {
+        return getView().getBtnShowUserView();
+    }
+
 
     public JPanel getPnlContent() {
         return getView().getPnlContent();

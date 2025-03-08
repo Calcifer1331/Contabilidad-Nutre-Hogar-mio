@@ -1,4 +1,4 @@
-package com.nutrehogar.sistemacontable.application.dto;
+package com.nutrehogar.sistemacontable.application.controller.crud.dto;
 
 import java.time.LocalDate;
 import java.util.List;

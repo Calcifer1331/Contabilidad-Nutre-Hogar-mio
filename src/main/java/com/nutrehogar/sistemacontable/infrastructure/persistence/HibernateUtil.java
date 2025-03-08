@@ -25,7 +25,7 @@ public class HibernateUtil {
     }
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
-    private static final SessionPool sessionPool = new SessionPool(sessionFactory, 5); // Pool de 5 sesiones
+    private static final SessionPool sessionPool = new SessionPool(sessionFactory, 3); // Pool de 5 sesiones
 
     /**
      * Construye el SessionFactory utilizando la configuración especificada en hibernate.cfg.xml.
@@ -39,8 +39,7 @@ public class HibernateUtil {
         try {
             // Cargar la configuración de hibernate.cfg.xml
             Configuration configuration = new Configuration().configure();
-
-            configuration.setProperty("hibernate.connection.url", "jdbc:sqlite:" + ConfigLoader.Props.DB_NAME.getPath().toString() + ";journal_mode=WAL");
+            configuration.setProperty("hibernate.connection.url", "jdbc:sqlite:" + ConfigLoader.Props.DB_NAME.getPath().toString() + "?journal_mode=WAL");
 
             return configuration.buildSessionFactory();
         } catch (Exception e) {

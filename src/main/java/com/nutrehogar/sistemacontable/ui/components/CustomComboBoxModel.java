@@ -33,6 +33,7 @@ public class CustomComboBoxModel<E> extends DefaultComboBoxModel<E> {
             for (E e : data) {
                 this.addElement(e);
             }
+            setSelectedItem(data.getFirst());
         }
     }
 }

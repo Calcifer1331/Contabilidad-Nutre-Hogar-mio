@@ -18,6 +18,7 @@ public abstract class DashboardView extends JPanel implements View {
     public abstract JButton getBtnShowAccountSubtypeView();
 
     public abstract JButton getBtnShowBackupView();
+    public abstract JButton getBtnShowUserView();
 
     public abstract JPanel getPnlContent();
 

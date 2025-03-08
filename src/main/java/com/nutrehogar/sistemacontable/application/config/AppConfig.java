@@ -1,7 +1,15 @@
 package com.nutrehogar.sistemacontable.application.config;
 
+import com.nutrehogar.sistemacontable.application.controller.AuthController;
+import com.nutrehogar.sistemacontable.application.controller.crud.UserController;
+import com.nutrehogar.sistemacontable.application.controller.service.DashboardController;
+import com.nutrehogar.sistemacontable.application.view.AuthView;
+import com.nutrehogar.sistemacontable.application.view.service.DashboardView;
+import com.nutrehogar.sistemacontable.domain.Permissions;
+import com.nutrehogar.sistemacontable.infrastructure.persistence.HibernateUtil;
 import com.nutrehogar.sistemacontable.ui.view.business.DefaultGeneralLedgerView;
 import com.nutrehogar.sistemacontable.ui.view.business.DefaultJournalView;
+import com.nutrehogar.sistemacontable.ui.view.crud.DefaultUserView;
 import com.nutrehogar.sistemacontable.ui.view.service.DefaultBackupView;
 import com.nutrehogar.sistemacontable.ui.view.crud.DefaultAccountView;
 import com.nutrehogar.sistemacontable.ui.view.crud.DefaultAccountEntryFormView;
@@ -18,13 +26,40 @@ import com.nutrehogar.sistemacontable.domain.repository.*;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.domain.model.*;
 import com.nutrehogar.sistemacontable.ui.view.business.DefaultTrialBalanceView;
+import com.nutrehogar.sistemacontable.ui.view.service.DefaultDashboardView;
+import com.nutrehogar.sistemacontable.ui.view.service.LoginForm;
 import org.hibernate.Session;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.util.function.Consumer;
 
 public class AppConfig {
-    public static ApplicationContext init(Session session, User user, JFrame parent) {
-        ApplicationContext context = new ApplicationContext();
+
+    private AppConfig() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    static Consumer<Integer> editJournalEntry;
+
+    public static void setup(@NotNull ApplicationContext context) {
+        context.registerBean(User.class, User.builder().username("Root").permissions(Permissions.CREATE).isEnable(true).password("0922").build());
+        context.registerBean(UserRepository.class, new UserRepo());
+        context.registerBean(AuthView.class, new LoginForm());
+        context.registerBean(AuthController.class, new AuthController(context.getBean(AuthView.class), context.getBean(UserRepository.class), context.getBean(User.class)));
+        context.registerBean(DashboardView.class, new DefaultDashboardView());
+        var dashboard = new DashboardController(context.getBean(DashboardView.class), context);
+        context.registerBean(DashboardController.class, dashboard);
+        editJournalEntry = (Integer JournalEntryId) -> {
+            dashboard.setContent(context.getBean(AccountingEntryFormController.class).getView());
+            context.getBean(AccountingEntryFormController.class).prepareToEditEntry(JournalEntryId);
+        };
+        SwingUtilities.invokeLater(() -> {
+
+        });
+    }
+
+    public static void init(@NotNull ApplicationContext context, Session session, User user, JFrame parent) {
 
         // Registro de repositorios
         context.registerBean(AccountRepository.class, new AccountRepo());
@@ -62,35 +97,39 @@ public class AppConfig {
         context.registerBean(JournalController.class, new JournalController(
                 context.getBean(JournalEntryRepository.class),
                 new DefaultJournalView(),
-                (integer) -> {
-                },
+                editJournalEntry,
                 context.getBean(ReportService.class),
                 user
         ));
         context.registerBean(TrialBalanceController.class, new TrialBalanceController(
                 context.getBean(JournalEntryRepository.class),
                 new DefaultTrialBalanceView(),
-                (integer -> {
-                }),
+                editJournalEntry,
                 context.getBean(ReportService.class),
                 user
         ));
         context.registerBean(GeneralLedgerController.class, new GeneralLedgerController(
                 context.getBean(AccountRepository.class),
                 new DefaultGeneralLedgerView(),
-                (integer -> {
-                }),
+                editJournalEntry,
                 context.getBean(AccountSubtypeRepository.class),
                 context.getBean(ReportService.class),
                 user
         ));
+        context.registerBean(BackupRepository.class, new BackupRepo());
         context.registerBean(BackupController.class, new BackupController(
+                context.getBean(BackupRepository.class),
                 new DefaultBackupView(),
                 session,
                 parent
         ));
+        context.registerBean(UserController.class, new UserController(
+                context.getBean(UserRepository.class),
+                new DefaultUserView(),
+                context.getBean(ReportService.class),
+                user
+        ));
         // Registrar otros controladores de manera similar...
 
-        return context;
     }
 }

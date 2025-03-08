@@ -6,6 +6,7 @@ package com.nutrehogar.sistemacontable.ui.view.crud;
 
 import com.nutrehogar.sistemacontable.domain.AccountType;
 import com.nutrehogar.sistemacontable.application.view.crud.AccountSubtypeView;
+import javax.swing.JButton;
 import lombok.Getter;
 
 /**
@@ -271,7 +272,7 @@ public class DefaultAccountSubtypeView extends AccountSubtypeView {
                 .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(auditablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -325,4 +326,9 @@ public class DefaultAccountSubtypeView extends AccountSubtypeView {
     private javax.swing.JTextField txtAccountSubtypeId;
     private javax.swing.JTextField txtAccountSubtypeName;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public JButton getBtnGenerateReport() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.nutrehogar.sistemacontable.ui.components.LocalDateSpinnerModel.CURRENT_DATE;
+import static com.nutrehogar.sistemacontable.application.config.Util.CURRENT_DATE;
 
 @Getter
 @Setter
@@ -31,7 +31,7 @@ public abstract class BusinessController<T extends AuditableDTO, R> extends Simp
 
 
     public BusinessController(SimpleRepository<R> repository, BusinessView view, Consumer<Integer> editJournalEntry, ReportService reportService, User user) {
-        super(repository, view, reportService,user);
+        super(repository, view, reportService, user);
         this.editJournalEntry = editJournalEntry;
     }
 
@@ -69,6 +69,7 @@ public abstract class BusinessController<T extends AuditableDTO, R> extends Simp
         getBtnEdit().setEnabled(false);
         getBtnEdit().addActionListener(e -> editJournalEntry.accept(journalEntryId));
         getBtnFilter().addActionListener(e -> {
+            if (!user.isAuthorized()) return;
             loadData();
             setSelected(null);
             getBtnEdit().setEnabled(false);
@@ -87,10 +88,10 @@ public abstract class BusinessController<T extends AuditableDTO, R> extends Simp
     @Override
     protected void setAuditoria() {
         SwingUtilities.invokeLater(() -> {
-            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? "" : getSelected().getCreatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? "" : getSelected().getCreatedBy());
-            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? "" : getSelected().getUpdatedAt().format(DATE_FORMATTER));
-            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? "" : getSelected().getUpdatedBy());
+            getAuditablePanel().getLblCreateAt().setText(getSelected().getCreatedAt() == null ? NA : getSelected().getCreatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblCreateBy().setText(getSelected().getCreatedBy() == null ? NA : getSelected().getCreatedBy());
+            getAuditablePanel().getLblUpdateAt().setText(getSelected().getUpdatedAt() == null ? NA : getSelected().getUpdatedAt().format(DATE_FORMATTER));
+            getAuditablePanel().getLblUpdateBy().setText(getSelected().getUpdatedBy() == null ? NA : getSelected().getUpdatedBy());
             getAuditablePanel().revalidate();
             getAuditablePanel().repaint();
         });
