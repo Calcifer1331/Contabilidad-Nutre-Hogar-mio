@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class GeneralLedgerDTO extends AuditableDTO {
     Integer entryId;
     LocalDate entryDate;
-    String entryName;
     DocumentType documentType;
     Integer accountId;
     AccountType accountType;
@@ -29,11 +28,10 @@ public class GeneralLedgerDTO extends AuditableDTO {
     @Setter
     BigDecimal balance;
 
-    public GeneralLedgerDTO(String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt, Integer entryId, LocalDate entryDate, String entryName, DocumentType documentType, Integer accountId, AccountType accountType, String voucher, String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
+    public GeneralLedgerDTO(String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt, Integer entryId, LocalDate entryDate, DocumentType documentType, Integer accountId, AccountType accountType, String voucher, String reference, BigDecimal debit, BigDecimal credit, BigDecimal balance) {
         super(createdBy, updatedBy, createdAt, updatedAt);
         this.entryId = entryId;
         this.entryDate = entryDate;
-        this.entryName = entryName;
         this.documentType = documentType;
         this.accountId = accountId;
         this.accountType = accountType;

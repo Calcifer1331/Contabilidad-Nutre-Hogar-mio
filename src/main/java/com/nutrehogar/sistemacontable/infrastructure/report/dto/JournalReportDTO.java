@@ -11,7 +11,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JournalReportDTO {
-    String entryId;
     String entryDate;
     String documentType;
     String accountId;

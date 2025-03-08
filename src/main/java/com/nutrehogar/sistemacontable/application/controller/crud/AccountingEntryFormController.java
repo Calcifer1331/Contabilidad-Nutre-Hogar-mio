@@ -37,6 +37,8 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.nutrehogar.sistemacontable.application.config.Util.DECIMAL_FORMAT;
+
 @Slf4j
 public class AccountingEntryFormController extends SimpleController<LedgerRecord, LedgerRecord> {
     private final JournalEntryRepository journalRepository;
@@ -513,12 +515,17 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         for (LedgerRecord record : getData()) {
             debitSum = debitSum.add(record.getDebit(), MathContext.DECIMAL128);
             creditSum = creditSum.add(record.getCredit(), MathContext.DECIMAL128);
-            tblDataList.add(new LedgerRecordDTO(record.getDocumentType().getName(), record.getVoucher(), Account.getCellRenderer(record.getAccount().getId()), record.getReference(), record.getDebit().toString(), record.getCredit().toString()));
+            tblDataList.add(new LedgerRecordDTO(record.getDocumentType().getName(), record.getVoucher(), Account.getCellRenderer(record.getAccount().getId()), record.getReference(), formatBigDecimal(record.getDebit()), formatBigDecimal(record.getCredit())));
         }
-        tblDataList.add(new LedgerRecordDTO("", "", "TOTAL", "", debitSum.toString(), creditSum.toString()));
+        tblDataList.add(new LedgerRecordDTO("", "", "TOTAL", "", DECIMAL_FORMAT.format(debitSum), DECIMAL_FORMAT.format(creditSum)));
         boolean isBalanced = !getData().isEmpty();
         getBtnSaveEntry().setEnabled(isBalanced && isBeingAdded);
         getBtnUpdateEntry().setEnabled(isBalanced && isBeingEdited);
+
+    }
+
+    private String formatBigDecimal(BigDecimal value) {
+        return value.compareTo(BigDecimal.ZERO) == 0 ? "" : DECIMAL_FORMAT.format(value);
     }
 
     public class LedgerRecordTableModel extends AbstractTableModel {
@@ -558,7 +565,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             return switch (columnIndex) {
-                case 4, 5 -> BigDecimal.class;
                 default -> String.class;
             };
         }

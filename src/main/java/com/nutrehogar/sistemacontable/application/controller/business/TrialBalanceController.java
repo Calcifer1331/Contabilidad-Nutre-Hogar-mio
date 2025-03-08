@@ -60,7 +60,7 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
 
     public TrialBalanceReportDTO toDTO(TrialBalanceDTO t) {
         if (t == null) t = new TrialBalanceDTO();
-        return new TrialBalanceReportDTO(toStringSafe(t.getJournalId()), toStringSafe(t.getJournalDate()), toStringSafe(t.getDocumentType(), DocumentType::getName), toStringSafe(t.getAccountId(), Account::getCellRenderer), toStringSafe(t.getVoucher()), toStringSafe(t.getReference()), formatDecimalSafe(t.getDebit()), formatDecimalSafe(t.getCredit()), formatDecimalSafe(t.getBalance()));
+        return new TrialBalanceReportDTO(toStringSafe(t.getJournalDate()), toStringSafe(t.getDocumentType(), DocumentType::getName), toStringSafe(t.getAccountId(), Account::getCellRenderer), toStringSafe(t.getVoucher()), toStringSafe(t.getReference()), formatDecimalSafe(t.getDebit()), formatDecimalSafe(t.getCredit()), formatDecimalSafe(t.getBalance()));
     }
 
 
@@ -135,7 +135,7 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
 
 
     public class TrialBalanceTableModel extends AbstractTableModel {
-        private final String[] COLUMN_NAMES = {"Fecha", "Documento No.", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito", "Saldo"};
+        private final String[] COLUMN_NAMES = {"Fecha", "Comprobante", "Tipo Documento", "Cuenta", "Referencia", "Debíto", "Crédito", "Saldo"};
 
         @Override
         public int getRowCount() {
@@ -157,15 +157,14 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
             var dto = getData().get(rowIndex);
             return switch (columnIndex) {
                 case 0 -> dto.getJournalDate();
-                case 1 -> dto.getJournalId();
+                case 1 -> dto.getVoucher();
                 case 2 -> dto.getDocumentType();
                 case 3 -> Account.getCellRenderer(dto.getAccountId());
-                case 4 -> dto.getVoucher();
-                case 5 -> dto.getAccountName();
-                case 6 -> dto.getReference();
-                case 7 -> dto.getDebit();
-                case 8 -> dto.getCredit();
-                case 9 -> dto.getBalance();
+                case 4 -> dto.getAccountName();
+                case 5 -> dto.getReference();
+                case 6 -> dto.getDebit();
+                case 7 -> dto.getCredit();
+                case 8 -> dto.getBalance();
                 default -> "Element not found";
             };
         }
@@ -174,10 +173,9 @@ public class TrialBalanceController extends BusinessController<TrialBalanceDTO, 
         public Class<?> getColumnClass(int columnIndex) {
             return switch (columnIndex) {
                 case 0 -> LocalDate.class;
-                case 1 -> Integer.class;
                 case 2 -> DocumentType.class;
-                case 3, 4, 5, 6 -> String.class;
-                case 7, 8, 9 -> BigDecimal.class;
+                case 1, 3, 4, 5 -> String.class;
+                case 6, 7, 8 -> BigDecimal.class;
                 default -> Object.class;
             };
         }

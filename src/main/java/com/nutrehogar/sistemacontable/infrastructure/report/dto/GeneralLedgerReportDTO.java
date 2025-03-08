@@ -9,7 +9,6 @@ import lombok.experimental.FieldDefaults;
 public class GeneralLedgerReportDTO {
     String entryId;
     String entryDate;
-    String entryName;
     String documentType;
     String accountId;
     String accountType;

@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.function.Consumer;
 
 import static com.nutrehogar.sistemacontable.application.config.Util.*;
@@ -43,7 +44,6 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
                 var journalReportDTOs = new ArrayList<JournalReportDTO>();
                 data.forEach(j -> journalReportDTOs.add(
                         new JournalReportDTO(
-                                toStringSafe(j.getEntryId()),
                                 toStringSafe(j.getEntryDate()),
                                 toStringSafe(j.getDocumentType(), DocumentType::getName),
                                 toStringSafe(j.getAccountId(), Account::getCellRenderer),
@@ -84,6 +84,7 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
                                 ledgerRecord.getCredit()
                         ))
                 )
+                .sorted(Comparator.comparing(JournalDTO::getEntryDate))
                 .toList();
         setData(list);
         super.loadData();
@@ -108,7 +109,7 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
     public class JournalTableModel extends AbstractTableModel {
         private final String[] COLUMN_NAMES =
                 {
-                        "Fecha", "Documento No.", "Tipo Documento", "Cuenta", "Comprobante", "Referencia", "Debíto", "Crédito"
+                        "Fecha", "Comprobante", "Tipo Documento", "Cuenta", "Referencia", "Debíto", "Crédito"
                 };
 
         @Override
@@ -131,13 +132,12 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
             var dto = getData().get(rowIndex);
             return switch (columnIndex) {
                 case 0 -> dto.getEntryDate();
-                case 1 -> dto.getEntryId();
+                case 1 -> dto.getVoucher();
                 case 2 -> dto.getDocumentType();
                 case 3 -> Account.getCellRenderer(dto.getAccountId());
-                case 4 -> dto.getVoucher();
-                case 5 -> dto.getReference();
-                case 6 -> dto.getDebit();
-                case 7 -> dto.getCredit();
+                case 4 -> dto.getReference();
+                case 5 -> dto.getDebit();
+                case 6 -> dto.getCredit();
                 default -> "Element not found";
             };
         }
@@ -146,10 +146,9 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
         public Class<?> getColumnClass(int columnIndex) {
             return switch (columnIndex) {
                 case 0 -> LocalDate.class;
-                case 1 -> Integer.class;
                 case 2 -> DocumentType.class;
-                case 3, 4, 5 -> String.class;
-                case 6, 7 -> BigDecimal.class;
+                case 1, 3, 4 -> String.class;
+                case 5, 6 -> BigDecimal.class;
                 default -> Object.class;
             };
         }

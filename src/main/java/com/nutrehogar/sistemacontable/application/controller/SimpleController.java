@@ -19,6 +19,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ public abstract class SimpleController<T, R> extends Controller {
     protected void initialize() {
         getTblData().setModel(getTblModel());
         getTblData().setDefaultRenderer(Object.class, new CustomTableCellRenderer());
+        getTblData().setDefaultRenderer(BigDecimal.class, new CustomTableCellRenderer());
         getTblData().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         loadData();
         setupViewListeners();

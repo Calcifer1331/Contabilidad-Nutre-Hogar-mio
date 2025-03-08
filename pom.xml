@@ -5,7 +5,7 @@
 
     <groupId>com.nutrehogar</groupId>
     <artifactId>SistemaContable</artifactId>
-    <version>1.9.0.1</version>
+    <version>1.9.0.2</version>
     <packaging>jar</packaging>
 
     <name>Sistema Contable</name>

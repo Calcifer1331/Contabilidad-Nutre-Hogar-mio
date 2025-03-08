@@ -3,6 +3,11 @@
 Este proyecto es una aplicación de escritorio para la gestión contable de Nutre Hogar. Permite el ledgerRecord y control de
 transacciones contables, incluyendo la generación de reportes de libro diario mayor y general.
 
+## Que Haceres
+* Eliminar Comprobante de los Records en el EntryForm, usar referencia directa a el JournalEntry
+* Hacer que TipoDocuemnto este en el JournalEntry y eliminarlo de la parte de LedgerRecord
+* Hacer que el id sea compuesto de Documento No. y TipoDeDocumento, para que se pueda hacer cosas como: `170 Ingreso, 170 Egreso, 17 Ajuste`;
+
 ## Indicaciones
 - el numero de cheque en los JaspertReports
 
@@ -12,7 +17,7 @@ Se debe ejecutar el script `jpackage.ps1` que esta en `package/`, para en la car
 
 ### Instalacion 
 
-Se debe instalar el programa en `C:\users\[tu-usuario]\SistemaContable`, ademas dentro de esta carpeta tiene que tener `\template\img\` con las imagenes.
+Se debe instalar el programa en `C:\users\[tu-usuario]\Sistema_Contable`, ademas dentro de esta carpeta tiene que tener `\template\img\` con las imagenes.
 
 
 ```java

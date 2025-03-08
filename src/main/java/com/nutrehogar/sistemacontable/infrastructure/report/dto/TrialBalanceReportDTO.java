@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TrialBalanceReportDTO {
-    String id;
     String date;
     String type;
     String accountId;

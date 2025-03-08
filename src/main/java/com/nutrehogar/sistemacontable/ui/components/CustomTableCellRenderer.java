@@ -28,17 +28,35 @@ public class CustomTableCellRenderer extends DefaultTableCellRenderer {
 
     @Override
     protected void setValue(Object value) {
-        setText(switch (value) {
-            case BigDecimal bigDecimal -> DECIMAL_FORMAT.format(bigDecimal);
-            case Double doubleValue -> DECIMAL_FORMAT.format(doubleValue);
-            case AccountType accountType -> AccountType.getCellRenderer(accountType);
-            case AccountSubtype tipoCuenta ->
-                    tipoCuenta.getAccountType().getId() + "." + tipoCuenta.getCanonicalId() + " " + tipoCuenta.getName();
-            case Account account -> account.getId() + " " + account.getName();
-            case DocumentType documentType -> documentType.getName();
-            case Permissions permissions -> permissions.getName();
-            case null -> "";
-            default -> value.toString();
-        });
+
+        switch (value) {
+            case BigDecimal bigDecimal -> {
+                setText(bigDecimal.compareTo(BigDecimal.ZERO) == 0 ? "" : DECIMAL_FORMAT.format(bigDecimal));
+                setHorizontalAlignment(RIGHT);
+            }
+            case Double doubleValue -> {
+                setText(doubleValue == 0.0 ? "" : DECIMAL_FORMAT.format(doubleValue));
+                setHorizontalAlignment(RIGHT);
+            }
+            case AccountType accountType -> {
+                setText(AccountType.getCellRenderer(accountType));
+            }
+            case AccountSubtype tipoCuenta -> {
+                setText(tipoCuenta.getAccountType().getId() + "." + tipoCuenta.getCanonicalId() + " " + tipoCuenta.getName());
+            }
+            case Account account -> {
+                setText(account.getId() + " " + account.getName());
+            }
+            case DocumentType documentType -> {
+                setText(documentType.getName());
+
+            }
+            case Permissions permissions -> {
+                setText(permissions.getName());
+            }
+            case null -> setText("");
+            default -> setText(value.toString());
+        }
     }
+
 }
