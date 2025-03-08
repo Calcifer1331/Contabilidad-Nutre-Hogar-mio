@@ -17,13 +17,13 @@ public abstract class AuditableEntity {
     @Transient
     private User user;
 
-    @Column(name = "created_by", updatable = false, nullable = false)
+    @Column(name = "created_by")
     String createdBy;
 
     @Column(name = "updated_by")
     String updatedBy;
 
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at")
     LocalDateTime createdAt;
 
     @Column(name = "updated_at")
