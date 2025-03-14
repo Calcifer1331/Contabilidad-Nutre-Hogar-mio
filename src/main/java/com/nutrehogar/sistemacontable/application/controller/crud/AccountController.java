@@ -41,11 +41,6 @@ public class AccountController extends CRUDController<Account, Integer> {
     }
 
     @Override
-    public void loadData() {
-        super.loadData();
-    }
-
-    @Override
     protected void initialize() {
         setTblModel(new AccountTableModel());
         cbxModelAccountType = new CustomComboBoxModel<>(AccountType.values());

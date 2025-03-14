@@ -1,6 +1,8 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
+import com.nutrehogar.sistemacontable.domain.model.JournalEntryPK;
+import com.nutrehogar.sistemacontable.exception.ApplicationException;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
 import com.nutrehogar.sistemacontable.application.dto.AuditableDTO;
 import com.nutrehogar.sistemacontable.application.repository.SimpleRepository;
@@ -23,14 +25,13 @@ import static com.nutrehogar.sistemacontable.application.config.Util.CURRENT_DAT
 public abstract class BusinessController<T extends AuditableDTO, R> extends SimpleController<T, R> {
     public static final LocalDate END_PERIOD = LocalDate.of(CURRENT_DATE.getYear(), 12, 31);
     public static final LocalDate START_PERIOD = LocalDate.of(CURRENT_DATE.getYear(), 1, 1);
-
     protected LocalDateSpinnerModel spnModelStartPeriod;
     protected LocalDateSpinnerModel spnModelEndPeriod;
-    protected final Consumer<Integer> editJournalEntry;
-    protected Integer journalEntryId;
+    protected final Consumer<JournalEntryPK> editJournalEntry;
+    protected JournalEntryPK journalEntryId;
 
 
-    public BusinessController(SimpleRepository<R> repository, BusinessView view, Consumer<Integer> editJournalEntry, ReportService reportService, User user) {
+    public BusinessController(SimpleRepository<R> repository, BusinessView view, Consumer<JournalEntryPK> editJournalEntry, ReportService reportService, User user) {
         super(repository, view, reportService, user);
         this.editJournalEntry = editJournalEntry;
     }

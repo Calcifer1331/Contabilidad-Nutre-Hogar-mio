@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -33,9 +34,16 @@ public abstract class CRUDController<T extends AuditableEntity, ID> extends Simp
     }
 
     @Override
-    protected void loadData() {
-        setData(getRepository().findAll());
-        super.loadData();
+    public void loadData() {
+        new CRUDDataLoader().execute();
+    }
+
+    public class CRUDDataLoader extends DataLoader {
+
+        @Override
+        protected List<T> doInBackground() {
+            return getRepository().findAll();
+        }
     }
 
     @Override

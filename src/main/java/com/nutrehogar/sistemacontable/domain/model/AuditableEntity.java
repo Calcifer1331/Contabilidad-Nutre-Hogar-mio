@@ -31,8 +31,7 @@ public abstract class AuditableEntity {
 
 
     public AuditableEntity(User user) {
-        this.user = Optional.ofNullable(user)
-                .orElseThrow(() -> new IllegalArgumentException("user is null"));
+        this.user = user;
     }
 
     @PrePersist

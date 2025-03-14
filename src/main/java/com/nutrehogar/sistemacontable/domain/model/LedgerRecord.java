@@ -26,18 +26,11 @@ public class LedgerRecord extends AuditableEntity{
     Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_journal_entry", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "id_journal_document_number", referencedColumnName = "document_number"),
+            @JoinColumn(name = "id_journal_document_type", referencedColumnName = "document_type")
+    })
     JournalEntry journalEntry;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "document_type")
-    DocumentType documentType;
-
-    /**
-     * Comprobante
-     */
-    @Column(name = "voucher", columnDefinition = "TEXT")
-    String voucher;
 
     @Column(name = "reference", columnDefinition = "TEXT")
     String reference;

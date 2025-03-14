@@ -118,7 +118,7 @@
                   <Component id="pnlRecordForm" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="auditablePanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -256,8 +256,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblRecordAccount" alignment="1" max="32767" attributes="0"/>
                                   <Component id="lblRecordReference" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="lblRecordDocumentType" alignment="0" pref="120" max="32767" attributes="0"/>
-                                  <Component id="lblRecordType" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="lblRecordType" alignment="1" pref="120" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="rbtRecordDebit" min="-2" max="-2" attributes="0"/>
@@ -266,20 +265,12 @@
                               <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblRecordVoucher" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblRecordAmount" min="-2" pref="128" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblRecordAmount" min="-2" pref="128" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtRecordVoucher" alignment="1" max="32767" attributes="0"/>
                                   <Component id="txtRecordReference" alignment="1" max="32767" attributes="0"/>
                                   <Component id="cbxRecordAccount" alignment="1" pref="253" max="32767" attributes="0"/>
                                   <Component id="txtRecordAmount" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                                  <Component id="cbxRecordDocumentType" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -301,16 +292,6 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblRecordDocumentType" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbxRecordDocumentType" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblRecordVoucher" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtRecordVoucher" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtRecordReference" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblRecordReference" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -347,17 +328,6 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblRecordVoucher">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="txtRecordVoucher"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Comprobante:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtRecordVoucher">
-            </Component>
             <Component class="javax.swing.JLabel" name="lblRecordAmount">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="4"/>
@@ -369,28 +339,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtRecordAmount">
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblRecordDocumentType">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                  <ComponentRef name="cbxRecordDocumentType"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Tipo De Documento:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cbxRecordDocumentType">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;()" type="code"/>
-                </Property>
-                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor Por defecto"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DocumentType&gt;"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="lblRecordAccount">
               <Properties>
@@ -524,9 +472,13 @@
                       <Component id="txtEntryCheckNumber" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="btnUpdateEntry" alignment="1" min="-2" pref="113" max="-2" attributes="0"/>
-                      <Component id="btnDeleteEntry" alignment="1" min="-2" pref="113" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="cbxEntryDocumentType" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnDeleteEntry" min="-2" pref="113" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="btnAddEntry" min="-2" pref="110" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -561,6 +513,7 @@
                               <Component id="lblEntryDocumentNumber" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtEntryDocumentNumber" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnDeleteEntry" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbxEntryDocumentType" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -696,6 +649,23 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbxEntryDocumentType">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;()" type="code"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Tipo de Documento"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor Por defecto"/>
+            </Property>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Tipo de Documento"/>
+          </AccessibilityProperties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;DocumentType&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

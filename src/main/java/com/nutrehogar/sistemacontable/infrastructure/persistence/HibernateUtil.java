@@ -35,7 +35,6 @@ public class HibernateUtil {
      */
     private static SessionFactory buildSessionFactory() {
         log.info("Building Hibernate SessionFactory");
-
         try {
             // Cargar la configuración de hibernate.cfg.xml
             Configuration configuration = new Configuration().configure();

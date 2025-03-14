@@ -1,19 +1,17 @@
 package com.nutrehogar.sistemacontable.application.controller.crud;
 
 import com.nutrehogar.sistemacontable.application.controller.SimpleController;
-import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.controller.crud.dto.JournalEntryDTO;
 import com.nutrehogar.sistemacontable.application.controller.crud.dto.LedgerRecordDTO;
+import com.nutrehogar.sistemacontable.domain.model.*;
+import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.JournalEntryReportDTO;
+import com.nutrehogar.sistemacontable.infrastructure.report.dto.LedgerRecordReportDTO;
 import com.nutrehogar.sistemacontable.infrastructure.report.PaymentVoucher;
 import com.nutrehogar.sistemacontable.infrastructure.report.RegistrationForm;
 import com.nutrehogar.sistemacontable.application.repository.AccountRepository;
 import com.nutrehogar.sistemacontable.application.repository.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.application.repository.LedgerRecordRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
-import com.nutrehogar.sistemacontable.domain.model.Account;
-import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
-import com.nutrehogar.sistemacontable.domain.model.LedgerRecord;
-import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.ui.components.*;
 import com.nutrehogar.sistemacontable.application.view.crud.AccountingEntryFormView;
@@ -31,13 +29,11 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.nutrehogar.sistemacontable.application.config.Util.DECIMAL_FORMAT;
+import static com.nutrehogar.sistemacontable.application.config.Util.*;
 
 @Slf4j
 public class AccountingEntryFormController extends SimpleController<LedgerRecord, LedgerRecord> {
@@ -60,7 +56,28 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     @Override
     protected void initialize() {
-        setTblModel(new LedgerRecordTableModel());
+        setTblModel(new CustomTableModel("Referencia", "Cuenta", "Debíto", "Crédito") {
+            @Override
+            public int getRowCount() {
+                return tblDataList.size();
+            }
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                var record = tblDataList.get(rowIndex);
+                return switch (columnIndex) {
+                    case 0 -> record.getReference();
+                    case 1 -> record.getAccountId();
+                    case 2 -> record.getDebit();
+                    case 3 -> record.getCredit();
+                    default -> "que haces?";
+                };
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return String.class;
+            }
+        });
         cbxModelAccount = new CustomComboBoxModel<>(List.of());
         cbxModelDocumentType = new CustomComboBoxModel<>(DocumentType.values());
         journalEntry = Optional.empty();
@@ -91,12 +108,41 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         super.loadData();
     }
 
+    private void calcBalance() {
+        var debitSum = BigDecimal.ZERO;
+        var creditSum = BigDecimal.ZERO;
+        if (journalEntry.isEmpty()) {
+            showError("Error: journal entry is empty!");
+            return;
+        }
+
+        if (tblDataList == null) {
+            tblDataList = new ArrayList<>();
+        } else {
+            tblDataList.clear();
+        }
+
+        for (LedgerRecord record : getData()) {
+            debitSum = debitSum.add(record.getDebit(), MathContext.DECIMAL128);
+            creditSum = creditSum.add(record.getCredit(), MathContext.DECIMAL128);
+            tblDataList.add(new LedgerRecordDTO(Account.getCellRenderer(record.getAccount().getId()), record.getReference(), formatBigDecimal(record.getDebit()), formatBigDecimal(record.getCredit())));
+        }
+        tblDataList.add(new LedgerRecordDTO("", "TOTAL", DECIMAL_FORMAT.format(debitSum), DECIMAL_FORMAT.format(creditSum)));
+        boolean isBalanced = !getData().isEmpty();
+        getBtnSaveEntry().setEnabled(isBalanced && isBeingAdded);
+        getBtnUpdateEntry().setEnabled(isBalanced && isBeingEdited);
+    }
+
+    private String formatBigDecimal(BigDecimal value) {
+        return value.compareTo(BigDecimal.ZERO) == 0 ? "" : DECIMAL_FORMAT.format(value);
+    }
+
     @Override
     protected void setupViewListeners() {
         super.setupViewListeners();
         getCbxRecordAccount().setModel(cbxModelAccount);
-        getCbxRecordDocumentType().setModel(cbxModelDocumentType);
-        getCbxRecordDocumentType().setRenderer(new CustomListCellRenderer());
+        getCbxEntryDocumentType().setModel(cbxModelDocumentType);
+        getCbxEntryDocumentType().setRenderer(new CustomListCellRenderer());
         getCbxRecordAccount().setRenderer(new AccountListCellRenderer());
         getBtnSaveRecord().addActionListener(e -> saveRecord());
         getBtnDeleteRecord().addActionListener(e -> deleteRecord());
@@ -127,17 +173,44 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         ((AbstractDocument) getTxtEntryDocumentNumber().getDocument()).setDocumentFilter(new CustomDocumentFilter(CustomDocumentFilter.Type.INTEGER));
     }
 
-    private @Nullable JournalEntryDTO getJournalEntryDTO() {
-        AtomicReference<JournalEntryDTO> journalEntryDTO = new AtomicReference<>();
-        journalEntry.ifPresentOrElse(entry -> journalEntryDTO.set(new JournalEntryDTO(
-                entry.getId(),
-                entry.getCheckNumber(),
-                entry.getDate(),
-                entry.getName(),
-                entry.getConcept(),
-                tblDataList.getLast().getDebit(),
-                tblDataList)), () -> log.error("getJournalEntryDTO() error"));
+    private @Nullable JournalEntryReportDTO getJournalEntryDTO() {
+        AtomicReference<JournalEntryReportDTO> journalEntryDTO = new AtomicReference<>();
+        journalEntry.ifPresentOrElse(entry -> {
+
+            var records = getLedgerRecordDTO();
+
+            journalEntryDTO.set(new JournalEntryReportDTO(
+                    entry.getId().getDocumentNumber(),
+                    entry.getCheckNumber(),
+                    entry.getDate(),
+                    entry.getName(),
+                    entry.getConcept(),
+                    records.getLast().getDebit(),
+                    records));
+        }, () -> log.error("getJournalEntryDTO() error"));
         return journalEntryDTO.get();
+    }
+
+    private List<LedgerRecordReportDTO> getLedgerRecordDTO() {
+        var recordList = new ArrayList<LedgerRecordReportDTO>();
+        var debitSum = BigDecimal.ZERO;
+        var creditSum = BigDecimal.ZERO;
+        for (var record : getData()) {
+            debitSum = debitSum.add(record.getDebit(), MathContext.DECIMAL128);
+            creditSum = creditSum.add(record.getCredit(), MathContext.DECIMAL128);
+            recordList.add(
+                    new LedgerRecordReportDTO(
+                            toStringSafe(record.getJournalEntry().getId().getDocumentType(), DocumentType::getName),
+                            toStringSafe(record.getJournalEntry().getId().getDocumentNumber()),
+                            toStringSafe(record.getAccount().getId(), Account::getCellRenderer),
+                            toStringSafe(record.getReference()),
+                            formatDecimalSafe(record.getDebit()),
+                            formatBigDecimal(record.getCredit())
+                    )
+            );
+        }
+        recordList.add(new LedgerRecordReportDTO("", "", "", "TOTAL", DECIMAL_FORMAT.format(debitSum), DECIMAL_FORMAT.format(creditSum)));
+        return recordList;
     }
 
 
@@ -183,6 +256,15 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             showError("La Entrada esta vaciá.");
             return;
         }
+        if (cbxModelDocumentType.getSelectedItem() == null) {
+            showError("Selecciona un tipo de documento");
+            return;
+        }
+        if (getTxtEntryDocumentNumber().getText().isEmpty()) {
+            showError("El numero de documento no puede estar vacio.");
+            return;
+        }
+
         var record = getLedgerRecordByForm(new LedgerRecord(user));
         if (record.isEmpty()) {
             return;
@@ -210,8 +292,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         }
         if (lr == null) lr = new LedgerRecord();
         lr.setJournalEntry(journalEntry.get());
-        lr.setVoucher(getTxtRecordVoucher().getText());
-        lr.setDocumentType(cbxModelDocumentType.getSelectedItem());
         lr.setReference(getTxtRecordReference().getText());
         lr.setAccount(account.get());
         if (getRbtRecordCredit().isSelected()) {
@@ -237,14 +317,16 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             showMessage("La Entrada tiene que tener al menos dos registros.");
             return Optional.empty();
         }
-
         je.setName(name);
         je.setConcept(getTaEntryConcept().getText());
         je.setCheckNumber(getTxtEntryCheckNumber().getText());
         je.setDate(getSpnEntryDate().getValue());
         je.setLedgerRecords(getData());
+        je.setUser(user);
+
         for (var record : getData()) {
             record.setJournalEntry(je);
+            record.setUser(user);
         }
         return Optional.of(je);
     }
@@ -287,30 +369,27 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
         prepareBtnToEditRecord();
 
-        cbxModelDocumentType.setSelectedItem(getSelected().getDocumentType());
-        getTxtRecordVoucher().setText(getSelected().getVoucher());
         getTxtRecordReference().setText(getSelected().getReference());
         cbxModelAccount.setSelectedItem(getSelected().getAccount());
 
-        if (getSelected().getCredit() != null && !getSelected().getCredit().equals(BigDecimal.valueOf(0, 2))) {
+        if (getSelected().getCredit() != null && !(getSelected().getCredit().compareTo(BigDecimal.ZERO)==0)) {
+            log.info("es credito");
             getRbtRecordCredit().setSelected(true);
             getTxtRecordAmount().setText(getSelected().getCredit().toString());
-        } else if (getSelected().getDebit() != null && !getSelected().getDebit().equals(BigDecimal.valueOf(0, 2))) {
+        }
+        if (getSelected().getDebit() != null && !(getSelected().getDebit().compareTo(BigDecimal.ZERO) == 0)){
+            log.info("es debito");
             getRbtRecordDebit().setSelected(true);
             getTxtRecordAmount().setText(getSelected().getDebit().toString());
-        } else {
-            showMessage("Debe seleccionar credito o debito.");
         }
     }
 
     private void prepareToAddRecord() {
         prepareBtnToAddRecord();
         setSelected(null);
-        getCbxRecordDocumentType().setSelectedIndex(0);
         if (cbxModelAccount.getSize() > 0) {
             getCbxRecordAccount().setSelectedIndex(0);
         }
-        getTxtRecordVoucher().setText("");
         getTxtRecordReference().setText("");
         getRbtRecordDebit().setSelected(true);
         getTxtRecordAmount().setText("");
@@ -334,43 +413,55 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     }
 
     private void saveEntry() {
-        if (journalRepository == null) {
-            showError("Error: journal repository is null!");
-            return;
-        }
-        JournalEntry entry = new JournalEntry(user);
-        String documentNo = getTxtEntryDocumentNumber().getText();
-        if (!documentNo.isBlank()) {
-            int id;
-            try {
-                id = Integer.parseInt(documentNo);
-            } catch (NumberFormatException e) {
-                showMessage("El Documento No. debe ser un numero.");
-                return;
-            }
-            if (journalRepository.existsById(id)) {
-                showMessage("Ya existe una Entrada con el numero de documento: " + id);
-                return;
-            }
-            entry.setId(id);
-        }
-        var optional = getJournalEntryByForm(entry);
-        if (optional.isEmpty()) {
-            return;
-        }
         try {
-            for (var record : entry.getLedgerRecords()) record.setUser(user);
-            journalRepository.save(entry);
-            showMessage("El Registro actualizado exitosamente.");
-            prepareToEditEntry(entry);
-        } catch (RepositoryException e) {
-            String fullMessage = switch (e.getCause()) {
-                case EntityExistsException c -> "Ya existe esa Cuenta";
-                case IllegalArgumentException c -> "Los datos no puede ser nulo";
-                case ConstraintViolationException c -> "Código de cuenta duplicado";
-                case null, default -> e.getMessage();
-            };
-            showError("Error al guardar: " + fullMessage);
+            if (journalRepository == null) {
+                showError("Error: journal repository is null!");
+                return;
+            }
+            JournalEntry entry = new JournalEntry(user);
+            String documentNo = getTxtEntryDocumentNumber().getText();
+            if (!documentNo.isBlank()) {
+                int id;
+                try {
+                    id = Integer.parseInt(documentNo);
+                } catch (NumberFormatException e) {
+                    showMessage("El Documento No. debe ser un numero.");
+                    return;
+                }
+
+                var journalId = new JournalEntryPK(id, cbxModelDocumentType.getSelectedItem());
+
+                if (journalRepository.existsById(journalId)) {
+                    showMessage("Ya existe una Entrada con el numero de documento: " + id + " y tipo de documento: " + cbxModelDocumentType.getSelectedItem().getName() + ".");
+                    return;
+                }
+                entry.setId(journalId);
+            } else {
+                showMessage("La Documento no puede estar vacia.");
+            }
+
+            var optional = getJournalEntryByForm(entry);
+
+            if (optional.isEmpty()) {
+                showError("Optioanl null");
+                return;
+            }
+
+            try {
+                journalRepository.save(entry);
+                showMessage("El Registro actualizado exitosamente.");
+                prepareToEditEntry(entry);
+            } catch (RepositoryException e) {
+                String fullMessage = switch (e.getCause()) {
+                    case EntityExistsException c -> "Ya existe esa Cuenta";
+                    case IllegalArgumentException c -> "Los datos no puede ser nulo";
+                    case ConstraintViolationException c -> "Código de cuenta duplicado";
+                    case null, default -> e.getMessage();
+                };
+                showError("Error al guardar: " + fullMessage);
+            }
+        } catch (Exception e) {
+            showError("Error al guardar: " + e.getMessage());
         }
     }
 
@@ -412,8 +503,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
             return;
         }
         entry = optional.get();
-        entry.setUser(user);
-        for (var record : entry.getLedgerRecords()) record.setUser(user);
         try {
             entry = journalRepository.update(entry);
             showMessage("El Registro actualizado exitosamente.");
@@ -434,7 +523,9 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     public void prepareToEditEntry(@NotNull JournalEntry je) {
         journalEntry = Optional.of(je);
         getTxtEntryDocumentNumber().setEnabled(false);
-        getTxtEntryDocumentNumber().setText(je.getId().toString());
+        getTxtEntryDocumentNumber().setText(je.getId().getDocumentNumber().toString());
+        getCbxEntryDocumentType().setEnabled(false);
+        getCbxEntryDocumentType().setSelectedItem(je.getId().getDocumentType());
         getTxtEntryName().setText(je.getName());
         getTaEntryConcept().setText(je.getConcept());
         getSpnEntryDate().getModel().setValue(je.getDate());
@@ -448,7 +539,7 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         loadData();
     }
 
-    public void prepareToEditEntry(int jeId) {
+    public void prepareToEditEntry(JournalEntryPK jeId) {
         if (journalRepository == null) {
             showError("Error: journal repository is null!");
             return;
@@ -459,6 +550,8 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
     private void prepareToAddEntry() {
         journalEntry = Optional.of(new JournalEntry());
         getTxtEntryDocumentNumber().setEnabled(true);
+        getCbxEntryDocumentType().setEnabled(true);
+        getCbxEntryDocumentType().setSelectedItem(DocumentType.INCOME);
         getTxtEntryName().setText("");
         getTaEntryConcept().setText("");
         getTxtEntryDocumentNumber().setText("");
@@ -503,74 +596,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         cbxModelAccount.setData(list);
     }
 
-    private void calcBalance() {
-        var debitSum = BigDecimal.ZERO;
-        var creditSum = BigDecimal.ZERO;
-
-        if (tblDataList == null) {
-            tblDataList = new ArrayList<>();
-        } else {
-            tblDataList.clear();
-        }
-        for (LedgerRecord record : getData()) {
-            debitSum = debitSum.add(record.getDebit(), MathContext.DECIMAL128);
-            creditSum = creditSum.add(record.getCredit(), MathContext.DECIMAL128);
-            tblDataList.add(new LedgerRecordDTO(record.getDocumentType().getName(), record.getVoucher(), Account.getCellRenderer(record.getAccount().getId()), record.getReference(), formatBigDecimal(record.getDebit()), formatBigDecimal(record.getCredit())));
-        }
-        tblDataList.add(new LedgerRecordDTO("", "", "TOTAL", "", DECIMAL_FORMAT.format(debitSum), DECIMAL_FORMAT.format(creditSum)));
-        boolean isBalanced = !getData().isEmpty();
-        getBtnSaveEntry().setEnabled(isBalanced && isBeingAdded);
-        getBtnUpdateEntry().setEnabled(isBalanced && isBeingEdited);
-
-    }
-
-    private String formatBigDecimal(BigDecimal value) {
-        return value.compareTo(BigDecimal.ZERO) == 0 ? "" : DECIMAL_FORMAT.format(value);
-    }
-
-    public class LedgerRecordTableModel extends AbstractTableModel {
-
-        private final String[] COLUMN_NAMES = {"Tipo de Documento", "Comprobante", "Referencia", "Cuenta", "Debíto", "Crédito"};
-
-        @Override
-        public int getRowCount() {
-            return tblDataList.size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return COLUMN_NAMES.length;
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            return COLUMN_NAMES[column];
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            LedgerRecordDTO record = tblDataList.get(rowIndex);
-            return switch (columnIndex) {
-                case 0 -> record.getDocumentType();
-                case 1 -> record.getVoucher();
-                case 2 -> record.getReference();
-                case 3 -> record.getAccountId();
-                case 4 -> record.getDebit();
-                case 5 -> record.getCredit();
-                default -> "que haces?";
-            };
-
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return switch (columnIndex) {
-                default -> String.class;
-            };
-        }
-    }
-
-
     public LedgerRecordRepository getLedgerRecordRepository() {
         return (LedgerRecordRepository) super.getRepository();
     }
@@ -602,10 +627,6 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
 
     public JTextField getTxtRecordReference() {
         return getView().getTxtRecordReference();
-    }
-
-    public JTextField getTxtRecordVoucher() {
-        return getView().getTxtRecordVoucher();
     }
 
     public JTextArea getTaEntryConcept() {
@@ -640,8 +661,8 @@ public class AccountingEntryFormController extends SimpleController<LedgerRecord
         return getView().getCbxRecordAccount();
     }
 
-    public JComboBox<DocumentType> getCbxRecordDocumentType() {
-        return getView().getCbxRecordDocumentType();
+    public JComboBox<DocumentType> getCbxEntryDocumentType() {
+        return getView().getCbxEntryDocumentType();
     }
 
     public ButtonGroup getBgRecordType() {

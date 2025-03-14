@@ -4,12 +4,13 @@ import com.nutrehogar.sistemacontable.application.repository.JournalEntryReposit
 import com.nutrehogar.sistemacontable.domain.core.CRUDRepositoryImpl;
 import com.nutrehogar.sistemacontable.domain.core.TransactionManager;
 import com.nutrehogar.sistemacontable.domain.model.JournalEntry;
+import com.nutrehogar.sistemacontable.domain.model.JournalEntryPK;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class JournalEntryRepo extends CRUDRepositoryImpl<JournalEntry, Integer>
+public class JournalEntryRepo extends CRUDRepositoryImpl<JournalEntry, JournalEntryPK>
         implements JournalEntryRepository {
 
     public JournalEntryRepo() {

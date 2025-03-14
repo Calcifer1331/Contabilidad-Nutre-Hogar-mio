@@ -2,6 +2,7 @@ package com.nutrehogar.sistemacontable.application.controller.business.dto;
 
 import com.nutrehogar.sistemacontable.application.dto.AuditableDTO;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
+import com.nutrehogar.sistemacontable.domain.model.JournalEntryPK;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,17 +17,17 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JournalDTO extends AuditableDTO {
-    Integer entryId;
+public class JournalTableDTO extends AuditableDTO {
+    JournalEntryPK entryId;
     LocalDate entryDate;
     DocumentType documentType;
     Integer accountId;
-    String voucher;
+    Integer voucher;
     String reference;
     BigDecimal debit;
     BigDecimal credit;
 
-    public JournalDTO(String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt, Integer entryId, LocalDate entryDate, DocumentType documentType, Integer accountId, String voucher, String reference, BigDecimal debit, BigDecimal credit) {
+    public JournalTableDTO(String createdBy, String updatedBy, LocalDateTime createdAt, LocalDateTime updatedAt, JournalEntryPK entryId, LocalDate entryDate, DocumentType documentType, Integer accountId, Integer voucher, String reference, BigDecimal debit, BigDecimal credit) {
         super(createdBy, updatedBy, createdAt, updatedAt);
         this.entryId = entryId;
         this.entryDate = entryDate;

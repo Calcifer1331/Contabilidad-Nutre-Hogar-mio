@@ -19,8 +19,6 @@ public abstract class AccountingEntryFormView extends CRUDView {
 
     public abstract JTextField getTxtRecordReference();
 
-    public abstract JTextField getTxtRecordVoucher();
-
     public abstract JTextArea getTaEntryConcept();
 
     public abstract JRadioButton getRbtRecordCredit();
@@ -41,7 +39,7 @@ public abstract class AccountingEntryFormView extends CRUDView {
 
     public abstract JComboBox<Account> getCbxRecordAccount();
 
-    public abstract JComboBox<DocumentType> getCbxRecordDocumentType();
+    public abstract JComboBox<DocumentType> getCbxEntryDocumentType();
 
     public abstract ButtonGroup getBgRecordType();
 

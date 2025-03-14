@@ -56,7 +56,8 @@ public class DashboardController extends Controller {
         });
         getBtnShowGeneralLedgerView().addActionListener(e -> {
             setContent(context.getBean(GeneralLedgerController.class).getView());
-            context.getBean(GeneralLedgerController.class).loadData();
+            context.getBean(GeneralLedgerController.class).loadDataSubtype();
+            context.getBean(GeneralLedgerController.class).loadDataAccount();
         });
         getBtnShowBackupView().addActionListener(e -> context.getBean(BackupController.class).showView());
         getBtnHome().addActionListener(e -> setContent(getPnlHome()));

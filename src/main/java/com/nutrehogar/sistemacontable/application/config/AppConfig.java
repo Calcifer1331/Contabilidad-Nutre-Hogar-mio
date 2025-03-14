@@ -6,7 +6,6 @@ import com.nutrehogar.sistemacontable.application.controller.service.DashboardCo
 import com.nutrehogar.sistemacontable.application.view.AuthView;
 import com.nutrehogar.sistemacontable.application.view.service.DashboardView;
 import com.nutrehogar.sistemacontable.domain.Permissions;
-import com.nutrehogar.sistemacontable.infrastructure.persistence.HibernateUtil;
 import com.nutrehogar.sistemacontable.ui.view.business.DefaultGeneralLedgerView;
 import com.nutrehogar.sistemacontable.ui.view.business.DefaultJournalView;
 import com.nutrehogar.sistemacontable.ui.view.crud.DefaultUserView;
@@ -40,7 +39,7 @@ public class AppConfig {
         throw new IllegalStateException("Utility class");
     }
 
-    static Consumer<Integer> editJournalEntry;
+    static Consumer<JournalEntryPK> editJournalEntry;
 
     public static void setup(@NotNull ApplicationContext context) {
         context.registerBean(User.class, User.builder().username("Root").permissions(Permissions.CREATE).isEnable(true).password("0922").build());
@@ -50,13 +49,11 @@ public class AppConfig {
         context.registerBean(DashboardView.class, new DefaultDashboardView());
         var dashboard = new DashboardController(context.getBean(DashboardView.class), context);
         context.registerBean(DashboardController.class, dashboard);
-        editJournalEntry = (Integer JournalEntryId) -> {
+        editJournalEntry = (JournalEntryPK JournalEntryId) -> {
             dashboard.setContent(context.getBean(AccountingEntryFormController.class).getView());
             context.getBean(AccountingEntryFormController.class).prepareToEditEntry(JournalEntryId);
         };
-        SwingUtilities.invokeLater(() -> {
-
-        });
+        ReportService.initializeReports();
     }
 
     public static void init(@NotNull ApplicationContext context, Session session, User user, JFrame parent) {
@@ -113,6 +110,7 @@ public class AppConfig {
                 new DefaultGeneralLedgerView(),
                 editJournalEntry,
                 context.getBean(AccountSubtypeRepository.class),
+                context.getBean(LedgerRecordRepository.class),
                 context.getBean(ReportService.class),
                 user
         ));

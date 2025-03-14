@@ -1,9 +1,9 @@
 package com.nutrehogar.sistemacontable.domain.model;
 
+import com.nutrehogar.sistemacontable.domain.DocumentType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.apache.batik.dom.AbstractEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,21 +22,20 @@ public class JournalEntry extends AuditableEntity {
         super(user);
     }
 
-    @Id
-    @Column(name = "id")
-    Integer id;
-
-    @Column(name = "check_number", columnDefinition = "TEXT")
-    String checkNumber;
-
-    @Column(name = "date", nullable = false)
-    LocalDate date;
+    @EmbeddedId
+    JournalEntryPK id;
 
     @Column(name = "name", columnDefinition = "TEXT", nullable = false)
     String name;
 
     @Column(name = "concept", columnDefinition = "TEXT")
     String concept;
+
+    @Column(name = "check_number", columnDefinition = "TEXT")
+    String checkNumber;
+
+    @Column(name = "date", nullable = false)
+    LocalDate date;
 
     @OneToMany(mappedBy = "journalEntry", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     List<LedgerRecord> ledgerRecords = new ArrayList<>();

@@ -2,6 +2,8 @@ package com.nutrehogar.sistemacontable.application.controller;
 
 
 import com.nutrehogar.sistemacontable.application.config.Util;
+import com.nutrehogar.sistemacontable.application.controller.business.dto.JournalTableDTO;
+import com.nutrehogar.sistemacontable.exception.ApplicationException;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.infrastructure.report.Report;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
@@ -22,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -43,14 +46,6 @@ public abstract class SimpleController<T, R> extends Controller {
         this.reportService = reportService;
         this.user = user;
         initialize();
-    }
-
-    protected void generateReport(Class<? extends Report<T>> reportClass) {
-        try {
-            reportService.generateReport(reportClass, getSelected());
-        } catch (RepositoryException e) {
-            showError("Error al generar report", e);
-        }
     }
 
     @Override
@@ -81,6 +76,23 @@ public abstract class SimpleController<T, R> extends Controller {
         SwingUtilities.invokeLater(getTblModel()::fireTableDataChanged);
     }
 
+    public abstract class DataLoader extends SwingWorker<List<T>, Void> {
+
+        @Override
+        protected void done() {
+            try {
+                if (get() == null ||get().isEmpty() || get().getFirst() == null) {
+                    setData(List.of());
+                    return;
+                }
+                setData(get());
+                getTblModel().fireTableDataChanged();
+            } catch (Exception e) {
+                showError("Error al cargar datos", new ApplicationException("Failure to find", e));
+            }
+        }
+    }
+
     protected abstract void setElementSelected(@NotNull MouseEvent e);
 
     protected abstract void setAuditoria();
@@ -88,7 +100,7 @@ public abstract class SimpleController<T, R> extends Controller {
     public abstract class CustomTableModel extends AbstractTableModel {
         private final String[] COLUMN_NAMES;
 
-        public CustomTableModel(String... COLUMN_NAMES) {
+        public CustomTableModel(@NotNull String... COLUMN_NAMES) {
             this.COLUMN_NAMES = COLUMN_NAMES;
         }
 
@@ -107,6 +119,7 @@ public abstract class SimpleController<T, R> extends Controller {
             return COLUMN_NAMES[column];
         }
     }
+
 
     @Override
     public SimpleView getView() {

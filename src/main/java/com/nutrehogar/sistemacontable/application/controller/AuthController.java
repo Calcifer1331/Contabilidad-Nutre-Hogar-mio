@@ -63,6 +63,7 @@ public final class AuthController extends Controller {
             User selectedUser = getLstUser().getSelectedValue();
             if (selectedUser != null && String.valueOf(getTxtPing().getPassword()).equals(selectedUser.getPassword())) {
                 authenticatedUser = selectedUser;
+                authenticatedUser.setUser(authenticatedUser);
                 getView().setVisible(false);
                 getView().dispose();
             } else {

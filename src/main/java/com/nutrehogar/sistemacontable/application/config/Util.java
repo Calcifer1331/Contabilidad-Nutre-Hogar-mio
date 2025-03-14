@@ -22,7 +22,7 @@ public class Util {
 
     // Maneja conversiones seguras de BigDecimal o Double usando DECIMAL_FORMAT
     public static String formatDecimalSafe(Number number) {
-        return (number != null) ? DECIMAL_FORMAT.format(number) : "0.00";
+        return (number != null) ? DECIMAL_FORMAT.format(number) : "";
     }
 
 }

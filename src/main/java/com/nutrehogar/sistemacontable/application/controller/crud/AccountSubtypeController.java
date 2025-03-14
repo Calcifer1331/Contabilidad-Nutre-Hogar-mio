@@ -26,7 +26,23 @@ public class AccountSubtypeController extends CRUDController<AccountSubtype, Int
 
     @Override
     protected void initialize() {
-        setTblModel(new AccountSubtypeTableModel());
+        setTblModel(new CustomTableModel("Código", "Nombre", "Tipo de Cuenta") {
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                var dto = getData().get(rowIndex);
+                return switch (columnIndex) {
+                    case 0 -> dto.getFormattedId();
+                    case 1 -> dto.getName();
+                    case 2 -> dto.getAccountType().getName();
+                    default -> "que haces?";
+                };
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 2 ? AccountType.class : String.class;
+            }
+        });
         cbxModelAccountType = new CustomComboBoxModel<>(AccountType.values());
         documentSizeFilter = new DocumentSizeFilter(AccountSubtype.MAX_CANONICAL_ID_LENGTH);
         super.initialize();
@@ -81,7 +97,6 @@ public class AccountSubtypeController extends CRUDController<AccountSubtype, Int
         return getSelected().getId();
     }
 
-
     @Override
     protected AccountSubtype prepareToSave() {
         int id;
@@ -123,48 +138,6 @@ public class AccountSubtypeController extends CRUDController<AccountSubtype, Int
         getSelected().setName(getTxtAccountSubtypeName().getText());
         getSelected().setUser(user);
         return getSelected();
-    }
-
-    public class AccountSubtypeTableModel extends AbstractTableModel {
-
-        private final String[] COLUMN_NAMES =
-                {
-                        "Código", "Nombre", "Tipo de Cuenta"
-                };
-
-        @Override
-        public int getRowCount() {
-            return getData().size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return COLUMN_NAMES.length;
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            return COLUMN_NAMES[column];
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            var dto = getData().get(rowIndex);
-            return switch (columnIndex) {
-                case 0 -> dto.getFormattedId();
-                case 1 -> dto.getName();
-                case 2 -> dto.getAccountType().getName();
-                default -> "que haces?";
-            };
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return switch (columnIndex) {
-                case 2 -> AccountType.class;
-                default -> String.class;
-            };
-        }
     }
 
     @Override

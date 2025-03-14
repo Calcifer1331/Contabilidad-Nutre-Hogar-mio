@@ -89,7 +89,7 @@ public class CRUDRepositoryImpl<T, ID> implements CRUDRepository<T, ID> {
     public long count() throws RepositoryException {
         return TransactionManager.executeInTransaction(session -> {
             try {
-                Long count = session.createQuery("select count(id) from " + entityClass.getSimpleName(), Long.class)
+                Long count = session.createQuery("select count(*) from " + entityClass.getSimpleName(), Long.class)
                         .uniqueResult();
                 return count != null ? count : 0L; // Devuelve 0 si count es null
             } catch (Exception e) {

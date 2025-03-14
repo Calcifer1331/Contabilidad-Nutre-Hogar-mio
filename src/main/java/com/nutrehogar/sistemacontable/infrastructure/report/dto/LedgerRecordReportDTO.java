@@ -1,11 +1,13 @@
-package com.nutrehogar.sistemacontable.application.controller.crud.dto;
+package com.nutrehogar.sistemacontable.infrastructure.report.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LedgerRecordDTO {
+public class LedgerRecordReportDTO {
+    String documentType;
+    String voucher;
     String accountId;
     String reference;
     String debit;

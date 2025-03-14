@@ -16,7 +16,6 @@ import javax.swing.*;
  */
 @Getter
 public class DefaultAccountEntryFormView extends AccountingEntryFormView {
-    private String lblText = "Hola";
 
     /**
      * Creates new form DefaultAccountEntryFormView
@@ -27,7 +26,6 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         taEntryConcept.putClientProperty("JTextArea.placeholderText", "Cancelación de factura al crédito");
         txtEntryDocumentNumber.putClientProperty("JTextField.placeholderText", "120");
         txtEntryCheckNumber.putClientProperty("JTextField.placeholderText", "4987");
-        txtRecordVoucher.putClientProperty("JTextField.placeholderText", "F-00000876");
         txtRecordReference.putClientProperty("JTextField.placeholderText", "Pago de factura");
         txtRecordAmount.putClientProperty("JTextField.placeholderText", "12.50");
     }
@@ -53,12 +51,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         lblDelete = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         pnlRecordForm = new javax.swing.JPanel();
-        lblRecordVoucher = new javax.swing.JLabel();
-        txtRecordVoucher = new javax.swing.JTextField();
         lblRecordAmount = new javax.swing.JLabel();
         txtRecordAmount = new javax.swing.JTextField();
-        lblRecordDocumentType = new javax.swing.JLabel();
-        cbxRecordDocumentType = new javax.swing.JComboBox<>();
         lblRecordAccount = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         cbxRecordAccount = new javax.swing.JComboBox<>();
@@ -87,6 +81,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         btnUpdateEntry = new javax.swing.JButton();
         btnDeleteEntry = new javax.swing.JButton();
         btnAddEntry = new javax.swing.JButton();
+        cbxEntryDocumentType = new javax.swing.JComboBox<>();
         pnlSourceDocuments = new javax.swing.JPanel();
         btnGeneratePaymentVoucher = new javax.swing.JButton();
         btnGenerateRegistrationForm = new javax.swing.JButton();
@@ -181,21 +176,10 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
         pnlRecordForm.setBorder(javax.swing.BorderFactory.createTitledBorder(" Registro Contable "));
         pnlRecordForm.setOpaque(false);
 
-        lblRecordVoucher.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblRecordVoucher.setLabelFor(txtRecordVoucher);
-        lblRecordVoucher.setText("Comprobante:");
-
         lblRecordAmount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblRecordAmount.setLabelFor(txtRecordAmount);
         lblRecordAmount.setText("Monto:");
         lblRecordAmount.setName(""); // NOI18N
-
-        lblRecordDocumentType.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblRecordDocumentType.setLabelFor(cbxRecordDocumentType);
-        lblRecordDocumentType.setText("Tipo De Documento:");
-
-        cbxRecordDocumentType.setModel(new javax.swing.DefaultComboBoxModel<>());
-        cbxRecordDocumentType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         lblRecordAccount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblRecordAccount.setLabelFor(cbxRecordAccount);
@@ -242,26 +226,19 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                         .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblRecordAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblRecordReference, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblRecordDocumentType, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(lblRecordType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblRecordType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbtRecordDebit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rbtRecordCredit, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                         .addGap(123, 123, 123))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRecordFormLayout.createSequentialGroup()
-                        .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblRecordVoucher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(pnlRecordFormLayout.createSequentialGroup()
-                                .addComponent(lblRecordAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblRecordAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtRecordVoucher, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtRecordReference, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cbxRecordAccount, javax.swing.GroupLayout.Alignment.TRAILING, 0, 253, Short.MAX_VALUE)
-                            .addComponent(txtRecordAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxRecordDocumentType, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtRecordAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlRecordFormLayout.createSequentialGroup()
                         .addComponent(lblUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -276,14 +253,6 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
             pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRecordFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRecordDocumentType)
-                    .addComponent(cbxRecordDocumentType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRecordVoucher)
-                    .addComponent(txtRecordVoucher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlRecordFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRecordReference, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRecordReference))
@@ -331,7 +300,7 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                 .addComponent(pnlRecordForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(auditablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pnlEntryForm.setBorder(javax.swing.BorderFactory.createTitledBorder("  Entrada de Diario  "));
@@ -378,6 +347,10 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
 
         btnAddEntry.setText("Nuevo");
 
+        cbxEntryDocumentType.setModel(new javax.swing.DefaultComboBoxModel<>());
+        cbxEntryDocumentType.setToolTipText("Tipo de Documento");
+        cbxEntryDocumentType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         javax.swing.GroupLayout pnlEntryFormLayout = new javax.swing.GroupLayout(pnlEntryForm);
         pnlEntryForm.setLayout(pnlEntryFormLayout);
         pnlEntryFormLayout.setHorizontalGroup(
@@ -402,9 +375,12 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                     .addComponent(spnEntryDate, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
                     .addComponent(txtEntryCheckNumber))
                 .addGap(18, 18, 18)
-                .addGroup(pnlEntryFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlEntryFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btnUpdateEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDeleteEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlEntryFormLayout.createSequentialGroup()
+                        .addComponent(cbxEntryDocumentType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeleteEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlEntryFormLayout.createSequentialGroup()
                         .addComponent(btnAddEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -430,7 +406,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                         .addGroup(pnlEntryFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEntryDocumentNumber)
                             .addComponent(txtEntryDocumentNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDeleteEntry))
+                            .addComponent(btnDeleteEntry)
+                            .addComponent(cbxEntryDocumentType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlEntryFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEntryDate)
@@ -444,6 +421,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
                             .addComponent(btnAddEntry))))
                 .addContainerGap())
         );
+
+        cbxEntryDocumentType.getAccessibleContext().setAccessibleName("Tipo de Documento");
 
         pnlSourceDocuments.setBorder(javax.swing.BorderFactory.createTitledBorder("Documentos Fuente"));
         pnlSourceDocuments.setOpaque(false);
@@ -568,8 +547,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
     private javax.swing.JButton btnSaveEntry;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdateEntry;
+    private javax.swing.JComboBox<DocumentType> cbxEntryDocumentType;
     private javax.swing.JComboBox<Account> cbxRecordAccount;
-    private javax.swing.JComboBox<DocumentType> cbxRecordDocumentType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -588,10 +567,8 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
     private javax.swing.JLabel lblEntryName;
     private javax.swing.JLabel lblRecordAccount;
     private javax.swing.JLabel lblRecordAmount;
-    private javax.swing.JLabel lblRecordDocumentType;
     private javax.swing.JLabel lblRecordReference;
     private javax.swing.JLabel lblRecordType;
-    private javax.swing.JLabel lblRecordVoucher;
     private javax.swing.JLabel lblSave;
     private javax.swing.JLabel lblUpdate;
     private javax.swing.JLabel lblUpdateAt;
@@ -611,7 +588,6 @@ public class DefaultAccountEntryFormView extends AccountingEntryFormView {
     private javax.swing.JTextField txtEntryName;
     private javax.swing.JTextField txtRecordAmount;
     private javax.swing.JTextField txtRecordReference;
-    private javax.swing.JTextField txtRecordVoucher;
 
     @Override
     public JButton getBtnGenerateReport() {

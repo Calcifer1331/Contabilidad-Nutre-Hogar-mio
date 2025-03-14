@@ -1,9 +1,11 @@
 package com.nutrehogar.sistemacontable.application.controller.business;
 
+import com.nutrehogar.sistemacontable.domain.model.JournalEntryPK;
+import com.nutrehogar.sistemacontable.exception.ApplicationException;
 import com.nutrehogar.sistemacontable.exception.RepositoryException;
 import com.nutrehogar.sistemacontable.infrastructure.report.Journal;
 import com.nutrehogar.sistemacontable.infrastructure.report.ReportService;
-import com.nutrehogar.sistemacontable.application.controller.business.dto.JournalDTO;
+import com.nutrehogar.sistemacontable.application.controller.business.dto.JournalTableDTO;
 import com.nutrehogar.sistemacontable.application.repository.JournalEntryRepository;
 import com.nutrehogar.sistemacontable.domain.DocumentType;
 import com.nutrehogar.sistemacontable.domain.model.Account;
@@ -12,27 +14,56 @@ import com.nutrehogar.sistemacontable.domain.model.User;
 import com.nutrehogar.sistemacontable.application.view.business.JournalView;
 import com.nutrehogar.sistemacontable.infrastructure.report.dto.JournalReportDTO;
 import com.nutrehogar.sistemacontable.infrastructure.report.dto.SimpleReportDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.table.AbstractTableModel;
+import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static com.nutrehogar.sistemacontable.application.config.Util.*;
 
-
-public class JournalController extends BusinessController<JournalDTO, JournalEntry> {
-    public JournalController(JournalEntryRepository repository, JournalView view, Consumer<Integer> editJournalEntry, ReportService reportService, User user) {
+@Slf4j
+public class JournalController extends BusinessController<JournalTableDTO, JournalEntry> {
+    public JournalController(JournalEntryRepository repository, JournalView view, Consumer<JournalEntryPK> editJournalEntry, ReportService reportService, User user) {
         super(repository, view, editJournalEntry, reportService, user);
     }
 
     @Override
     protected void initialize() {
-        setTblModel(new JournalTableModel());
+        setTblModel(new CustomTableModel("Fecha", "Comprobante", "Tipo Documento", "Cuenta", "Referencia", "Debíto", "Crédito") {
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                var dto = getData().get(rowIndex);
+                return switch (columnIndex) {
+                    case 0 -> dto.getEntryDate();
+                    case 1 -> dto.getVoucher();
+                    case 2 -> dto.getDocumentType();
+                    case 3 -> Account.getCellRenderer(dto.getAccountId());
+                    case 4 -> dto.getReference();
+                    case 5 -> dto.getDebit();
+                    case 6 -> dto.getCredit();
+                    default -> "Element not found";
+                };
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 0 -> LocalDate.class;
+                    case 1 -> Integer.class;
+                    case 2 -> DocumentType.class;
+                    case 3, 4 -> String.class;
+                    case 5, 6 -> BigDecimal.class;
+                    default -> Object.class;
+                };
+            }
+        });
         super.initialize();
     }
 
@@ -66,29 +97,34 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
 
     @Override
     public void loadData() {
-        var list = getRepository().findAllByDateRange(spnModelStartPeriod.getValue(), spnModelEndPeriod.getValue())
-                .stream()
-                .flatMap(journalEntry -> journalEntry.getLedgerRecords().stream()
-                        .map(ledgerRecord -> new JournalDTO(
-                                ledgerRecord.getCreatedBy(),
-                                ledgerRecord.getUpdatedBy(),
-                                ledgerRecord.getCreatedAt(),
-                                ledgerRecord.getUpdatedAt(),
-                                journalEntry.getId(),
-                                journalEntry.getDate(),
-                                ledgerRecord.getDocumentType(),
-                                ledgerRecord.getAccount().getId(),
-                                ledgerRecord.getVoucher(),
-                                ledgerRecord.getReference(),
-                                ledgerRecord.getDebit(),
-                                ledgerRecord.getCredit()
-                        ))
-                )
-                .sorted(Comparator.comparing(JournalDTO::getEntryDate))
-                .toList();
-        setData(list);
-        super.loadData();
+        new JournalDataLoader().execute();
     }
+    public class JournalDataLoader extends DataLoader {
+        @Override
+        protected List<JournalTableDTO> doInBackground() {
+            return getRepository().findAllByDateRange(spnModelStartPeriod.getValue(), spnModelEndPeriod.getValue())
+                    .stream()
+                    .flatMap(journalEntry -> journalEntry.getLedgerRecords().stream()
+                            .map(ledgerRecord -> new JournalTableDTO(
+                                    ledgerRecord.getCreatedBy(),
+                                    ledgerRecord.getUpdatedBy(),
+                                    ledgerRecord.getCreatedAt(),
+                                    ledgerRecord.getUpdatedAt(),
+                                    ledgerRecord.getJournalEntry().getId(),
+                                    ledgerRecord.getJournalEntry().getDate(),
+                                    ledgerRecord.getJournalEntry().getId().getDocumentType(),
+                                    ledgerRecord.getAccount().getId(),
+                                    ledgerRecord.getJournalEntry().getId().getDocumentNumber(),
+                                    ledgerRecord.getReference(),
+                                    ledgerRecord.getDebit(),
+                                    ledgerRecord.getCredit()
+                            ))
+                    )
+                    .sorted(Comparator.comparing(JournalTableDTO::getEntryDate))
+                    .toList();
+        }
+    }
+
 
     @Override
     protected void setElementSelected(@NotNull MouseEvent e) {
@@ -106,57 +142,8 @@ public class JournalController extends BusinessController<JournalDTO, JournalEnt
         }
     }
 
-    public class JournalTableModel extends AbstractTableModel {
-        private final String[] COLUMN_NAMES =
-                {
-                        "Fecha", "Comprobante", "Tipo Documento", "Cuenta", "Referencia", "Debíto", "Crédito"
-                };
-
-        @Override
-        public int getRowCount() {
-            return getData().size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return COLUMN_NAMES.length;
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            return COLUMN_NAMES[column];
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            var dto = getData().get(rowIndex);
-            return switch (columnIndex) {
-                case 0 -> dto.getEntryDate();
-                case 1 -> dto.getVoucher();
-                case 2 -> dto.getDocumentType();
-                case 3 -> Account.getCellRenderer(dto.getAccountId());
-                case 4 -> dto.getReference();
-                case 5 -> dto.getDebit();
-                case 6 -> dto.getCredit();
-                default -> "Element not found";
-            };
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return switch (columnIndex) {
-                case 0 -> LocalDate.class;
-                case 2 -> DocumentType.class;
-                case 1, 3, 4 -> String.class;
-                case 5, 6 -> BigDecimal.class;
-                default -> Object.class;
-            };
-        }
-    }
-
     @Override
     public JournalView getView() {
-
         return (JournalView) super.getView();
     }
 
