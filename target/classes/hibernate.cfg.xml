@@ -2,22 +2,28 @@
     <session-factory>
         <!-- Configuración de la base de datos -->
         <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
-        <property name="hibernate.connection.url">jdbc:sqlite:srccontabilidad.db</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:sistemacontable.db?journal_mode=WAL</property>
         <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
 
+<!--        <property name="hibernate.cache.use_second_level_cache">true</property>-->
+<!--        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory-->
+<!--        </property>-->
+        <property name="hibernate.connection.isolation">8</property> <!-- TRANSACTION_SERIALIZABLE -->
+        <property name="hibernate.jdbc.batch_size">20</property>
         <!-- log SQL -->
-        <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.format_sql">true</property>
+        <!--        <property name="hibernate.show_sql">true</property>-->
+        <!--        <property name="hibernate.format_sql">true</property>-->
 
         <!-- Configuración del esquema -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Mapeo de clases de entidad -->
-        <mapping class="com.nutrehogar.sistemacontable.domain.model.Asiento"/>
-        <mapping class="com.nutrehogar.sistemacontable.domain.model.Cuenta"/>
-        <mapping class="com.nutrehogar.sistemacontable.domain.model.Registro"/>
-        <mapping class="com.nutrehogar.sistemacontable.domain.model.SubTipoCuenta"/>
-        <mapping class="com.nutrehogar.sistemacontable.domain.model.TipoCuenta"/>
-        <mapping class="com.nutrehogar.sistemacontable.domain.model.TipoDocumento"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.model.JournalEntry"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.model.Account"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.model.LedgerRecord"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.model.AccountSubtype"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.AccountType"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.DocumentType"/>
+        <mapping class="com.nutrehogar.sistemacontable.domain.model.User"/>
     </session-factory>
 </hibernate-configuration>

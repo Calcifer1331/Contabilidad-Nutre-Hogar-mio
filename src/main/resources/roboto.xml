@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+    <fontFamily name="Roboto Black">
+        <normal>fonts/Roboto-Black.ttf</normal>
+        <bold>fonts/Roboto-Black.ttf</bold>
+        <italic>fonts/Roboto-BlackItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-BlackItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+    <fontFamily name="Roboto Regular">
+        <normal>fonts/Roboto-Regular.ttf</normal>
+        <bold>fonts/Roboto-Bold.ttf</bold>
+        <italic>fonts/Roboto-Italic.ttf</italic>
+        <boldItalic>fonts/Roboto-BoldItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+    <fontFamily name="Roboto Thin">
+        <normal>fonts/Roboto-Thin.ttf</normal>
+        <bold>fonts/Roboto-Thin.ttf</bold>
+        <italic>fonts/Roboto-ThinItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-ThinItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Roboto ExtraLight">
+        <normal>fonts/Roboto-ExtraLight.ttf</normal>
+        <bold>fonts/Roboto-ExtraLight.ttf</bold>
+        <italic>fonts/Roboto-ExtraLightItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-ExtraLightItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Roboto Light">
+        <normal>fonts/Roboto-Light.ttf</normal>
+        <bold>fonts/Roboto-Light.ttf</bold>
+        <italic>fonts/Roboto-LightItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-LightItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+    <fontFamily name="Roboto Medium">
+        <normal>fonts/Roboto-Medium.ttf</normal>
+        <bold>fonts/Roboto-Medium.ttf</bold>
+        <italic>fonts/Roboto-MediumItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-MediumItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Roboto SemiBold">
+        <normal>fonts/Roboto-SemiBold.ttf</normal>
+        <bold>fonts/Roboto-SemiBold.ttf</bold>
+        <italic>fonts/Roboto-SemiBoldItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-SemiBoldItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+    <fontFamily name="Roboto Bold">
+        <normal>fonts/Roboto-Bold.ttf</normal>
+        <bold>fonts/Roboto-Bold.ttf</bold>
+        <italic>fonts/Roboto-BoldItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-BoldItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Roboto ExtraBold">
+        <normal>fonts/Roboto-ExtraBold.ttf</normal>
+        <bold>fonts/Roboto-ExtraBold.ttf</bold>
+        <italic>fonts/Roboto-ExtraBoldItalic.ttf</italic>
+        <boldItalic>fonts/Roboto-ExtraBoldItalic.ttf</boldItalic>
+        <pdfEncoding>Identity-H</pdfEncoding>
+        <pdfEmbedded>true</pdfEmbedded>
+    </fontFamily>
+</fontFamilies>

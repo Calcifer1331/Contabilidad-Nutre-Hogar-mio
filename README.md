@@ -1,7 +1,66 @@
 # Sistema Contable
 
-Este proyecto es una aplicación de escritorio para la gestión contable de Nutre Hogar. Permite el registro y control de
+Este proyecto es una aplicación de escritorio para la gestión contable de Nutre Hogar. Permite el ledgerRecord y control de
 transacciones contables, incluyendo la generación de reportes de libro diario mayor y general.
+
+## Que Haceres
+* Eliminar Comprobante de los Records en el EntryForm, usar referencia directa a el JournalEntry
+* Hacer que TipoDocuemnto este en el JournalEntry y eliminarlo de la parte de LedgerRecord
+* Hacer que el id sea compuesto de Documento No. y TipoDeDocumento, para que se pueda hacer cosas como: `170 Ingreso, 170 Egreso, 17 Ajuste`;
+
+## Indicaciones
+- el numero de cheque en los JaspertReports
+
+### crear exe
+
+Se debe ejecutar el script `jpackage.ps1` que esta en `package/`, para en la carpeta `./target/bio` debe de haber el `.jar` principal de programa y el de las dependencias.
+
+### Instalacion 
+
+Se debe instalar el programa en `C:\users\[tu-usuario]\Sistema_Contable`, ademas dentro de esta carpeta tiene que tener `\template\` y pasar las imagenes de `\package\resources\template` a esta y por ultimo pasar la base de datos de `\package\resource\app_data_base-prueba.sqlite` a `\Sistema_Contable\` y borrar *-prueba* del nombre.
+
+
+```java
+module SistemaContable {
+    requires java.compiler;
+    requires java.instrument;
+    requires java.naming;
+    requires java.rmi;
+    requires java.sql;
+    requires java.transaction.xa;
+    requires java.xml.crypto;
+
+    requires itextpdf;
+    requires jakarta.persistence;
+    requires static lombok;
+    requires org.hibernate.orm.core;
+    requires org.jetbrains.annotations;
+    requires org.slf4j;
+    requires com.formdev.flatlaf.extras;
+    requires com.formdev.flatlaf;
+    requires java.desktop;
+    requires java.management;
+
+    exports com.nutrehogar.sistemacontable.ui;
+    exports com.nutrehogar.sistemacontable.ui.components;
+    exports com.nutrehogar.sistemacontable.ui.controller;
+    exports com.nutrehogar.sistemacontable.ui.tabs;
+    exports com.nutrehogar.sistemacontable.ui.styles;
+    exports com.nutrehogar.sistemacontable.ui.simpleView;
+    exports com.nutrehogar.sistemacontable.ui.services;
+    exports com.nutrehogar.sistemacontable.ui.windows;
+    exports com.nutrehogar.sistemacontable.application;
+    exports com.nutrehogar.sistemacontable.application.dto;
+    exports com.nutrehogar.sistemacontable.application.service;
+    exports com.nutrehogar.sistemacontable.domain;
+    exports com.nutrehogar.sistemacontable.domain.model;
+    exports com.nutrehogar.sistemacontable.domain.repository;
+
+    opens com.nutrehogar.sistemacontable.domain.model to org.hibernate.orm.core;
+    exports com.nutrehogar.sistemacontable.application.config;
+    exports com.nutrehogar.sistemacontable.exception;
+}
+```
 
 ````xml
 
@@ -13,6 +72,7 @@ transacciones contables, incluyendo la generación de reportes de libro diario m
 <role>QA Engineer / Tester</role>
 <role>Data Engineer</role>
 ````
+
 
 ## Características
 

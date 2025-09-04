@@ -1,0 +1,242 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="RegistrationForm" language="java" columnCount="1" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ee58cf6-d5b5-4286-aae2-58be765c1c95">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="TABLE_STYLE" mode="Opaque" backcolor="#8F8282" markup=""/>
+	<style name="Table 1_TH" mode="Opaque" backcolor="rgba(255, 255, 255, 0.0)">
+		<box>
+			<pen lineWidth="0.5" lineColor="#133E58"/>
+			<topPen lineWidth="0.5" lineColor="#133E58"/>
+			<leftPen lineWidth="0.5" lineColor="#133E58"/>
+			<bottomPen lineWidth="0.5" lineColor="#133E58"/>
+			<rightPen lineWidth="0.5" lineColor="#133E58"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="rgba(255, 255, 255, 0.0)">
+		<box>
+			<pen lineWidth="0.5" lineColor="#133E58"/>
+			<topPen lineWidth="0.5" lineColor="#133E58"/>
+			<leftPen lineWidth="0.5" lineColor="#133E58"/>
+			<bottomPen lineWidth="1.5" lineColor="#133E58"/>
+			<rightPen lineWidth="0.5" lineColor="#133E58"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="rgba(255, 255, 255, 0.0)">
+		<box>
+			<pen lineWidth="0.5" lineColor="#133E58"/>
+			<topPen lineWidth="0.5" lineColor="#133E58"/>
+			<leftPen lineWidth="0.5" lineColor="#133E58"/>
+			<bottomPen lineWidth="0.5" lineColor="#133E58"/>
+			<rightPen lineWidth="0.5" lineColor="#133E58"/>
+		</box>
+		<conditionalStyle backcolor="rgba(251, 253, 255, 0.0)">
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+		</conditionalStyle>
+	</style>
+	<dataset name="Dataset1" whenResourceMissingType="Empty" uuid="84b0b287-3057-4005-9a53-ff5576ab3a81">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<query language="sql"><![CDATA[]]></query>
+		<field name="accountId" class="java.lang.String"/>
+		<field name="debit" class="java.lang.String"/>
+		<field name="credit" class="java.lang.String"/>
+		<field name="reference" class="java.lang.String"/>
+	</dataset>
+	<parameter name="MANAGER_NAME" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Licdo. Julío C. Guerra."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LOCATION" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Finca 12, Changuinola, Bocas del toro, Panamá"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PHONE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["(+507) 758-6506"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EMAIL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["nutrebocas@gmail.com"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ENTRY_ID" class="java.lang.String"/>
+	<parameter name="ENTRY_DATE" class="java.lang.String"/>
+	<parameter name="ENTRY_NAME" class="java.lang.String"/>
+	<parameter name="ENTRY_CONCEPT" class="java.lang.String"/>
+	<parameter name="ENTRY_AMOUNT" class="java.lang.String"/>
+	<parameter name="IMG_DIR" evaluationTime="Early" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./img/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TABLE_DATA_SOURCE" evaluationTime="Early" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="ENTRY_CHECK_NUMBER" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<background splitType="Stretch"/>
+	<title height="62" splitType="Stretch">
+		<element kind="image" uuid="6dafed81-7dd3-47d9-8fba-a636d6af1c7d" x="268" y="25" width="282" height="10">
+			<expression><![CDATA[$P{IMG_DIR}+"Rectangle1_blue.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="cb249c6d-b33b-4697-8a4f-f0153332e090" x="22" y="3" width="234" height="54" forecolor="#133E58" fontName="Roboto Black" fontSize="40.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Nutre Hogar]]></text>
+		</element>
+		<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	</title>
+	<pageHeader height="141" splitType="Stretch">
+		<element kind="image" uuid="2f7d3709-dbab-4788-be1f-42842df70be7" x="22" y="14" width="15" height="12" hImageAlign="Center" vImageAlign="Bottom">
+			<expression><![CDATA[$P{IMG_DIR}+"calculator.png"]]></expression>
+		</element>
+		<element kind="image" uuid="23ae4ce5-e694-4e80-99ed-2f258bd7c17b" x="22" y="35" width="15" height="12" hImageAlign="Center" vImageAlign="Bottom">
+			<expression><![CDATA[$P{IMG_DIR}+"locate_icon.png"]]></expression>
+		</element>
+		<element kind="image" uuid="5be394e1-e6fa-4c32-a97b-84c7c1fe4529" x="24" y="58" width="11" height="11" hImageAlign="Center" vImageAlign="Bottom">
+			<expression><![CDATA[$P{IMG_DIR}+"phone_icon.png"]]></expression>
+		</element>
+		<element kind="image" uuid="73afc1ad-2832-4d32-b4ff-16fbff6ff99f" x="24" y="80" width="11" height="12" hImageAlign="Center" vImageAlign="Bottom">
+			<expression><![CDATA[$P{IMG_DIR}+"email_icon.png"]]></expression>
+		</element>
+		<element kind="textField" uuid="97a87cf5-de0f-4840-be07-b701a97f0f74" x="37" y="79" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
+			<expression><![CDATA[$P{EMAIL}]]></expression>
+		</element>
+		<element kind="textField" uuid="a610da1d-5c0d-4aa4-8c30-3e81d865d9a4" x="37" y="56" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
+			<expression><![CDATA[$P{PHONE}]]></expression>
+		</element>
+		<element kind="textField" uuid="623e265f-2a30-449b-b117-ec766520a767" x="37" y="34" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
+			<expression><![CDATA[$P{LOCATION}]]></expression>
+		</element>
+		<element kind="textField" uuid="a4f52453-2e63-412c-843e-6ca6301fda9c" x="37" y="13" width="218" height="14" forecolor="#323232" fontName="Roboto Regular" vTextAlign="Middle">
+			<expression><![CDATA[$P{MANAGER_NAME}]]></expression>
+		</element>
+		<element kind="textField" uuid="2478e073-9de6-4a8f-8068-eddcd820b9ff" x="407" y="69" width="138" height="14" forecolor="#323232" fontName="Roboto Regular" bold="false" hTextAlign="Right">
+			<expression><![CDATA[$P{ENTRY_DATE}]]></expression>
+		</element>
+		<element kind="textField" uuid="20f60122-16f9-496c-8fb8-24fd9ae16175" x="407" y="33" width="116" height="35" forecolor="#133E58" markup="none" fontName="Roboto Black" fontSize="29.0" bold="false" hTextAlign="Right" vTextAlign="Top">
+			<paragraph lineSpacingSize="0.0"/>
+			<expression><![CDATA[$P{ENTRY_ID}]]></expression>
+		</element>
+		<element kind="staticText" uuid="b9d0e1fd-5bd5-498f-b118-f7b12d8a6edd" x="524" y="33" width="25" height="35" forecolor="#323232" fontName="Roboto Bold" fontSize="28.0" hTextAlign="Center" vTextAlign="Top">
+			<text><![CDATA[#]]></text>
+		</element>
+		<element kind="staticText" uuid="7f5e066f-b43b-4f3d-a794-e8540c4c1c86" x="266" y="6" width="283" height="27" forecolor="#323232" fontName="Roboto Black" fontSize="21.0" hTextAlign="Right" vTextAlign="Top">
+			<text><![CDATA[COMPROBANTE DE PAGO]]></text>
+		</element>
+		<element kind="textField" uuid="6eb0550c-ff72-43a4-8867-61c84b9ac717" x="409" y="85" width="139" height="24" forecolor="#133E58" markup="none" fontName="Roboto Black" fontSize="16.0" bold="false" hTextAlign="Right" vTextAlign="Top">
+			<paragraph lineSpacingSize="0.0"/>
+			<expression><![CDATA[$P{ENTRY_CHECK_NUMBER}]]></expression>
+		</element>
+		<element kind="image" uuid="4e8fb72b-0900-41c3-90cb-cf6c0aec7464" x="286" y="31" width="123" height="99" hImageAlign="Center">
+			<expression><![CDATA[$P{IMG_DIR}+"logo_big.png"]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="74">
+		<element kind="rectangle" uuid="e07114b8-c7eb-4030-8afb-6ac14aeff137" x="22" y="4" width="10" height="46" forecolor="#133E58" backcolor="#133E58">
+			<pen lineWidth="0.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+		</element>
+		<element kind="image" uuid="6eda5699-3ca3-4146-9c3c-4e89b271e6e6" x="362" y="17" width="187" height="33" hImageAlign="Right">
+			<expression><![CDATA[$P{IMG_DIR}+"Rectangle2-blue.png"]]></expression>
+		</element>
+		<element kind="staticText" uuid="0bbfe33c-f7ea-42f0-bf01-24bb4be734ac" x="374" y="17" width="55" height="33" forecolor="#FFFFFF" fontName="Roboto" fontSize="16.0" bold="false" hTextAlign="Center" vTextAlign="Middle">
+			<paragraph lineSpacing="Single" lineSpacingSize="0.0"/>
+			<text><![CDATA[Monto:]]></text>
+		</element>
+		<element kind="textField" uuid="ec08ce0d-21f9-4c52-b504-b84a4918ee73" x="429" y="17" width="115" height="33" forecolor="#FFFFFF" fontName="Roboto Black" fontSize="16.0" bold="false" hTextAlign="Right" vTextAlign="Middle">
+			<expression><![CDATA[$P{ENTRY_AMOUNT}]]></expression>
+		</element>
+		<element kind="textField" uuid="bbef4c09-22f0-4a12-9742-379a4c91eb57" x="40" y="20" width="285" height="30" forecolor="#323232" fontName="Roboto Regular">
+			<expression><![CDATA[$P{ENTRY_CONCEPT}]]></expression>
+		</element>
+		<element kind="textField" uuid="4085eac4-6aa6-449c-a4c4-3fd39d80c382" x="40" y="4" width="259" height="14" forecolor="#323232" fontName="Roboto Bold" evaluationTime="Column" bold="true">
+			<expression><![CDATA[$P{ENTRY_NAME}]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="296" splitType="Stretch">
+			<element kind="component" uuid="dbe5c476-f549-40e5-8a86-7c5e57c0c061" x="237" y="26" width="312" height="50">
+				<component kind="table">
+					<datasetRun uuid="9aa619a6-7b4c-4eb4-b603-41e40419346b" subDataset="Dataset1">
+						<dataSourceExpression><![CDATA[$P{TABLE_DATA_SOURCE}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="050d5450-305b-4d19-afd2-e43099b1864d" width="77">
+						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
+							<element kind="staticText" uuid="0f911404-d95a-461b-955e-f225fca8b995" x="0" y="0" width="77" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Referencia]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table 1_TD">
+							<element kind="textField" uuid="85d1799e-edff-4abd-81eb-ea89131329e0" x="0" y="0" width="77" height="20" forecolor="#000000" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{reference}]]></expression>
+							</element>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="79be98c9-c6d4-4ffb-9c6b-59b288d7add6" width="79">
+						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
+							<element kind="staticText" uuid="442c02e8-de2f-4495-bb12-aaacc1bb8733" x="0" y="0" width="79" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Cuenta]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table 1_TD">
+							<element kind="textField" uuid="b6b0f2f3-ed43-4591-8129-7102bb6431d5" x="0" y="0" width="79" height="20" forecolor="#000000" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{accountId}]]></expression>
+							</element>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="b8762da9-f1a7-44f9-a0bb-e37a49cef452" width="78">
+						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
+							<element kind="staticText" uuid="a63f72a7-f984-4a25-a498-d5549d6f1d91" x="0" y="0" width="78" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Debíto]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table 1_TD">
+							<element kind="textField" uuid="5d7c799b-381b-4bf5-97d4-94172d7af4e6" x="0" y="0" width="78" height="20" forecolor="#000000" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{debit}]]></expression>
+							</element>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+					<column kind="single" uuid="03a3f9e5-ecda-48d3-a169-ae2399e5dd59" width="78">
+						<columnHeader height="30" rowSpan="1" style="Table 1_CH">
+							<element kind="staticText" uuid="92084ef6-b8a3-4932-b679-bbf93d2d7a12" x="0" y="0" width="78" height="30" forecolor="#133E58" fontName="Roboto Bold" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Crédito]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="20" style="Table 1_TD">
+							<element kind="textField" uuid="f96028df-8897-47ad-8ba3-0874a775394c" x="0" y="0" width="78" height="20" forecolor="#000000" fontName="Roboto Regular" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{credit}]]></expression>
+							</element>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table 1_TD"/>
+			</element>
+			<element kind="line" uuid="13959dc2-0572-4104-9a94-e91afcbd6329" x="32" y="130" width="150" height="1">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="line" uuid="a629b177-05b4-4314-95cf-46bb73589dd5" x="32" y="207" width="150" height="1">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="f3e6e144-7d4b-4b84-b3f9-247537482e06" x="32" y="207" width="150" height="21" forecolor="#000000" fontName="Roboto" fontSize="10.0" vTextAlign="Top">
+				<text><![CDATA[Recibido por:]]></text>
+			</element>
+			<element kind="line" uuid="d0aea5c6-6564-48e1-85b7-c62cda90477b" x="32" y="263" width="150" height="1">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="fd3cad01-044f-426a-9852-a9df00808ede" x="32" y="264" width="150" height="20" forecolor="#000000" fontName="Roboto" fontSize="10.0" vTextAlign="Top">
+				<text><![CDATA[No. De Cédula:]]></text>
+			</element>
+			<element kind="staticText" uuid="cdad83cb-342b-4d7b-a504-fed3fc8af748" x="32" y="131" width="150" height="21" forecolor="#000000" fontName="Roboto" fontSize="10.0" vTextAlign="Top">
+				<text><![CDATA[Firma del personal que entrega:]]></text>
+			</element>
+			<element kind="staticText" uuid="3b9f19af-933f-4c76-9e23-f694913f3c1f" x="32" y="26" width="150" height="21" forecolor="#000000" fontName="Roboto Bold" fontSize="10.0" vTextAlign="Top">
+				<text><![CDATA[ENTREGADO POR:]]></text>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<pageFooter height="17">
+		<element kind="textField" uuid="aa8b7274-e08a-4686-af5e-2789f0088286" x="498" y="2" width="72" height="15">
+			<expression><![CDATA["Página " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+</jasperReport>
