@@ -17,7 +17,7 @@ Se debe ejecutar el script `jpackage.ps1` que esta en `package/`, para en la car
 
 ### Instalacion 
 
-Se debe instalar el programa en `C:\users\[tu-usuario]\Sistema_Contable`, ademas dentro de esta carpeta tiene que tener `\template\img\` con las imagenes.
+Se debe instalar el programa en `C:\users\[tu-usuario]\Sistema_Contable`, ademas dentro de esta carpeta tiene que tener `\template\` y pasar las imagenes de `\package\resources\template` a esta y por ultimo pasar la base de datos de `\package\resource\app_data_base-prueba.sqlite` a `\Sistema_Contable\` y borrar *-prueba* del nombre.
 
 
 ```java
@@ -73,24 +73,6 @@ module SistemaContable {
 <role>Data Engineer</role>
 ````
 
-```java
-SwingWorker<Void, Void> worker = new SwingWorker<>() {
-
-    @Override
-    protected Void doInBackground() {
-        libroDiario = LibroDiarioController.getInstance().getView();
-        balanceComprobacion = BalanceComController.getInstance().getView();
-        mayorGeneral = MayorGenController.getInstance().getView();
-        listaCuenta = new CuentasPestana();
-        listaSubtipoCuenta = new SubtiposCuentaPestana();
-        backupService = BackupService.getInstance();
-        return null;
-    }
-};
-        worker.
-
-execute();
-```
 
 ## Características
 
