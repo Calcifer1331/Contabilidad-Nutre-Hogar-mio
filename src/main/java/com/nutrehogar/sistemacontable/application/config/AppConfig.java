@@ -42,7 +42,12 @@ public class AppConfig {
     static Consumer<JournalEntryPK> editJournalEntry;
 
     public static void setup(@NotNull ApplicationContext context) {
-        context.registerBean(User.class, User.builder().username("Root").permissions(Permissions.CREATE).isEnable(true).password("0922").build());
+        context.registerBean(User.class, User.builder()
+                .username("Root")
+                .permissions(Permissions.CREATE)
+                .isEnable(true)
+                .password("0922")
+                .build());
         context.registerBean(UserRepository.class, new UserRepo());
         context.registerBean(AuthView.class, new LoginForm());
         context.registerBean(AuthController.class, new AuthController(context.getBean(AuthView.class), context.getBean(UserRepository.class), context.getBean(User.class)));

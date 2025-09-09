@@ -8,11 +8,11 @@
 <!--        <property name="hibernate.cache.use_second_level_cache">true</property>-->
 <!--        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory-->
 <!--        </property>-->
-        <property name="hibernate.connection.isolation">8</property> <!-- TRANSACTION_SERIALIZABLE -->
-        <property name="hibernate.jdbc.batch_size">20</property>
+        <property name="hibernate.connection.isolation">2</property> <!-- TRANSACTION_SERIALIZABLE -->
+        <property name="hibernate.jdbc.batch_size">5</property>
         <!-- log SQL -->
-        <!--        <property name="hibernate.show_sql">true</property>-->
-        <!--        <property name="hibernate.format_sql">true</property>-->
+                <property name="hibernate.show_sql">true</property>
+                <property name="hibernate.format_sql">true</property>
 
         <!-- Configuración del esquema -->
         <property name="hibernate.hbm2ddl.auto">update</property>

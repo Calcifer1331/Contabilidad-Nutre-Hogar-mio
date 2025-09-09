@@ -30,9 +30,7 @@ public final class AuthController extends Controller {
     @Override
     protected void initialize() {
         getLstUser().setModel(userListModel);
-        SwingUtilities.invokeLater(() -> {
-            getBtnOk().setEnabled(false);
-        });
+        SwingUtilities.invokeLater(() -> getBtnOk().setEnabled(false));
         new SwingWorker<ArrayList<User>, Void>() {
             @Override
             protected ArrayList<User> doInBackground() {

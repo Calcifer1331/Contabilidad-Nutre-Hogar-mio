@@ -19,12 +19,21 @@ public class App {
     private JFrame frame;
 
     public App() {
+        try {
+            var session = HibernateUtil.getSession();
+            HibernateUtil.returnSession(session);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         Thread.startVirtualThread(() -> Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             WriteExecutor.shutdown();
             HibernateUtil.shutdown();
             log.info("Application stopped");
         })));
+
         var context = new ApplicationContext();
+
         try {
             AppConfig.setup(context);
             frame = new JFrame();
